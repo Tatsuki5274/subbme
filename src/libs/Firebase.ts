@@ -9,6 +9,8 @@ import "firebase/analytics";
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage"
+import "firebase/functions"
 
 
 // Your web app's Firebase configuration
@@ -21,15 +23,17 @@ var firebaseConfig = {
     appId: "1:729779483858:web:19d88c3099ba968e3ae90b"
 };
 
-const isEmulating = window.location.hostname === "localhost";
-if (isEmulating) {
-    console.log("Emulating mode")
-    firebase.auth().useEmulator("http://localhost:9099");
-    firebase.functions().useEmulator("localhost", 5001);
-    firebase.firestore().useEmulator("localhost", 8081);
-}
+
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
+    const isEmulating = window.location.hostname === "localhost";
+    if (isEmulating) {
+        console.log("Emulating mode")
+        firebase.auth().useEmulator("http://localhost:9099");
+        firebase.functions().useEmulator("localhost", 5001);
+        firebase.firestore().useEmulator("localhost", 8081);
+    }
 }
+
 export default firebase

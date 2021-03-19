@@ -1,18 +1,22 @@
 import { useFormik } from "formik"
+import { createUser } from "repositories/User"
 
 export default function(){
     const formik = useFormik({
         initialValues: {
-            username: ""
+            username: "",
+            password: "",
         },
-        onSubmit: (values) => {
-            firebase
+        onSubmit: async(values) => {
+            const user = await createUser(values.username, values.password)
+            console.log("user", user)
         }
     })
     return (
         <form onSubmit={formik.handleSubmit}>
             <input type="text" name="username" onChange={formik.handleChange} />
-            {JSON.stringify(formik.values, null, 2)}
+            <input type="password" name="password" onChange={formik.handleChange} />
+            <button type="submit">Submit</button>
         </form>
     )
 }
