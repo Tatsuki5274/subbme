@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import { createUser } from "repositories/User"
+import { signUpUser } from "repositories/User"
 
 export default function(){
     const formik = useFormik({
@@ -8,7 +8,7 @@ export default function(){
             password: "",
         },
         onSubmit: async(values) => {
-            const user = await createUser(values.username, values.password)
+            const user = await signUpUser(values.username, values.password)
             console.log("user", user)
         }
     })

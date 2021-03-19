@@ -1,9 +1,9 @@
-import PSignUp from "./components/auth/pages/PSignUp";
+import Router from "router";
 
 function App() {
   return (
     <div className="App">
-      <PSignUp />
+      <Router />
     </div>
   );
 }
