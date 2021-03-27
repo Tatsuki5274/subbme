@@ -1,4 +1,5 @@
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
+import { formLayout } from 'common/styles';
 import { signUpUser } from 'repositories/User';
 
 type FormType = {
@@ -8,7 +9,6 @@ type FormType = {
 
 export default function SignUpForm(){
     const onFinish = async (values: FormType) => {
-        console.log('Success:', values);
         const user = await signUpUser(values.email, values.password)
         console.log("user", user)
     };
@@ -18,6 +18,7 @@ export default function SignUpForm(){
     };
     return (
         <Form
+            {...formLayout}
             name="signup"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -25,12 +26,14 @@ export default function SignUpForm(){
             <Form.Item
                 label="メールアドレス"
                 name="email"
+                rules={[{required: true, message: "入力が必須です"}]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
                 label="パスワード"
                 name="password"
+                rules={[{required: true, message: "入力が必須です"}]}
             >
                 <Input.Password />
             </Form.Item>
@@ -41,5 +44,4 @@ export default function SignUpForm(){
             </Form.Item>
         </Form>
     )
-    return null;
 }

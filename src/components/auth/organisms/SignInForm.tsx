@@ -7,16 +7,6 @@ type FormType = {
 }
 
 export default function SingInForm(){
-    // const formik = useFormik({
-    //     initialValues: {
-    //         username: "",
-    //         password: ""
-    //     },
-    //     onSubmit: async (values) => {
-    //         const user = await signInUser(values.username, values.password);
-    //         console.log("singin", user);
-    //     }
-    // })
     const initialValues: FormType= {
         email: "",
         password: ""
