@@ -1,4 +1,6 @@
 import Title from "components/common/atoms/Title";
+import Footer from "components/common/organisms/Footer";
+import SimpleHeader from "components/common/organisms/SimpleHeader";
 import React from "react";
 import styled from "styled-components";
 import OSignInForm from "../organisms/SignInForm";
@@ -8,10 +10,12 @@ export default function SignIn(){
 
     return (
         <>
+            <SimpleHeader/>
             <Title>ログイン</Title>
             <SubTitle>メールアドレスでログイン</SubTitle>
             <OSignInForm />
             <SignInNewUser />
+            <Footer/>
         </>
     );
 }
