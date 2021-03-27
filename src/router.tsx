@@ -1,10 +1,9 @@
-import PSignIn from "components/auth/pages/PSignIn";
-import PSignUp from "components/auth/pages/PSignUp";
+import PSignIn from "components/auth/pages/SignIn";
+import PSignUp from "components/auth/pages/SignUp";
 import {
     BrowserRouter,
     Switch,
     Route,
-    Link,
     Redirect
   } from "react-router-dom";
 
@@ -22,14 +21,14 @@ const Router = () => {
 }
 
 export const routeBuilder = {
-    topPath: (host?: string) => {
-        return `${host || ""}/`;
+    topPath: (host="") => {
+        return `${host}/`;
     },
-    signInPath: (host?: string) => {
-        return `${host || ""}/signin`;
+    signInPath: (host="") => {
+        return `${host}/signin`;
     },
-    signUpPath: (host?: string) => {
-        return `${host || ""}/signup`;
+    signUpPath: (host="") => {
+        return `${host}/signup`;
     }
 }
 

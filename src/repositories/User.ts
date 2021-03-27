@@ -1,4 +1,8 @@
 import firebase from "libs/Firebase"
+type ErrorType = {
+    code: string,
+    message: string
+}
 
 export const signUpUser = async(email: string, password: string) => {
     const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -6,8 +10,15 @@ export const signUpUser = async(email: string, password: string) => {
 }
 
 export const signInUser = async (email: string, password: string) => {
-    const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-    return user;
+    try{
+        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+        return user;
+    }catch(e){
+        return {
+            code: e.code,
+            message: e.message
+        } as ErrorType
+    }
 }
 
 export const currentUser = () => {
