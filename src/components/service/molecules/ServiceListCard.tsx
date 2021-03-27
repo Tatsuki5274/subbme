@@ -62,26 +62,26 @@ const ServiceNameStyle = styled.div({
     display: "inline-block",
     width: "50%",
     textAlign: "left",
-    fontSize: "26px",
+    fontSize: "22px",
 })
 
 const ServicePlanStyle = styled.div({
     display: "inline-block",
     width: "50%",
     textAlign: "right",
-    fontSize: "26px",
+    fontSize: "22px",
 })
 
 const ConvertPriceStyle = styled.div({
     display: "inline-block",
     width: "50%",
     textAlign: "left",
-    fontSize: "24px",
+    fontSize: "20px",
 })
 
 const OriginalPriceStyle = styled.div({
     display: "inline-block",
     width: "50%",
     textAlign: "right",
-    fontSize: "24px",
+    fontSize: "20px",
 })

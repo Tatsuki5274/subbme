@@ -17,6 +17,7 @@ export default function ServiceList(){
         },
     ]
     return <ServiceListTemplate
+        formattedTotalCost={"¥10,000/月"}
         data={mock}
     />;
 }
