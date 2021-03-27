@@ -1,14 +1,40 @@
-type CurrencyType = {
-    [key: string]: string
-}
 
-type CategoryType = {
-    [key: string]: string | CategoryType
-}
 
-export const CategoryMaster: CategoryType[] = [
+
+export const CurrencyData = [
 ]
 
-
-export const CurrencyMaster: CurrencyType[] = [
-]
+export const CategoryData = [
+    {
+      value: 'zhejiang',
+      label: 'Zhejiang',
+      children: [
+        {
+          value: 'hangzhou',
+          label: 'Hangzhou',
+          children: [
+            {
+              value: 'xihu',
+              label: 'West Lake',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: 'jiangsu',
+      label: 'Jiangsu',
+      children: [
+        {
+          value: 'nanjing',
+          label: 'Nanjing',
+          children: [
+            {
+              value: 'zhonghuamen',
+              label: 'Zhong Hua Men',
+            },
+          ],
+        },
+      ],
+    },
+  ];

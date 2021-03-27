@@ -1,6 +1,7 @@
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
+import ServiceCreate from "components/service/pages/ServiceCreate";
 
 //  テストページ
 import TestPage from "components/TestPage"; 
@@ -19,6 +20,7 @@ const Router = () => {
                 <Route exact path={routeBuilder.topPath()} component={TestPage} />
                 <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
                 <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
+                <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} />
                 <Result404/>
                 {/* <Redirect to={routeBuilder.topPath()} /> */}
             </Switch>
@@ -35,6 +37,9 @@ export const routeBuilder = {
     },
     signUpPath: (host="") => {
         return `${host}/signup`;
+    },
+    serviceCreatePath: (host="") => {
+        return `${host}/services/new`
     }
 }
 

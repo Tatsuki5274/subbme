@@ -15,7 +15,7 @@ const Style = styled.div({
     backgroundColor: "#5794C3",
     height: "20px",
     width: "100%",
-    position: "absolute",
+    position: "relative",
     bottom: "0",
 })
 

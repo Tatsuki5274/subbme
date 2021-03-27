@@ -9,8 +9,9 @@ type ServiceBase = {
     detail: string
     // categoryName: string
     unit: string
+    costPerUnitTerm: string
+    unitTerm: number
     currency: string
-    costPerUnit: number
     paymentMethod: string
     isArchived: boolean
 }
