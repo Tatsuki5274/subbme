@@ -24,3 +24,7 @@ export const signInUser = async (email: string, password: string) => {
 export const currentUser = () => {
     return firebase.auth().currentUser;
 }
+
+export const isSignedIn = () => {
+    return currentUser() ? true : false;
+}
