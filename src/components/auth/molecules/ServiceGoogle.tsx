@@ -1,6 +1,5 @@
 import RoundImage from "../atoms/RoundImage";
 import Logo from "assets/images/google-icon.svg"
-import styled from "styled-components";
 
 type PropsType = {
     alt?: string
