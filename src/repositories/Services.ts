@@ -22,10 +22,10 @@ export const getService = async (id: string) => {
 export const addService = async (service: Service ) => {
   try {
       serviceRef.add(service);
-    return { result: true };
+    return true;
   } catch (e) {
     console.warn(e);
-    return { result: false };
+    return false;
   }
 }
 

@@ -1,9 +1,11 @@
-import { Button, Cascader, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Cascader, Form, Input, InputNumber, message, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import Item from 'antd/lib/list/Item';
 import { CategoryData } from 'common/master';
 import { Service } from 'entities/Service';
-import React, { useRef } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router';
+import { addService } from 'repositories/Services';
+import { routeBuilder } from 'router';
 
 type FormType = {
     serviceName: string
@@ -18,6 +20,7 @@ type FormType = {
 }
 
 export default function ServiceCreateForm(){
+    const history = useHistory();
     const initialValues: FormType = {
         serviceName: "",
         planName: "",
@@ -29,8 +32,27 @@ export default function ServiceCreateForm(){
         costPerUnitTerm: "",
         paymentMethod: "",
     }
-    const onFinish = (values: Service) => {
-        console.log(values)
+    const onFinish = async (values: FormType) => {
+        const unitTerm: number = parseInt(values.unitTerm);
+        const data: Service = {
+            serviceName: values.serviceName,
+            planName: values.planName,
+            categoryID: values.category[values.category.length - 1],
+            detail: values.detail,
+            unit: values.unit,
+            unitTerm: unitTerm,
+            currency: values.currency,
+            costPerUnitTerm: values.costPerUnitTerm,
+            paymentMethod: values.paymentMethod,
+        }
+        const result = await addService(data);
+        if(result){
+            message.success("保存に成功しました");
+            history.push(routeBuilder.serviceListPath());
+        } else{
+            message.error("失敗しました");
+        }
+        console.log(result);
     }
     return (
         <Form
@@ -70,6 +92,28 @@ export default function ServiceCreateForm(){
             </Form.Item>
             <Input.Group compact>
                 <Form.Item
+                    label="周期単位"
+                    name="unit"
+                    rules={[{required: true, message: "入力が必須です"}]}
+                    style={{width: "20%"}}
+                >
+                    <Select>
+                        <Select.Option value="year">年</Select.Option>
+                        <Select.Option value="month">月</Select.Option>
+                        <Select.Option value="day">日</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="周期"
+                    name="unitTerm"
+                    rules={[{required: true, message: "入力が必須です"}]}
+                    style={{width: "40%"}}
+                >
+                    <Input />
+                </Form.Item>
+            </Input.Group>
+            <Input.Group compact>
+                <Form.Item
                     label="通貨"
                     name="currency"
                     style={{width: "20%"}}
@@ -91,29 +135,6 @@ export default function ServiceCreateForm(){
                     <InputNumber />
                 </Form.Item>
             </Input.Group>
-            <Input.Group compact>
-                <Form.Item
-                    label="周期単位"
-                    name="unit"
-                    rules={[{required: true, message: "入力が必須です"}]}
-                    style={{width: "20%"}}
-                >
-                    <Select>
-                        <Select.Option value="year">年</Select.Option>
-                        <Select.Option value="month">月</Select.Option>
-                        <Select.Option value="day">日</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="周期"
-                    name="unitTerm"
-                    rules={[{required: true, message: "入力が必須です"}]}
-                    style={{width: "40%"}}
-                >
-                    <Input />
-                </Form.Item>
-            </Input.Group>
- 
             <Form.Item
                 label="支払い方法"
                 name="paymentMethod"

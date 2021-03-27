@@ -40,6 +40,9 @@ export const routeBuilder = {
     },
     serviceCreatePath: (host="") => {
         return `${host}/services/new`
+    },
+    serviceListPath: (host="") => {
+        return `${host}/services/`
     }
 }
 
