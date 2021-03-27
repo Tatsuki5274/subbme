@@ -1,5 +1,6 @@
 import { Button, Cascader, Form, Input, InputNumber, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
+import Item from 'antd/lib/list/Item';
 import { CategoryData } from 'common/master';
 import { Service } from 'entities/Service';
 import React, { useRef } from 'react';
@@ -17,8 +18,6 @@ type FormType = {
 }
 
 export default function ServiceCreateForm(){
-    // const [form] = Form.useForm();
-    // form.setFieldsValue({categoryID: "aaa"})
     const initialValues: FormType = {
         serviceName: "",
         planName: "",
@@ -69,40 +68,52 @@ export default function ServiceCreateForm(){
             >
                 <TextArea rows={4} />
             </Form.Item>
-            <Form.Item
-                label="通貨"
-                name="currency"
-            >
-                <Select>
-                    <Select.Option value="JPY">円</Select.Option>
-                </Select>            
-            </Form.Item>
-            <Form.Item
-                label="価格"
-                name="costPerUnitTerm"
-                rules={[
-                    {required: true, message: "入力が必須です"},
-                    {type: "number", min: 1, message: "0より大きい金額を入力してください"}
-                ]}
-            >
-                <InputNumber />
-            </Form.Item>
-            <Form.Item
-                label="周期単位"
-                name="unit"
-            >
-                <Select>
-                    <Select.Option value="year">年</Select.Option>
-                    <Select.Option value="month">月</Select.Option>
-                    <Select.Option value="day">日</Select.Option>
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="周期"
-                name="unitTerm"
-            >
-                <Input />
-            </Form.Item>
+            <Input.Group compact>
+                <Form.Item
+                    label="通貨"
+                    name="currency"
+                    style={{width: "20%"}}
+                    rules={[{required: true, message: "入力が必須です"}]}
+                >
+                    <Select>
+                        <Select.Option value="JPY">円</Select.Option>
+                    </Select>            
+                </Form.Item>
+                <Form.Item
+                    label="価格"
+                    name="costPerUnitTerm"
+                    style={{width: "40%"}}
+                    rules={[
+                        {required: true, message: "入力が必須です"},
+                        {type: "number", min: 1, message: "0より大きい金額を入力してください"}
+                    ]}
+                >
+                    <InputNumber />
+                </Form.Item>
+            </Input.Group>
+            <Input.Group compact>
+                <Form.Item
+                    label="周期単位"
+                    name="unit"
+                    rules={[{required: true, message: "入力が必須です"}]}
+                    style={{width: "20%"}}
+                >
+                    <Select>
+                        <Select.Option value="year">年</Select.Option>
+                        <Select.Option value="month">月</Select.Option>
+                        <Select.Option value="day">日</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="周期"
+                    name="unitTerm"
+                    rules={[{required: true, message: "入力が必須です"}]}
+                    style={{width: "40%"}}
+                >
+                    <Input />
+                </Form.Item>
+            </Input.Group>
+ 
             <Form.Item
                 label="支払い方法"
                 name="paymentMethod"
