@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 import OSignInForm from "../organisms/SignInForm";
 import SignInNewUser from "../organisms/SignInNewUser";
+import SignInServices from "../organisms/SignInServices";
 
 export default function SignIn(){
 
@@ -15,6 +16,8 @@ export default function SignIn(){
             <SubTitle>メールアドレスでログイン</SubTitle>
             <OSignInForm />
             <SignInNewUser />
+            <SubTitle>サービスでログイン</SubTitle>
+            <SignInServices />
             <Footer/>
         </>
     );
