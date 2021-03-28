@@ -7,8 +7,8 @@ export function useListService(userID?: string){
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isEmpty, setIsEmpty] = useState<boolean>(true);
     useEffect(()=>{
-        (async()=>{
-            // setIsLoading(true);
+        const fn = async()=>{
+            setIsLoading(true);
             if(userID){
                 const ref = getServiceRef();
                 const query = await ref.where("userID", "==", userID);
@@ -25,7 +25,9 @@ export function useListService(userID?: string){
                 setIsLoading(false);
                 setIsEmpty(true);
             }
-        })();
+        };
+        fn();
     }, [userID]);
-    return {serviceList, isLoading, isEmpty};
+    // console.log(serviceList, isLoading, isEmpty)
+    return {serviceList, setServiceList, isLoading, isEmpty};
 }
