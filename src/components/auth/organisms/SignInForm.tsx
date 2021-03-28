@@ -1,5 +1,7 @@
 import { signInUser } from "repositories/User";
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
+import { routeBuilder } from "router";
+import { useHistory } from "react-router";
 
 type FormType = {
     email: string
@@ -7,14 +9,21 @@ type FormType = {
 }
 
 export default function SingInForm(){
+    const history = useHistory();
     const initialValues: FormType= {
         email: "",
         password: ""
     };
     const onFinish = async (values: FormType) => {
-        const user = await signInUser(values.email, values.password);
-        console.log("singin", user);
-        console.log("values", values);
+        signInUser(values.email, values.password)
+            .then(user => {
+                message.success("ログインに成功しました")
+                history.push(routeBuilder.topPath());
+            })
+            .catch(reason => {
+                message.error("ログインに失敗しました");
+                console.error(reason)
+            })
     }
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);

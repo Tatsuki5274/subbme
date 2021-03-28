@@ -1,6 +1,8 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { formLayout } from 'common/styles';
+import { useHistory } from 'react-router';
 import { signUpUser } from 'repositories/User';
+import { routeBuilder } from 'router';
 
 type FormType = {
     email: string
@@ -8,9 +10,17 @@ type FormType = {
 }
 
 export default function SignUpForm(){
+    const history = useHistory();
     const onFinish = async (values: FormType) => {
-        const user = await signUpUser(values.email, values.password)
-        console.log("user", user)
+        signUpUser(values.email, values.password)
+            .then(user => {
+                message.success("ログインに成功しました")
+                history.push(routeBuilder.topPath());
+            })
+            .catch(reason => {
+                message.error("ログインに失敗しました");
+                console.error(reason)
+            })
     };
     
     const onFinishFailed = (errorInfo: any) => {
