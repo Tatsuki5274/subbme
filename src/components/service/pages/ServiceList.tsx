@@ -4,41 +4,86 @@ import { useListService } from "hooks/ServiceHooks"
 import { ServiceListCardType } from "../molecules/ServiceListCard";
 import ServiceListTemplate from "../templates/ServiceListTemplate";
 import { useUser } from "hooks/UserHooks";
+import { ServiceListFunctionType } from "../organisms/ServiceListFunction";
+import { ServiceUnitEnum, ServiceUnitType } from "entities/Service";
+// import { UnitConverter } from "libs/Util";
+import { getServiceUnitString, getServiceUnitValue, isServiceUnitType } from "repositories/Services";
+
 
 const mock: ServiceListCardType[] = [
     {
         serviceName: "Dropbox",
         planName: "Plusプラン",
-        formattedOriginalPrice: "¥20,000/3年",
-        formattedConvertPrice: "¥900/月"
+        formattedPrice: "¥900/月"
     },
     {
         serviceName: "Dropbox",
         planName: "Plusプラン",
-        formattedOriginalPrice: "¥20,000/3年",
-        formattedConvertPrice: "¥900/月"
+        formattedPrice: "¥20,000/3年"
     },
 ]
 
-export default function ServiceList(){
-    const [card, setCard] = useState<ServiceListCardType[] | null>(mock);
-    const {currentUser} = useUser();
-    const {serviceList, isLoading, isEmpty} = useListService(currentUser?.uid);
+// function Convert(serviceInput: Service, toUnit: ServiceUnitType, toCurrency: unknown): ServiceListFunctionType{
+//     const originalCostPerUnitTerm = serviceInput.costPerUnitTerm ? parseInt(serviceInput.costPerUnitTerm) : 0;
+//     // convertUnit: string;
+//     // convertUnitTerm: string;
+//     // convertCostPerUnitTerm: number;
+//     // convertCurrency: string;
+//     const convertValue = UnitConverter(serviceInput.unit, toUnit)
+//     const result: ServiceListFunctionType = {
+//         serviceName: serviceInput.serviceName || "",
+//         planName: serviceInput.planName || "",
+//         originalUnit: serviceInput.unit || "",
+//         originalUnitTerm: serviceInput.unitTerm?.toString() || "",
+//         originalCurrency: "JPY",
+//         originalCostPerUnitTerm: originalCostPerUnitTerm,
+//         convertUnit: toUnit,
+//         convertCostPerUnitTerm: originalCostPerUnitTerm * convertValue,
+//         convertCurrency: "JPY",
+//         convertUnitTerm: 
+//     };
+//     return result;
+// }
 
-    const data = null;
+export default function ServiceList(){
+    const {currentUser} = useUser();
+    const {serviceList, setServiceList, isLoading} = useListService(currentUser?.uid);
+    const [unit, setUnit] = useState<ServiceUnitType>(ServiceUnitEnum.Month);
+
+    let totalCost = 0;
+    const unitValue = getServiceUnitValue(unit);
+    const unitString = getServiceUnitString(unit);
+    const card: ServiceListCardType[] | null = serviceList?.map(service => {
+        const cost = (service.costPerDay || 0) * unitValue;
+        totalCost += cost;
+        return {
+            serviceName: service.serviceName || "",
+            planName: service.planName || "",
+            formattedPrice: `${"¥"}${cost.toLocaleString()}/${unitString}`
+        }
+    }) || null;
+
 
     if(isLoading){
         return <LoadingScreen />
     }
-    console.log(serviceList);
-    if(isEmpty){
-        return <span>Empty....</span>
-    } else {
-        return <span>OK!</span>;
-    }
-
-    // return <ServiceListTemplate
-    //     formattedTotalCost={"¥10,000/月"}
-    //     data={card}
-    // />;
+    return (
+        <>
+        {/* <button
+            onClick={()=>{
+                serviceList?.sort((a, b) => {
+                    return a.costPerDay && b.costPerDay && (a.costPerDay > b.costPerDay) ? 1 : -1;
+                })
+                if(serviceList){
+                    setServiceList(serviceList.concat());
+                }
+            }}
+        >そーと</button> */}
+        <ServiceListTemplate
+            formattedTotalCost={`${"¥"}${totalCost.toLocaleString()}/${unitString}`}
+            cardData={card}
+            setUnit={setUnit}
+        />
+        </>
+    );
 }

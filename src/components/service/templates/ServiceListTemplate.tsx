@@ -7,11 +7,14 @@ import ServiceListData from "../organisms/ServiceListData";
 import ContentWrapper from "components/wrapper/ContentWrapper"
 import styled from "styled-components";
 import Text from "components/common/atoms/Text";
+import ServiceListFunction, { ServiceListFunctionType } from "../organisms/ServiceListFunction";
+import { ServiceUnitType } from "entities/Service";
 
 
 type PropsType = {
     formattedTotalCost: string
-    data?: ServiceListCardType[]
+    cardData: ServiceListCardType[] | null
+    setUnit: React.Dispatch<React.SetStateAction<ServiceUnitType>>
 }
 
 export default function ServiceListTemplate(props: PropsType){
@@ -22,9 +25,12 @@ export default function ServiceListTemplate(props: PropsType){
                 <>
                     <Title>サービス一覧</Title>
                     <TotalCostStyle><Text>{props.formattedTotalCost}</Text></TotalCostStyle>
-                    {props.data ?
+                    <ServiceListFunction
+                        setUnit={props.setUnit}
+                    />
+                    {props.cardData ?
                     <ServiceListData
-                        data={props.data}
+                        data={props.cardData}
                     />
                     : null}
                 </>

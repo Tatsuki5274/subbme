@@ -18,8 +18,7 @@ import styled from "styled-components"
 export type ServiceListCardType = {
     serviceName: string
     planName: string
-    formattedOriginalPrice: string
-    formattedConvertPrice: string
+    formattedPrice: string
 }
 
 export default function ServiceListCard(props: ServiceListCardType){
@@ -35,11 +34,9 @@ export default function ServiceListCard(props: ServiceListCardType){
                 <BorderLine />
             </LineStyle>
             <ConvertPriceStyle>
-                {props.formattedConvertPrice}
+                {props.formattedPrice}
             </ConvertPriceStyle>
-            <OriginalPriceStyle>
-                {props.formattedOriginalPrice}
-            </OriginalPriceStyle>
+
         </Card>
     )
 }
@@ -76,12 +73,5 @@ const ConvertPriceStyle = styled.div({
     display: "inline-block",
     width: "50%",
     textAlign: "left",
-    fontSize: "20px",
-})
-
-const OriginalPriceStyle = styled.div({
-    display: "inline-block",
-    width: "50%",
-    textAlign: "right",
     fontSize: "20px",
 })

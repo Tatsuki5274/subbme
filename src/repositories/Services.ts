@@ -74,3 +74,16 @@ export const getServiceUnitValue = (input: ServiceUnitType) => {
           throw new Error("Unit is never");
     }
 }
+
+export const getServiceUnitString = (input: ServiceUnitType) => {
+  switch(input){
+    case ServiceUnitEnum.Day:
+      return "日";
+    case ServiceUnitEnum.Month:
+      return "月";
+    case ServiceUnitEnum.Year:
+      return "年";
+    default:
+      throw new Error("Unit is never");
+}
+}
