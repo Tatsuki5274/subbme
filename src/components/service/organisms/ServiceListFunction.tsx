@@ -21,7 +21,6 @@ type PropsType = {
 }
 
 /**
- * @description ServiceListFunctionTypeからServiceListCardTypeを生成する
  * @returns 
  */
 export default function ServiceListFunction(props: PropsType){

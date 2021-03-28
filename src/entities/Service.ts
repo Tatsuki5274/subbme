@@ -1,4 +1,13 @@
 import firebase from "libs/Firebase"
+import { NullablePartial } from "libs/Util";
+
+export const ServiceUnitEnum = {
+    Month: "MONTH",
+    Day: "DAY",
+    Year: "YEAR",
+} as const;
+
+export type ServiceUnitType = typeof ServiceUnitEnum[keyof typeof ServiceUnitEnum]
 
 type ServiceBase = {
     id: string
@@ -8,7 +17,7 @@ type ServiceBase = {
     categoryID: string
     detail: string
     // categoryName: string
-    unit: string
+    unit: ServiceUnitType
     costPerUnitTerm: string
     unitTerm: number
     currency: string
@@ -16,7 +25,7 @@ type ServiceBase = {
     isArchived: boolean
 }
 
-export type Service = Partial<ServiceBase>
+export type Service = NullablePartial<ServiceBase>
 
 export const buildService = (id: string, data: firebase.firestore.DocumentData) => {
     const user: Service = {

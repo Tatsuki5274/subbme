@@ -1,10 +1,11 @@
 import { Button, Cascader, Form, Input, InputNumber, message, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { CategoryData } from 'common/master';
-import { Service } from 'entities/Service';
+import { Service, ServiceUnitEnum, ServiceUnitType } from 'entities/Service';
+import { useUser } from 'hooks/UserHooks';
 import React from 'react';
 import { useHistory } from 'react-router';
-import { addService } from 'repositories/Services';
+import { addService, isServiceUnitType } from 'repositories/Services';
 import { currentUser } from 'repositories/User';
 import { routeBuilder } from 'router';
 
@@ -21,6 +22,7 @@ type FormType = {
 }
 
 export default function ServiceCreateForm(){
+    const {currentUser, isSignedIn } = useUser();
     const history = useHistory();
     const initialValues: FormType = {
         serviceName: "",
@@ -34,22 +36,26 @@ export default function ServiceCreateForm(){
         paymentMethod: "",
     }
     const onFinish = async (values: FormType) => {
-        const userID = currentUser()?.uid;
-        if(!userID){
+        if(!isSignedIn){
             throw new Error("User is not signed in");
         }
         const unitTerm: number = parseInt(values.unitTerm);
+        let unit: ServiceUnitType | null = null;
+        if(isServiceUnitType(values.unit)){
+            unit = values.unit;
+        }
+
         const data: Service = {
             serviceName: values.serviceName,
             planName: values.planName,
             categoryID: values.category[values.category.length - 1],
             detail: values.detail,
-            unit: values.unit,
+            unit: unit,
             unitTerm: unitTerm,
             currency: values.currency,
             costPerUnitTerm: values.costPerUnitTerm,
             paymentMethod: values.paymentMethod,
-            userID: userID,
+            userID: currentUser?.uid,
         }
         const result = await addService(data);
         if(result){
@@ -104,9 +110,9 @@ export default function ServiceCreateForm(){
                     style={{width: "20%"}}
                 >
                     <Select>
-                        <Select.Option value="year">年</Select.Option>
-                        <Select.Option value="month">月</Select.Option>
-                        <Select.Option value="day">日</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Year}>年</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Month}>月</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Day}>日</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item

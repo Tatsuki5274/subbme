@@ -1,4 +1,4 @@
-import { buildService, Service } from "entities/Service";
+import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 import firebase from "libs/Firebase"
 
 const db = firebase.firestore();
@@ -46,4 +46,18 @@ export const listService = async (queryResult: firebase.firestore.Query<firebase
     console.warn(e);
     return null;
   }
+}
+
+/**
+ * 
+ * @param unit チェック対象の単位
+ * @returns 型チェック結果
+ */
+export const isServiceUnitType = (unit?: string): unit is ServiceUnitType => {
+  for (const value of Object.values(ServiceUnitEnum)) {
+    if(value === unit){
+      return true;
+    }
+  }
+  return false;
 }
