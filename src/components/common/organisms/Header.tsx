@@ -20,8 +20,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { routeBuilder } from 'router';
+import firebase from "libs/Firebase"
+import { message } from 'antd';
 
 const drawerWidth = 240;
 
@@ -59,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props: any) {
+  const history = useHistory();
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -81,11 +84,11 @@ function Header(props: any) {
               <ListItemIcon><AddBoxIcon /></ListItemIcon>
               <ListItemText primary="サービス作成" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to={routeBuilder.reportListPath()}>
               <ListItemIcon><AssessmentIcon /></ListItemIcon>
               <ListItemText primary="分析一覧" />
           </ListItem>
-          <ListItem button component={Link} to='/'>
+          <ListItem button component={Link} to={routeBuilder.reportNewPath()}>
               <ListItemIcon><AddBoxIcon /></ListItemIcon>
               <ListItemText primary="分析作成" />
           </ListItem>
@@ -96,14 +99,25 @@ function Header(props: any) {
               <ListItemIcon><AccountCircleIcon /></ListItemIcon>
               <ListItemText primary="プロフィール" />
           </ListItem>
-          <ListItem>
+          <ListItem button component={Link} to={routeBuilder.settingsPath()}>
               <ListItemIcon><SettingsIcon /></ListItemIcon>
               <ListItemText primary="設定" />
           </ListItem>
       </List>
       <Divider />
       <List>
-          <ListItem button>
+          <ListItem button onClick={()=>{
+            firebase.auth().onAuthStateChanged( (user) => {
+                firebase.auth().signOut().then(()=>{
+                    message.success('ログアウトしました');
+                    history.push(routeBuilder.topPath());
+                })
+                .catch( (error)=>{
+                    message.error("ログアウト時にエラーが発生しました");
+                    console.log(`ログアウト時にエラーが発生しました (${error})`);
+                });
+            });
+          }}>
               <ListItemIcon><ExitToAppIcon /></ListItemIcon>
               <ListItemText primary="ログアウト" />
           </ListItem>

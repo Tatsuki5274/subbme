@@ -41,10 +41,28 @@ export const routeBuilder = {
         return `${host}/signup`;
     },
     serviceCreatePath: (host="") => {
-        return `${host}/services/new`
+        return `${host}/services/new`;
     },
     serviceListPath: (host="") => {
-        return `${host}/services/`
+        return `${host}/services/`;
+    },
+    serviceEditPath: (serviceID: string, host="") => {
+        return `${host}/service/${serviceID}`;
+    },
+    reportListPath: (host="") => {
+        return `${host}/reports/`;
+    },
+    reportNewPath: (host="") => {
+        return `${host}/reports/new`;
+    },
+    reportDetailPath: (reportID: string, host="") => {
+        return `${host}/report/${reportID}`;
+    },
+    reportEditPath: (reportID: string, host="") => {
+        return `${host}/report/${reportID}/edit`;
+    },
+    settingsPath: (host="") => {
+        return `${host}/settings`;
     }
 }
 
