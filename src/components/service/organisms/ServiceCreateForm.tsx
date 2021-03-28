@@ -1,6 +1,5 @@
 import { Button, Cascader, Form, Input, InputNumber, message, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { CategoryData } from 'common/master';
 import { Service, ServiceUnitEnum, ServiceUnitType } from 'entities/Service';
 import { useUser } from 'hooks/UserHooks';
 import React from 'react';
@@ -8,6 +7,7 @@ import { useHistory } from 'react-router';
 import { addService, getServiceUnitValue, isServiceUnitType } from 'repositories/Services';
 import { routeBuilder } from 'router';
 import firebase from "libs/Firebase"
+import { listCategories } from 'repositories/Categories';
 
 type FormType = {
     serviceName: string
@@ -97,7 +97,7 @@ export default function ServiceCreateForm(){
             >
                 {/* <Input /> */}
                 <Cascader
-                    options={CategoryData}
+                    options={listCategories()}
                     // onChange={onChange}
                     placeholder="選択してください"
                 />
