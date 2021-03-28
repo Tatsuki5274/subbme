@@ -18,11 +18,12 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path={routeBuilder.topPath()} component={TestPage} />
+                <Route exact path={routeBuilder.topPath()} component={ServiceList} />
                 <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
                 <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
                 <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
                 <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} />
+                <Route exact path="/test" component={TestPage} />
                 <Result404/>
                 {/* <Redirect to={routeBuilder.topPath()} /> */}
             </Switch>
