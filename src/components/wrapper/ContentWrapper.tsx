@@ -15,5 +15,5 @@ export default function ContentWrapper(props: PropsType){
 const Style = styled.div({
     width: "90%",
     margin: "0 auto",
-    padding: "20% 0 0 0"
+    // padding: "20% 0 0 0"
 })

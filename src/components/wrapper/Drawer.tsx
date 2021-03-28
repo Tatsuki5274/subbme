@@ -60,9 +60,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header(props: any) {
+type PropsType = {
+    children: JSX.Element
+}
+
+function DrawerContainer(props: PropsType) {
   const history = useHistory();
-  const { window } = props;
+//   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -125,7 +129,8 @@ function Header(props: any) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+//   const container = window !== undefined ? () => window().document.body : undefined;
+const container = undefined
 
   return (
     <div className={classes.root}>
@@ -141,7 +146,7 @@ function Header(props: any) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{color: "white"}}>
             Subbme
           </Typography>
         </Toolbar>
@@ -177,17 +182,20 @@ function Header(props: any) {
           </Drawer>
         </Hidden>
       </nav>
-
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {props.children}
+      </main>
     </div>
   );
 }
 
-Header.propTypes = {
+DrawerContainer.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window: PropTypes.func,
+//   window: PropTypes.func,
 };
 
-export default Header;
+export default DrawerContainer;
