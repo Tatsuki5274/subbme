@@ -1,27 +1,3 @@
-import Sider from "components/common/organisms/Menu";
-import styled from "styled-components";
-import Text from "../atoms/Text";
-
-// export default function Header(){
-//     return <Style>
-//         <Sider />
-//         <Title><Text>Subbme</Text></Title>
-        
-//     </Style>;
-// }
-
-// const Style = styled.div({
-//     backgroundColor: "#5794C3",
-//     height: "60px"
-// })
-
-// const Title = styled.span({
-//     color: "#FFFFFF",
-//     fontSize: "32px",
-//     display: "inline-block",
-//     marginLeft: "10px"
-// })
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -43,6 +19,9 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import { Link } from 'react-router-dom';
+import { routeBuilder } from 'router';
 
 const drawerWidth = 240;
 
@@ -94,13 +73,21 @@ function Header(props: any) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-          <ListItem>
+          <ListItem button component={Link} to={routeBuilder.serviceListPath()}>
               <ListItemIcon><PaymentIcon /></ListItemIcon>
               <ListItemText primary="サービス一覧" />
           </ListItem>
-          <ListItem>
+          <ListItem button component={Link} to={routeBuilder.serviceCreatePath()}>
+              <ListItemIcon><AddBoxIcon /></ListItemIcon>
+              <ListItemText primary="サービス作成" />
+          </ListItem>
+          <ListItem button>
               <ListItemIcon><AssessmentIcon /></ListItemIcon>
               <ListItemText primary="分析一覧" />
+          </ListItem>
+          <ListItem button component={Link} to='/'>
+              <ListItemIcon><AddBoxIcon /></ListItemIcon>
+              <ListItemText primary="分析作成" />
           </ListItem>
       </List>
       <Divider />
