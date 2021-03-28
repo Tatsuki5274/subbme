@@ -5,6 +5,7 @@ import { Service } from 'entities/Service';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { addService } from 'repositories/Services';
+import { currentUser } from 'repositories/User';
 import { routeBuilder } from 'router';
 
 type FormType = {
@@ -33,6 +34,10 @@ export default function ServiceCreateForm(){
         paymentMethod: "",
     }
     const onFinish = async (values: FormType) => {
+        const userID = currentUser()?.uid;
+        if(!userID){
+            throw new Error("User is not signed in");
+        }
         const unitTerm: number = parseInt(values.unitTerm);
         const data: Service = {
             serviceName: values.serviceName,
@@ -44,6 +49,7 @@ export default function ServiceCreateForm(){
             currency: values.currency,
             costPerUnitTerm: values.costPerUnitTerm,
             paymentMethod: values.paymentMethod,
+            userID: userID,
         }
         const result = await addService(data);
         if(result){
