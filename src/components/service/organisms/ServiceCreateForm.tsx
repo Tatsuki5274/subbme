@@ -5,7 +5,7 @@ import { Service, ServiceUnitEnum, ServiceUnitType } from 'entities/Service';
 import { useUser } from 'hooks/UserHooks';
 import React from 'react';
 import { useHistory } from 'react-router';
-import { addService, isServiceUnitType } from 'repositories/Services';
+import { addService, getServiceUnitValue, isServiceUnitType } from 'repositories/Services';
 import { currentUser } from 'repositories/User';
 import { routeBuilder } from 'router';
 
@@ -43,7 +43,11 @@ export default function ServiceCreateForm(){
         let unit: ServiceUnitType | null = null;
         if(isServiceUnitType(values.unit)){
             unit = values.unit;
+        } else {
+            throw new TypeError("unit is known type");
         }
+        const costPerUnitTerm: number = parseInt(values.costPerUnitTerm);
+        const unitValue = getServiceUnitValue(unit);
 
         const data: Service = {
             serviceName: values.serviceName,
@@ -53,7 +57,8 @@ export default function ServiceCreateForm(){
             unit: unit,
             unitTerm: unitTerm,
             currency: values.currency,
-            costPerUnitTerm: values.costPerUnitTerm,
+            costPerUnitTerm: costPerUnitTerm,
+            costPerDay: costPerUnitTerm / unitValue / unitTerm,
             paymentMethod: values.paymentMethod,
             userID: currentUser?.uid,
         }

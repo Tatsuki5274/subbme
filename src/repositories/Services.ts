@@ -61,3 +61,16 @@ export const isServiceUnitType = (unit?: string): unit is ServiceUnitType => {
   }
   return false;
 }
+
+export const getServiceUnitValue = (input: ServiceUnitType) => {
+    switch(input){
+        case ServiceUnitEnum.Day:
+          return 1;
+        case ServiceUnitEnum.Month:
+          return 30;
+        case ServiceUnitEnum.Year:
+          return 365;
+        default:
+          throw new Error("Unit is never");
+    }
+}

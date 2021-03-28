@@ -18,7 +18,8 @@ type ServiceBase = {
     detail: string
     // categoryName: string
     unit: ServiceUnitType
-    costPerUnitTerm: string
+    costPerUnitTerm: number
+    costPerDay: number
     unitTerm: number
     currency: string
     paymentMethod: string
