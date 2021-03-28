@@ -6,8 +6,8 @@ import { useUser } from 'hooks/UserHooks';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { addService, getServiceUnitValue, isServiceUnitType } from 'repositories/Services';
-import { currentUser } from 'repositories/User';
 import { routeBuilder } from 'router';
+import firebase from "libs/Firebase"
 
 type FormType = {
     serviceName: string
@@ -57,10 +57,11 @@ export default function ServiceCreateForm(){
             unit: unit,
             unitTerm: unitTerm,
             currency: values.currency,
-            // costPerUnitTerm: costPerUnitTerm,
             costPerDay: costPerUnitTerm / unitValue / unitTerm,
             paymentMethod: values.paymentMethod,
             userID: currentUser?.uid,
+            createdAt: firebase.firestore.Timestamp.now(),
+            updatedAt: firebase.firestore.Timestamp.now(),
         }
         const result = await addService(data);
         if(result){

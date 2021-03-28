@@ -2,9 +2,9 @@ import firebase from "libs/Firebase"
 import { NullablePartial } from "libs/Util";
 
 export const ServiceUnitEnum = {
+    Year: "YEAR",
     Month: "MONTH",
     Day: "DAY",
-    Year: "YEAR",
 } as const;
 
 export type ServiceUnitType = typeof ServiceUnitEnum[keyof typeof ServiceUnitEnum]
@@ -24,6 +24,8 @@ type ServiceBase = {
     currency: string
     paymentMethod: string
     isArchived: boolean
+    createdAt: firebase.firestore.Timestamp
+    updatedAt: firebase.firestore.Timestamp
 }
 
 export type Service = NullablePartial<ServiceBase>
