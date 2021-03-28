@@ -57,7 +57,7 @@ export default function ServiceCreateForm(){
             unit: unit,
             unitTerm: unitTerm,
             currency: values.currency,
-            costPerUnitTerm: costPerUnitTerm,
+            // costPerUnitTerm: costPerUnitTerm,
             costPerDay: costPerUnitTerm / unitValue / unitTerm,
             paymentMethod: values.paymentMethod,
             userID: currentUser?.uid,
@@ -115,8 +115,8 @@ export default function ServiceCreateForm(){
                     style={{width: "20%"}}
                 >
                     <Select>
-                        <Select.Option value={ServiceUnitEnum.Year}>年</Select.Option>
-                        <Select.Option value={ServiceUnitEnum.Month}>月</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Year}>年(365日)</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Month}>月(30日)</Select.Option>
                         <Select.Option value={ServiceUnitEnum.Day}>日</Select.Option>
                     </Select>
                 </Form.Item>
