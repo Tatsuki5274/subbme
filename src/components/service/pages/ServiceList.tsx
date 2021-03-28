@@ -4,10 +4,9 @@ import { useListService } from "hooks/ServiceHooks"
 import { ServiceListCardType } from "../molecules/ServiceListCard";
 import ServiceListTemplate from "../templates/ServiceListTemplate";
 import { useUser } from "hooks/UserHooks";
-import { ServiceListFunctionType } from "../organisms/ServiceListFunction";
 import { ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 // import { UnitConverter } from "libs/Util";
-import { getServiceUnitString, getServiceUnitValue, isServiceUnitType } from "repositories/Services";
+import { getServiceUnitString, getServiceUnitValue } from "repositories/Services";
 
 
 const mock: ServiceListCardType[] = [
@@ -49,6 +48,7 @@ export default function ServiceList(){
     const {currentUser} = useUser();
     const {serviceList, setServiceList, isLoading} = useListService(currentUser?.uid);
     const [unit, setUnit] = useState<ServiceUnitType>(ServiceUnitEnum.Month);
+    console.log(serviceList)
 
     let totalCost = 0;
     const unitValue = getServiceUnitValue(unit);
@@ -59,7 +59,7 @@ export default function ServiceList(){
         return {
             serviceName: service.serviceName || "",
             planName: service.planName || "",
-            formattedPrice: `${"¥"}${cost.toLocaleString()}/${unitString}`
+            formattedPrice: `${"¥"}${Math.round(cost).toLocaleString()}/${unitString}`
         }
     }) || null;
 
@@ -80,9 +80,12 @@ export default function ServiceList(){
             }}
         >そーと</button> */}
         <ServiceListTemplate
-            formattedTotalCost={`${"¥"}${totalCost.toLocaleString()}/${unitString}`}
+            formattedTotalCost={`${"¥"}${Math.round(totalCost).toLocaleString()}/${unitString}`}
             cardData={card}
             setUnit={setUnit}
+
+            serviceList={serviceList}
+            setServiceList={setServiceList}
         />
         </>
     );
