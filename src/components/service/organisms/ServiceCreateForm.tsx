@@ -99,7 +99,7 @@ export default function ServiceCreateForm(){
                 <Cascader
                     options={CategoryData}
                     // onChange={onChange}
-                    placeholder="Please select"
+                    placeholder="選択してください"
                 />
             </Form.Item>
             <Form.Item
@@ -113,38 +113,40 @@ export default function ServiceCreateForm(){
                     label="周期単位"
                     name="unit"
                     rules={[{required: true, message: "入力が必須です"}]}
-                    style={{width: "20%"}}
+                    style={{width: "40%"}}
                 >
                     <Select>
                         <Select.Option value={ServiceUnitEnum.Year}>年(365日)</Select.Option>
                         <Select.Option value={ServiceUnitEnum.Month}>月(30日)</Select.Option>
-                        <Select.Option value={ServiceUnitEnum.Day}>日</Select.Option>
+                        <Select.Option value={ServiceUnitEnum.Day}>日(1日)</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item
                     label="周期"
                     name="unitTerm"
                     rules={[{required: true, message: "入力が必須です"}]}
-                    style={{width: "40%"}}
+                    style={{width: "60%"}}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
             </Input.Group>
             <Input.Group compact>
                 <Form.Item
                     label="通貨"
                     name="currency"
-                    style={{width: "20%"}}
+                    style={{width: "40%"}}
                     rules={[{required: true, message: "入力が必須です"}]}
                 >
-                    <Select>
+                    <Select
+                        defaultValue="JPY"
+                    >
                         <Select.Option value="JPY">円</Select.Option>
                     </Select>            
                 </Form.Item>
                 <Form.Item
                     label="価格"
                     name="costPerUnitTerm"
-                    style={{width: "40%"}}
+                    style={{width: "60%"}}
                     rules={[
                         {required: true, message: "入力が必須です"},
                         {type: "number", min: 1, message: "0より大きい金額を入力してください"}
