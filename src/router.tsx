@@ -6,13 +6,44 @@ import ServiceList from "components/service/pages/ServiceList";
 
 //  テストページ
 import TestPage from "components/TestPage"; 
+import { useUser } from "hooks/UserHooks";
 import React from "react";
+import { OmitNative } from "react-router";
 
 import {
     BrowserRouter,
     Switch,
     Route,
-  } from "react-router-dom";
+    Redirect,
+    RouteProps,
+} from "react-router-dom";
+import { Path } from "typescript";
+
+type AuthPropsType = {
+    children: JSX.Element,
+    rest?: RouteProps
+}
+
+function PrivateRoute(props: AuthPropsType & RouteProps) {
+    const {isSignedIn} = useUser();
+    return (
+      <Route
+        {...props.rest}
+        render={({ location }) =>
+          isSignedIn ? (
+            props.children
+          ) : (
+            <Redirect
+              to={{
+                pathname: routeBuilder.signInPath(),
+                state: { from: location }
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
 
 const Router = () => {
     return (
@@ -21,8 +52,12 @@ const Router = () => {
                 <Route exact path={routeBuilder.topPath()} component={ServiceList} />
                 <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
                 <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
+                <PrivateRoute path={routeBuilder.serviceCreatePath()} >
+                    <ServiceCreate />
+                </PrivateRoute>
                 <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
-                <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} />
+                {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
+                
                 <Route exact path="/test" component={TestPage} />
                 <Result404/>
                 {/* <Redirect to={routeBuilder.topPath()} /> */}
