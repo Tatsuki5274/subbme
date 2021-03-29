@@ -1,7 +1,9 @@
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
+import LoadingScreen from "components/common/organisms/LoadingScreen";
 import ServiceCreate from "components/service/pages/ServiceCreate";
+import ServiceDetail from "components/service/pages/ServiceDetail";
 import ServiceList from "components/service/pages/ServiceList";
 
 //  テストページ
@@ -19,7 +21,7 @@ import {
 } from "react-router-dom";
 import { Path } from "typescript";
 
-const authContext = createContext<boolean>(false);
+const authContext = createContext<boolean | null>(null);
 
 
 
@@ -41,6 +43,11 @@ type AuthPropsType = {
 }
 function PrivateRoute(props: AuthPropsType & RouteProps) {
     const isSignedIn = useContext(authContext);
+    console.log("status", isSignedIn)
+    if (isSignedIn === null) {
+        return <LoadingScreen />
+    }
+
     return (
       <Route
         {...props.rest}
@@ -74,6 +81,9 @@ const Router = () => {
                     <PrivateRoute path={routeBuilder.serviceListPath()}>
                         <ServiceList />
                     </PrivateRoute>
+                    <PrivateRoute path={routeBuilder.serviceDetailPath(":serviceID")}>
+                        <ServiceDetail />
+                    </PrivateRoute>
                     {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
                     
                     <Route exact path="/test" component={TestPage} />
@@ -101,8 +111,11 @@ export const routeBuilder = {
     serviceListPath: (host="") => {
         return `${host}/services/`;
     },
+    serviceDetailPath: (serviceID: string,host="") => {
+        return `${host}/service/${serviceID}`
+    },
     serviceEditPath: (serviceID: string, host="") => {
-        return `${host}/service/${serviceID}`;
+        return `${host}/service/${serviceID}/edit`;
     },
     reportListPath: (host="") => {
         return `${host}/reports/`;
