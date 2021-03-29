@@ -4,6 +4,7 @@ import Result404 from "components/common/organisms/404";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import ServiceCreate from "components/service/pages/ServiceCreate";
 import ServiceDetail from "components/service/pages/ServiceDetail";
+import ServiceEdit from "components/service/pages/ServiceEdit";
 import ServiceList from "components/service/pages/ServiceList";
 
 //  テストページ
@@ -80,6 +81,9 @@ const Router = () => {
                     </PrivateRoute>
                     <PrivateRoute path={routeBuilder.serviceListPath()}>
                         <ServiceList />
+                    </PrivateRoute>
+                    <PrivateRoute path={routeBuilder.serviceEditPath(":serviceID")}>
+                        <ServiceEdit />
                     </PrivateRoute>
                     <PrivateRoute path={routeBuilder.serviceDetailPath(":serviceID")}>
                         <ServiceDetail />

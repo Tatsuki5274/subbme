@@ -7,6 +7,7 @@ import ServiceDetailMid from "../organisms/ServiceDetailMid";
 import ServiceDetailTop from "../organisms/ServiceDetailTop";
 
 type PropsType = {
+    serviceID: string
     serviceName: string
     planName: string
     originalPrice: string
@@ -28,7 +29,9 @@ export default function ServicedetailTemplate(props: PropsType) {
                     <ServiceDetailMid
                         detail={props.detail}
                     />
-                    <ServiceDetailBottom />
+                    <ServiceDetailBottom
+                        serviceID={props.serviceID}
+                    />
                 </>
             </ContentWrapper>
         </DrawerContainer>

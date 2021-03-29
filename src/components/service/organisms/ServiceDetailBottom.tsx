@@ -1,13 +1,31 @@
 import { Button } from "antd";
 import WideBox from "components/wrapper/WideBox";
+import { Link } from "react-router-dom";
+import { routeBuilder } from "router";
 
-export default function ServiceDetailBottom() {
+type PropsType = {
+    serviceID: string
+}
+
+export default function ServiceDetailBottom(props: PropsType) {
+    const onClickArchive = async () => {
+        console.log("onClickArchive");
+    }
     return <>
         <WideBox>
-            <Button>プラン変更</Button>
+            <Link to={routeBuilder.serviceEditPath(props.serviceID)}>
+                <Button
+                    type="primary"
+                >プラン変更</Button>
+            </Link>
+
         </WideBox>
         <WideBox>
-            <Button>アーカイブ</Button>
+            <Button
+                danger
+                type="primary"
+                onClick={onClickArchive}
+            >アーカイブ</Button>
         </WideBox>
     </>;
 }

@@ -1,6 +1,7 @@
 import ServicedetailTemplate from "../templates/ServiceDetailTemplate";
 
 const mock = {
+    serviceID: "hogehoge",
     serviceName: "dropbox",
     planName: "クラウド",
     originalPrice: "¥2000/2月",
