@@ -7,7 +7,7 @@ import ServiceList from "components/service/pages/ServiceList";
 //  テストページ
 import TestPage from "components/TestPage"; 
 import { useUser } from "hooks/UserHooks";
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { OmitNative } from "react-router";
 
 import {
@@ -19,13 +19,28 @@ import {
 } from "react-router-dom";
 import { Path } from "typescript";
 
+const authContext = createContext<boolean>(false);
+
+
+
+type ProvideAuthType = {
+    children: JSX.Element,
+}
+function ProvideAuth(props: ProvideAuthType) {
+    const { isSignedIn } = useUser();
+    return (
+      <authContext.Provider value={isSignedIn}>
+        {props.children}
+      </authContext.Provider>
+    );
+}
+
 type AuthPropsType = {
     children: JSX.Element,
     rest?: RouteProps
 }
-
 function PrivateRoute(props: AuthPropsType & RouteProps) {
-    const {isSignedIn} = useUser();
+    const isSignedIn = useContext(authContext);
     return (
       <Route
         {...props.rest}
@@ -47,22 +62,24 @@ function PrivateRoute(props: AuthPropsType & RouteProps) {
 
 const Router = () => {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route exact path={routeBuilder.topPath()} component={ServiceList} />
-                <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
-                <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
-                <PrivateRoute path={routeBuilder.serviceCreatePath()} >
-                    <ServiceCreate />
-                </PrivateRoute>
-                <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
-                {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
-                
-                <Route exact path="/test" component={TestPage} />
-                <Result404/>
-                {/* <Redirect to={routeBuilder.topPath()} /> */}
-            </Switch>
-        </BrowserRouter>
+        <ProvideAuth>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path={routeBuilder.topPath()} component={ServiceList} />
+                    <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
+                    <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
+                    <PrivateRoute path={routeBuilder.serviceCreatePath()} >
+                        <ServiceCreate />
+                    </PrivateRoute>
+                    <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
+                    {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
+                    
+                    <Route exact path="/test" component={TestPage} />
+                    <Result404/>
+                    {/* <Redirect to={routeBuilder.topPath()} /> */}
+                </Switch>
+            </BrowserRouter>
+        </ProvideAuth>
     );
 }
 
