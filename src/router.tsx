@@ -71,7 +71,9 @@ const Router = () => {
                     <PrivateRoute path={routeBuilder.serviceCreatePath()} >
                         <ServiceCreate />
                     </PrivateRoute>
-                    <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
+                    <PrivateRoute path={routeBuilder.serviceListPath()}>
+                        <ServiceList />
+                    </PrivateRoute>
                     {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
                     
                     <Route exact path="/test" component={TestPage} />
