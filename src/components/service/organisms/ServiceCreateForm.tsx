@@ -4,7 +4,7 @@ import { Service, ServiceUnitEnum, ServiceUnitType } from 'entities/Service';
 import { useUser } from 'hooks/UserHooks';
 import React from 'react';
 import { useHistory } from 'react-router';
-import { addService, getServiceUnitValue, isServiceUnitType } from 'repositories/Services';
+import { getServiceUnitValue, isServiceUnitType, ServiceManager } from 'repositories/Services';
 import { routeBuilder } from 'router';
 import firebase from "libs/Firebase"
 import { listCategories } from 'repositories/Categories';
@@ -70,7 +70,8 @@ export default function ServiceCreateForm(){
             createdAt: firebase.firestore.Timestamp.now(),
             updatedAt: firebase.firestore.Timestamp.now(),
         }
-        const result = await addService(data);
+        const serviceManager = new ServiceManager();
+        const result = await serviceManager.add(data);
         if(result){
             message.success("保存に成功しました");
             history.push(routeBuilder.serviceListPath());

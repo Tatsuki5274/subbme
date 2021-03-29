@@ -11,6 +11,11 @@ export class ServiceManager{
     this.ref = serviceRef;
   }
 
+  /**
+   * 
+   * @param queryResult クエリ結果
+   * @returns 整形結果
+   */
   private async buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>){
     try{
       // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
@@ -26,6 +31,11 @@ export class ServiceManager{
     }
   }
 
+  /**
+   * 
+   * @param id ドキュメントI
+   * @returns 取得結果のデータ
+   */
   async get(id: string){
     try {
       const snapshot = await serviceRef.doc(id).get();
@@ -41,6 +51,11 @@ export class ServiceManager{
     }
   }
 
+  /**
+   * 
+   * @param service 追加したいデータ
+   * @returns 成功・失敗
+   */
   async add(service: Service){
     try {
       this.ref.add(service);
@@ -51,6 +66,11 @@ export class ServiceManager{
     }
   }
 
+  /**
+   * 
+   * @param where クエリ条件
+   * @returns クエリ結果
+   */
   async query(
       where: 
         (ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>)
@@ -64,72 +84,72 @@ export class ServiceManager{
 
 const serviceRef = db.collection('Service');
 
-/**
- * 
- * @param id 
- * @returns 
- * @deprecated
- */
-export const getService = async (id: string) => {
-    try {
-      const snapshot = await serviceRef.doc(id).get();
-      const data = snapshot.data();
-      if(!data){
-          throw new Error("Empty");
-      }
-      const user = buildService(id, data);
-      return user;
-    } catch (e) {
-      console.warn(e)
-      return null;
-    }
-}
+// /**
+//  * 
+//  * @param id 
+//  * @returns 
+//  * @deprecated
+//  */
+// export const getService = async (id: string) => {
+//     try {
+//       const snapshot = await serviceRef.doc(id).get();
+//       const data = snapshot.data();
+//       if(!data){
+//           throw new Error("Empty");
+//       }
+//       const user = buildService(id, data);
+//       return user;
+//     } catch (e) {
+//       console.warn(e)
+//       return null;
+//     }
+// }
 
-/**
- * 
- * @param service 
- * @returns 
- * @deprecated
- */
-export const addService = async (service: Service ) => {
-  try {
-      serviceRef.add(service);
-    return true;
-  } catch (e) {
-    console.warn(e);
-    return false;
-  }
-}
+// /**
+//  * 
+//  * @param service 
+//  * @returns 
+//  * @deprecated
+//  */
+// export const addService = async (service: Service ) => {
+//   try {
+//       serviceRef.add(service);
+//     return true;
+//   } catch (e) {
+//     console.warn(e);
+//     return false;
+//   }
+//}
 
-/**
- * 
- * @returns 
- * @deprecated
- */
-export const getServiceRef = () => {
-  return serviceRef;
-}
+// /**
+//  * 
+//  * @returns 
+//  * @deprecated
+//  */
+// export const getServiceRef = () => {
+//   return serviceRef;
+// }
 
-/**
- * 
- * @param queryResult 
- * @returns 
- * @deprecated
- */
-export const listService = async (queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) => {
-  try{
-    // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
-    const get = await queryResult?.get();
-    const doc = get?.docs;
-    const result = doc?.map(_doc => {
-        return buildService(_doc.id, _doc.data());
-    })
-    return result;
-  } catch (e) {
-    console.warn(e);
-    return null;
-  }
-}
+// /**
+//  * 
+//  * @param queryResult 
+//  * @returns 
+//  * @deprecated
+//  */
+// export const listService = async (queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) => {
+//   try{
+//     // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
+//     const get = await queryResult?.get();
+//     const doc = get?.docs;
+//     const result = doc?.map(_doc => {
+//         return buildService(_doc.id, _doc.data());
+//     })
+//     return result;
+//   } catch (e) {
+//     console.warn(e);
+//     return null;
+//   }
+// }
 
 /**
  * 

@@ -1,6 +1,6 @@
 import { Service } from "entities/Service";
 import { useEffect, useState } from "react";
-import { getServiceRef, listService } from "repositories/Services";
+import { ServiceManager } from "repositories/Services";
 
 export function useListService(userID?: string){
     const [serviceList, setServiceList] = useState<Service[] | null>(null);
@@ -10,9 +10,14 @@ export function useListService(userID?: string){
         const fn = async()=>{
             setIsLoading(true);
             if(userID){
-                const ref = getServiceRef();
-                const query = await ref.where("userID", "==", userID);
-                const data = await listService(query);
+                const serviceManager = new ServiceManager();
+                const data = await serviceManager.query((ref) => {
+                    const queryRef = ref.where("userID", "==", userID);
+                    return queryRef;
+                })
+                // const ref = getServiceR ef();
+                // const query = await ref.where("userID", "==", userID);
+                // const data = await listService(query);
                 setServiceList(data);
                 setIsLoading(false);
                 if(data){
