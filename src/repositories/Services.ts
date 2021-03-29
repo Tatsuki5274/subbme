@@ -2,8 +2,74 @@ import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entitie
 import firebase from "libs/Firebase"
 
 const db = firebase.firestore();
+
+export class ServiceManager{
+  private ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+
+  constructor(){
+    const serviceRef = db.collection('Service');
+    this.ref = serviceRef;
+  }
+
+  private async buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>){
+    try{
+      // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
+      const get = await queryResult?.get();
+      const doc = get?.docs;
+      const result = doc?.map(_doc => {
+          return buildService(_doc.id, _doc.data());
+      })
+      return result;
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  }
+
+  async get(id: string){
+    try {
+      const snapshot = await serviceRef.doc(id).get();
+      const data = snapshot.data();
+      if(!data){
+          throw new Error("Empty");
+      }
+      const user = buildService(id, data);
+      return user;
+    } catch (e) {
+      console.warn(e)
+      return null;
+    }
+  }
+
+  async add(service: Service){
+    try {
+      this.ref.add(service);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  async query(
+      where: 
+        (ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>)
+          => firebase.firestore.Query<firebase.firestore.DocumentData> 
+    ){
+    const query = await where(this.ref);
+    const data = await this.buildList(query);
+    return data;
+  }
+}
+
 const serviceRef = db.collection('Service');
 
+/**
+ * 
+ * @param id 
+ * @returns 
+ * @deprecated
+ */
 export const getService = async (id: string) => {
     try {
       const snapshot = await serviceRef.doc(id).get();
@@ -19,6 +85,12 @@ export const getService = async (id: string) => {
     }
 }
 
+/**
+ * 
+ * @param service 
+ * @returns 
+ * @deprecated
+ */
 export const addService = async (service: Service ) => {
   try {
       serviceRef.add(service);
@@ -29,10 +101,21 @@ export const addService = async (service: Service ) => {
   }
 }
 
+/**
+ * 
+ * @returns 
+ * @deprecated
+ */
 export const getServiceRef = () => {
   return serviceRef;
 }
 
+/**
+ * 
+ * @param queryResult 
+ * @returns 
+ * @deprecated
+ */
 export const listService = async (queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) => {
   try{
     // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
