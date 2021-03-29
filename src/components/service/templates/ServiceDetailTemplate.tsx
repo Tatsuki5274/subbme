@@ -2,6 +2,7 @@ import Footer from "components/common/organisms/Footer";
 import ContentWrapper from "components/wrapper/ContentWrapper";
 import DrawerContainer from "components/wrapper/Drawer";
 import React from "react";
+import ServiceDetailMid from "../organisms/ServiceDetailMid";
 import ServiceDetailTop from "../organisms/ServiceDetailTop";
 
 type PropsType = {
@@ -22,6 +23,9 @@ export default function ServicedetailTemplate(props: PropsType) {
                         planName={props.planName}
                         originalPrice={props.originalPrice}
                         categoryName={props.categoryName}
+                    />
+                    <ServiceDetailMid
+                        detail={props.detail}
                     />
                 </>
             </ContentWrapper>
