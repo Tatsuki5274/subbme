@@ -2,6 +2,7 @@ import Footer from "components/common/organisms/Footer";
 import ContentWrapper from "components/wrapper/ContentWrapper";
 import DrawerContainer from "components/wrapper/Drawer";
 import React from "react";
+import ServiceDetailBottom from "../organisms/ServiceDetailBottom";
 import ServiceDetailMid from "../organisms/ServiceDetailMid";
 import ServiceDetailTop from "../organisms/ServiceDetailTop";
 
@@ -27,6 +28,7 @@ export default function ServicedetailTemplate(props: PropsType) {
                     <ServiceDetailMid
                         detail={props.detail}
                     />
+                    <ServiceDetailBottom />
                 </>
             </ContentWrapper>
         </DrawerContainer>

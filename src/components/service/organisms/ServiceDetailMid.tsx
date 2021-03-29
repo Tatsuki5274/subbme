@@ -12,9 +12,9 @@ export default function ServiceDetailMid(props: PropsType) {
 }
 
 const BackGroundStyle = styled.div({
-    backgroundColor: "#F2F2F2",
-    position: "absolute",
-    left: "0",
+    // backgroundColor: "#F2F2F2",
+    // position: "absolute",
+    // left: "0",
     width: "100%",
     padding: "0 15%",
 })
