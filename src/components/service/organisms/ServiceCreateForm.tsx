@@ -35,6 +35,13 @@ export default function ServiceCreateForm(){
         costPerUnitTerm: "",
         paymentMethod: "",
     }
+    const labelCol = {
+        span: 4,
+    };
+    const wrapperCol = {
+        span: 16,
+
+    }
     const onFinish = async (values: FormType) => {
         if(!isSignedIn){
             throw new Error("User is not signed in");
@@ -81,12 +88,16 @@ export default function ServiceCreateForm(){
                 label="サービス名"
                 name="serviceName"
                 rules={[{required: true, message: "入力が必須です"}]}
+                labelCol={labelCol}
+                wrapperCol={wrapperCol}
             >
                 <Input />
             </Form.Item>
             <Form.Item
                 label="プラン名"
                 name="planName"
+                labelCol={labelCol}
+                wrapperCol={wrapperCol}
             >
                 <Input />
             </Form.Item>
@@ -94,6 +105,8 @@ export default function ServiceCreateForm(){
                 label="カテゴリ"
                 name="category"
                 rules={[{required: true, message: "選択が必須です"}]}
+                labelCol={labelCol}
+                wrapperCol={wrapperCol}
             >
                 {/* <Input /> */}
                 <Cascader
@@ -105,6 +118,8 @@ export default function ServiceCreateForm(){
             <Form.Item
                 label="詳細"
                 name="detail"
+                labelCol={labelCol}
+                wrapperCol={wrapperCol}
             >
                 <TextArea rows={4} />
             </Form.Item>
@@ -114,6 +129,7 @@ export default function ServiceCreateForm(){
                     name="unit"
                     rules={[{required: true, message: "入力が必須です"}]}
                     style={{width: "40%"}}
+
                 >
                     <Select>
                         <Select.Option value={ServiceUnitEnum.Year}>年(365日)</Select.Option>
@@ -158,6 +174,8 @@ export default function ServiceCreateForm(){
             <Form.Item
                 label="支払い方法"
                 name="paymentMethod"
+                labelCol={labelCol}
+                wrapperCol={wrapperCol}
             >
                 <Input />
             </Form.Item>
