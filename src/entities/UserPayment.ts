@@ -11,3 +11,12 @@ type UserPaymentBase = {
 }
 
 export type UserPayment = NullablePartial<UserPaymentBase>;
+
+export const buildUserPayment = (id: string, data: firebase.firestore.DocumentData) => {
+    const user: UserPayment = {
+        id,
+        ...data
+    }
+  
+    return user
+}

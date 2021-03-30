@@ -1,16 +1,16 @@
 import { buildUser, User } from "entities/User";
+import { buildUserPayment, UserPayment } from "entities/UserPayment";
 import firebase from "libs/Firebase"
 import ManagerInterface from "./ManagerInterface";
-import { UserPaymentManager } from "./UserPayments";
 
 const db = firebase.firestore();
 
-export class UserManager implements ManagerInterface<User> {
+export class UserPaymentManager implements ManagerInterface<UserPayment> {
     _ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 
-    constructor() {
-        const serviceRef = db.collection('User');
-        this._ref = serviceRef;
+    constructor(uid: string) {
+        const ref = db.collection('User').doc(uid).collection("Payment");
+        this._ref = ref;
     }
 
     /**
@@ -20,11 +20,10 @@ export class UserManager implements ManagerInterface<User> {
      */
     async _buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) {
         try {
-            // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
             const get = await queryResult?.get();
             const doc = get?.docs;
             const result = doc?.map(_doc => {
-                return buildUser(_doc.id, _doc.data());
+                return buildUserPayment(_doc.id, _doc.data());
             })
             return result;
         } catch (e) {
@@ -45,7 +44,7 @@ export class UserManager implements ManagerInterface<User> {
             if (!data) {
                 throw new Error("Empty");
             }
-            const user = buildUser(id, data);
+            const user = buildUserPayment(id, data);
             return user;
         } catch (e) {
             console.warn(e)
@@ -58,10 +57,10 @@ export class UserManager implements ManagerInterface<User> {
      * @param service 追加したいデータ
      * @returns 成功・失敗
      */
-    async add(user: User) {
+    async add(payment: UserPayment) {
         try {
-            delete user.uid;
-            this._ref.add(user);
+            delete payment.id;
+            this._ref.add(payment);
             return true;
         } catch (e) {
             console.warn(e);
@@ -82,10 +81,5 @@ export class UserManager implements ManagerInterface<User> {
         const query = await where(this._ref);
         const data = await this._buildList(query);
         return data;
-    }
-
-    getUserPaymentManager(){
-        const payment = new UserPaymentManager(this._ref.id);
-        return payment;
     }
 }
