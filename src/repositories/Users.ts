@@ -1,14 +1,15 @@
 import { buildUser, User } from "entities/User";
 import firebase from "libs/Firebase"
+import ManagerInterface from "./ManagerInterface";
 
 const db = firebase.firestore();
 
-export class ServiceManager {
-    private ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+export class UserManager implements ManagerInterface<User> {
+    _ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 
     constructor() {
         const serviceRef = db.collection('User');
-        this.ref = serviceRef;
+        this._ref = serviceRef;
     }
 
     /**
@@ -16,7 +17,7 @@ export class ServiceManager {
      * @param queryResult クエリ結果
      * @returns 整形結果
      */
-    private async buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) {
+    async _buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) {
         try {
             // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
             const get = await queryResult?.get();
@@ -38,7 +39,7 @@ export class ServiceManager {
      */
     async get(id: string) {
         try {
-            const snapshot = await this.ref.doc(id).get();
+            const snapshot = await this._ref.doc(id).get();
             const data = snapshot.data();
             if (!data) {
                 throw new Error("Empty");
@@ -59,7 +60,7 @@ export class ServiceManager {
     async add(user: User) {
         try {
             delete user.uid;
-            this.ref.add(user);
+            this._ref.add(user);
             return true;
         } catch (e) {
             console.warn(e);
@@ -77,8 +78,8 @@ export class ServiceManager {
             (ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>)
                 => firebase.firestore.Query<firebase.firestore.DocumentData>
     ) {
-        const query = await where(this.ref);
-        const data = await this.buildList(query);
+        const query = await where(this._ref);
+        const data = await this._buildList(query);
         return data;
     }
 }

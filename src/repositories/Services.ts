@@ -1,14 +1,15 @@
 import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
+import ManagerInterface from "./ManagerInterface"
 import firebase from "libs/Firebase"
 
 const db = firebase.firestore();
 
-export class ServiceManager{
-  private ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+export class ServiceManager implements ManagerInterface<Service>{
+  _ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 
   constructor(){
     const serviceRef = db.collection('Service');
-    this.ref = serviceRef;
+    this._ref = serviceRef;
   }
 
   /**
@@ -16,7 +17,7 @@ export class ServiceManager{
    * @param queryResult クエリ結果
    * @returns 整形結果
    */
-  private async buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>){
+  async _buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>){
     try{
       // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
@@ -38,7 +39,7 @@ export class ServiceManager{
    */
   async get(id: string){
     try {
-      const snapshot = await this.ref.doc(id).get();
+      const snapshot = await this._ref.doc(id).get();
       const data = snapshot.data();
       if(!data){
           throw new Error("Empty");
@@ -59,7 +60,7 @@ export class ServiceManager{
   async add(service: Service){
     try {
       delete service.id;
-      this.ref.add(service);
+      this._ref.add(service);
       return true;
     } catch (e) {
       console.warn(e);
@@ -77,8 +78,8 @@ export class ServiceManager{
         (ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>)
           => firebase.firestore.Query<firebase.firestore.DocumentData> 
     ){
-    const query = await where(this.ref);
-    const data = await this.buildList(query);
+    const query = await where(this._ref);
+    const data = await this._buildList(query);
     return data;
   }
 }
