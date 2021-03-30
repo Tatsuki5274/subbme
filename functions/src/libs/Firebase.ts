@@ -38,7 +38,9 @@
 
 import * as admin from 'firebase-admin';
 
-admin.initializeApp();
-const firebase = admin;
+if(!admin.apps.length){
+    admin.initializeApp();
+}
 
+const firebase = admin;
 export default firebase

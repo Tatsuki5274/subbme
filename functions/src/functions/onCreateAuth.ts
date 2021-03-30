@@ -2,7 +2,7 @@
 import * as functions from "firebase-functions";
 import { UserManager } from '../repositories/Users';
 
-export default functions.auth.user().onCreate(user => {
+export default functions.auth.user().onCreate(async user => {
     // pay.jpの顧客を作成
 
     // firestoreへユーザー情報を追加
@@ -10,7 +10,8 @@ export default functions.auth.user().onCreate(user => {
     console.log("onCreated", user.uid);
 
     const userManager = new UserManager();
-    userManager.add({
+    const result = await userManager.add({
         uid: user.uid
     })
+    return result;
 })
