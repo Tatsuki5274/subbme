@@ -1,6 +1,6 @@
-import * as admin from 'firebase-admin';
+// import * as admin from 'firebase-admin';
 import * as functions from "firebase-functions";
-import { UserManager } from 'repositories/Users';
+import { UserManager } from '../repositories/Users';
 
 export default functions.auth.user().onCreate(user => {
     // pay.jpの顧客を作成

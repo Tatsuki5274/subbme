@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 const funcs = {
-    onCreateUser: './functions/onCreateAuth.ts',
+    onCreateUser: './functions/onCreateAuth',
 };
 
 const loadFunctions = (names: any) => {

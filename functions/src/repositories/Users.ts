@@ -1,5 +1,5 @@
-import { buildUser, User } from "entities/User";
-import firebase from "libs/Firebase"
+import { buildUser, User } from "../entities/User";
+import firebase from "../libs/Firebase"
 // import ManagerInterface from "./ManagerInterface";
 // import { UserPaymentManager } from "./UserPayments";
 

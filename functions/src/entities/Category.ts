@@ -1,4 +1,4 @@
-import { NullablePartial } from "libs/Util"
+// import { NullablePartial } from "libs/Util"
 
 export type Category = {
     value: string
