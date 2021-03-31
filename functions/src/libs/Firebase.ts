@@ -42,5 +42,4 @@ if(!admin.apps.length){
     admin.initializeApp();
 }
 
-const firebase = admin;
-export default firebase
+export default admin;

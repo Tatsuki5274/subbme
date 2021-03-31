@@ -1,4 +1,4 @@
-import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
+import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
 // import ManagerInterface from "./ManagerInterface"
 import firebase from "libs/Firebase"
 

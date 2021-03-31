@@ -10,7 +10,7 @@ export default functions.auth.user().onCreate(async user => {
     console.log("onCreated", user.uid);
 
     const userManager = new UserManager();
-    const result = await userManager.add({
+    const result = await userManager.set({
         uid: user.uid
     })
     return result;

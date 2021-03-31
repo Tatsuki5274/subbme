@@ -1,4 +1,4 @@
-// import firebase from "libs/Firebase"
+import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "libs/Types";
 import { NullablePartial } from "libs/Util"
 
 type UserPaymentBase = {
@@ -6,13 +6,13 @@ type UserPaymentBase = {
     name: string,
     token: string,
 
-    createdAt: FirebaseFirestore.Timestamp
-    updatedAt: FirebaseFirestore.Timestamp
+    createdAt: FirebaseFirestoreTimestampType
+    updatedAt: FirebaseFirestoreTimestampType
 }
 
 export type UserPayment = NullablePartial<UserPaymentBase>;
 
-export const buildUserPayment = (id: string, data: FirebaseFirestore.Timestamp) => {
+export const buildUserPayment = (id: string, data: FirebaseDocumentDataType) => {
     const user: UserPayment = {
         id,
         ...data

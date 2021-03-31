@@ -20,17 +20,3 @@ export const signInUser = async (email: string, password: string) => {
         } as ErrorType
     }
 }
-
-/**
- * @deprecated
- */
-export function currentUser(){
-    return firebase.auth().currentUser;
-}
-
-/**
- * @deprecated
- */
-export const isSignedIn = () => {
-    return currentUser() ? true : false;
-}
