@@ -1,12 +1,11 @@
 import { buildUser, User } from "entities/User";
-import firebase from "libs/Firebase"
+import { db, FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
+// import firebase from "libs/Firebase"
 import ManagerInterface from "./ManagerInterface";
 import { UserPaymentManager } from "./UserPayments";
 
-const db = firebase.firestore();
-
 export class UserManager implements ManagerInterface<User> {
-    _ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+    _ref: FirebaseReferenceType
 
     constructor() {
         const serviceRef = db.collection('User');
@@ -18,7 +17,7 @@ export class UserManager implements ManagerInterface<User> {
      * @param queryResult クエリ結果
      * @returns 整形結果
      */
-    async _buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>) {
+    async _buildList(queryResult: FirebaseQueryType) {
         try {
             // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
             const get = await queryResult?.get();
@@ -76,8 +75,8 @@ export class UserManager implements ManagerInterface<User> {
      */
     async query(
         where:
-            (ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>)
-                => firebase.firestore.Query<firebase.firestore.DocumentData>
+            (ref: FirebaseReferenceType)
+                => FirebaseQueryType
     ) {
         const query = await where(this._ref);
         const data = await this._buildList(query);

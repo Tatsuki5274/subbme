@@ -1,14 +1,14 @@
-import firebase from "libs/Firebase"
+import { FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
 import { NullablePartial } from "libs/Util";
 
 export default interface ManagerInterface<T>{
-    _ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-    _buildList(queryResult: firebase.firestore.Query<firebase.firestore.DocumentData>): Promise<NullablePartial<T>[] | null>
+    _ref: FirebaseReferenceType
+    _buildList(queryResult: FirebaseQueryType): Promise<NullablePartial<T>[] | null>
     get(id: string): Promise<NullablePartial<T> | null>
     add(arg: T): Promise<boolean>
     query(
         where: (
-            ref: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-        ) => firebase.firestore.Query<firebase.firestore.DocumentData>
+            ref: FirebaseReferenceType
+        ) => FirebaseQueryType
     ): Promise<NullablePartial<T>[] | null>
 }

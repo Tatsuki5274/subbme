@@ -1,19 +1,19 @@
-import firebase from "libs/Firebase"
+import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "libs/Types";
 import { NullablePartial } from "libs/Util"
 
 type UserBase = {
     uid: string
-    lastLoginDate: firebase.firestore.Timestamp
+    lastLoginDate: FirebaseFirestoreTimestampType
     currency: "JPY",
-    lastCreateReportDate: firebase.firestore.Timestamp
+    lastCreateReportDate: FirebaseFirestoreTimestampType
 // isSendReportEmail
-    createdAt: firebase.firestore.Timestamp
-    updatedAt: firebase.firestore.Timestamp
+    createdAt: FirebaseFirestoreTimestampType
+    updatedAt: FirebaseFirestoreTimestampType
 }
 
 export type User = NullablePartial<UserBase>;
 
-export const buildUser = (uid: string, data: firebase.firestore.DocumentData) => {
+export const buildUser = (uid: string, data: FirebaseDocumentDataType) => {
     const user: User = {
         uid,
         ...data
