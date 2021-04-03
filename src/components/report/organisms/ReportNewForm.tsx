@@ -95,19 +95,23 @@ export default function ReportNewForm(props: PropsType){
     const mock :Service[] = [
         {
             id: "1",
-            costPerDay: 50
+            costPerDay: 50,
+            serviceName: "50円"
         },
         {
             id: "2",
             costPerDay: 20,
+            serviceName: "20円"
         },
         {
             id: "3",
-            costPerDay: 100
+            costPerDay: 100,
+            serviceName: "100円"
         },
         {
             id: "4",
             costPerDay: null,
+            serviceName: "未設定のサービス"
         }
     ]
     const res = divABC(mock, 60, 30, 10);
@@ -141,5 +145,28 @@ export default function ReportNewForm(props: PropsType){
             console.log(values)
         }
     });
-    return <span>done</span>;
+
+    return <form onSubmit={formik.handleSubmit}>
+        {formik.values.ranks.map((rank, rankIdx) => {
+            return (
+                <div>
+                    <div>ランク{rankIdx}</div>
+                    <div>ランクメッセージ</div>
+                    {rank.services.map((service, serviceIdx) => {
+                        return (
+                            <>
+                                <div>{service.serviceName}</div>
+                                <input
+                                    name={`ranks[${rankIdx}]services[${serviceIdx}]rate`}
+                                    type="number"
+                                    onChange={formik.handleChange}
+                                />
+                            </>
+                        )
+                    })}
+                </div>
+            )
+        })}
+        <button type="submit">submit</button>
+    </form>;
 }
