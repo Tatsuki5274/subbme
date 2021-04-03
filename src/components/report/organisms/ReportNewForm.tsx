@@ -6,6 +6,8 @@ import { message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
 import { useUser } from 'hooks/UserHooks';
 import { ReportServiceRankType } from 'entities/ReportService';
+import { useHistory } from 'react-router';
+import { routeBuilder } from 'router';
 
 
 
@@ -100,6 +102,7 @@ type FormType = {
 
 export default function ReportNewForm(props: PropsType){
     const {currentUser} = useUser();
+    const history = useHistory();
     const mock :Service[] = [
         {
             id: "1",
@@ -155,14 +158,42 @@ export default function ReportNewForm(props: PropsType){
                 return;
             }
 
+            // 各種合計を計算
+            let groupAScore = 0;
+            let groupBScore = 0;
+            let groupCScore = 0;
+            
+            values.ranks[0].services.forEach(sv => {
+                groupAScore += sv.rate || 0;
+            });
+            values.ranks[1].services.forEach(sv => {
+                groupBScore += sv.rate || 0;
+            })
+            values.ranks[2].services.forEach(sv => {
+                groupCScore += sv.rate || 0;
+            })
+
+            // スコアの重み
+            const groupAWeight = 5;
+            const groupBWeight = 3;
+            const groupCWeight = 1;
+
+            const totalScore = 
+                groupAScore * groupAWeight +
+                groupBScore * groupBWeight +
+                groupCScore * groupCWeight;
+
+            // レポートを作成
             const reportManager = new ReportManager();
             const reportParam: Report = {
                 userID: currentUser.uid,
                 resultComment: values.comment,
+                score: totalScore,
             }
             const createdReport = await reportManager.add(reportParam);
 
             if(createdReport){
+                // 作成したレポートのサービス情報を保存
                 const reportServiceManager = new ReportServiceManager(createdReport.id);
                 await Promise.all(values.ranks.map(async (rank, rankIdx) => {
                     let rankStr: ReportServiceRankType = "C";
@@ -187,13 +218,14 @@ export default function ReportNewForm(props: PropsType){
                             serviceName: service.serviceName,
                             costPerDay: service.costPerDay,
                             categoryID: service.categoryID,
-                        })
-                    }))
-                }))
+                        });
+                    }));
+                }));
+                message.success("レポートの作成に成功しました");
+                history.push(routeBuilder.reportDetailPath(createdReport.id));
             } else {
                 message.error("レポートの作成に失敗しました");
             }
-            console.log(values)
         }
     });
 
