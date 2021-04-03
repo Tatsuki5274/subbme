@@ -1,4 +1,5 @@
 import BorderLine from "components/common/atoms/BorderLine"
+import { useRate } from "hooks/ReportServiceHooks"
 import React from "react"
 import styled from "styled-components"
 import IconBadActive from "../atoms/IconBadActive"
@@ -16,6 +17,7 @@ type PropsType = {
 }
 
 export default function ServiceCard(props: PropsType) {
+    const {isBad, isGood, rate, clickBad, clickGood} = useRate();
     return (
         <>
             <ServiceTopBoxStyle>
@@ -32,10 +34,21 @@ export default function ServiceCard(props: PropsType) {
                 type="number"
                 onChange={props.handleChange}
             />
-            <IconGoodActive />
-            <IconGoodInactive />
-            <IconBadActive />
-            <IconBadInactive />
+            {isGood ? 
+            <IconGoodActive
+                onClick={clickGood}
+             /> : 
+            <IconGoodInactive
+                onClick={clickGood}
+            />}
+            
+            {isBad ?
+            <IconBadActive
+                onClick={clickBad}
+            /> :
+            <IconBadInactive
+                onClick={clickBad}
+            />}
         </>
     )
 }
