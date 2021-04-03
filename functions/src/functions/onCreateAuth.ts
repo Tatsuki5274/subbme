@@ -2,6 +2,7 @@
 import * as functions from "firebase-functions";
 import { UserManager } from '../repositories/Users';
 import * as Payjp from 'payjp';
+import * as admin from 'firebase-admin';
 
 export default functions.auth.user().onCreate(async user => {
     try{
@@ -24,10 +25,15 @@ export default functions.auth.user().onCreate(async user => {
 
         // firestoreへユーザー情報を追加
         const userManager = new UserManager();
-        const result = await userManager.set({
+        await userManager.set({
             uid: user.uid
         })
-        return result;
+
+        await admin.auth().setCustomUserClaims(user.uid, {
+            plan: "free",
+        })
+        return user.uid;
+
     } catch(e) {
         console.error(e);
         throw new Error(e);
