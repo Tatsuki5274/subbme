@@ -1,0 +1,99 @@
+import { buildReport, Report } from "entities/Report";
+import ManagerInterface from "./ManagerInterface"
+import { db, FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
+
+
+export class ReportManager implements ManagerInterface<Report>{
+  _ref: FirebaseReferenceType
+
+  constructor(){
+    const reportRef = db.collection('Report');
+    this._ref = reportRef;
+  }
+
+  /**
+   * 
+   * @param queryResult クエリ結果
+   * @returns 整形結果
+   */
+  async _buildList(queryResult: FirebaseQueryType){
+    try{
+      // const queryResult= await reportRef.where("userID", "==", "tatsuki");
+      const get = await queryResult?.get();
+      const doc = get?.docs;
+      const result = doc?.map(_doc => {
+          return buildReport(_doc.id, _doc.data());
+      })
+      return result;
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  }
+
+  /**
+   * 
+   * @param id ドキュメントI
+   * @returns 取得結果のデータ
+   */
+  async get(id: string){
+    try {
+      const snapshot = await this._ref.doc(id).get();
+      const data = snapshot.data();
+      if(!data){
+          throw new Error("Empty");
+      }
+      const user = buildReport(id, data);
+      return user;
+    } catch (e) {
+      console.warn(e)
+      return null;
+    }
+  }
+
+  async set(report: Report){
+    try {
+      if (!report.id){
+        throw new Error("id is undefined");
+      }
+      const id = report.id;
+      delete report.id;
+      this._ref.doc(id).set(report);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  /**
+   * 
+   * @param report 追加したいデータ
+   * @returns 成功・失敗
+   */
+  async add(report: Report){
+    try {
+      delete report.id;
+      this._ref.add(report);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  /**
+   * 
+   * @param where クエリ条件
+   * @returns クエリ結果
+   */
+  async query(
+      where: 
+        (ref: FirebaseReferenceType)
+          => FirebaseQueryType
+    ){
+    const query = await where(this._ref);
+    const data = await this._buildList(query);
+    return data;
+  }
+}

@@ -1,5 +1,7 @@
 import {useFormik} from 'formik'
 import { Service } from "entities/Service";
+import { ReportManager } from 'repositories/Reports';
+import { Report } from 'entities/Report';
 
 
 
@@ -141,7 +143,13 @@ export default function ReportNewForm(props: PropsType){
                 };
             }),
         },
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
+            const reportManager = new ReportManager();
+            const mock: Report = {
+                userID: "me",
+                resultComment: "総評",
+            }
+            await reportManager.add(mock);
             console.log(values)
         }
     });
