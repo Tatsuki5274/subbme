@@ -2,15 +2,7 @@ import {useFormik} from 'formik'
 import { Service } from "entities/Service";
 
 
-type FormType = {
-    comment: string     // 振り返りコメント 
-    ranks: {
-        services: {
-            serviceID: string
-            rate: number | null    // 自己評価
-        }[]
-    }[]
-}
+
 
 type PropsType = {
     // services: Service[]
@@ -86,6 +78,19 @@ function divABC
     };
 }
 
+type FormType = {
+    comment: string     // 振り返りコメント 
+    ranks: {
+        services: {
+            serviceID: string,
+            serviceName: string,
+            categoryName: string,
+            costPerDay: number,
+            rate: number | null    // 自己評価
+        }[]
+    }[]
+}
+
 export default function ReportNewForm(props: PropsType){
     const mock :Service[] = [
         {
@@ -106,15 +111,35 @@ export default function ReportNewForm(props: PropsType){
         }
     ]
     const res = divABC(mock, 60, 30, 10);
+    const serviceABC: Service[][] = [
+        res.A,
+        res.B,
+        res.C,
+    ];
+
     console.log(res);
-    // const formik = useFormik<FormType>({
-    //     initialValues: {
-    //         comment: "",
-    //         ranks: ,
-    //     },
-    //     onSubmit: (values) => {
-    //         console.log(values)
-    //     }
-    // });
+    const formik = useFormik<FormType>({
+        initialValues: {
+            comment: "",
+            ranks: serviceABC.map(svABC => {
+                const abc = svABC.map(sv => {
+                    // Todo カテゴリの参照を追加
+                    return {
+                        serviceID: sv.id || "",
+                        serviceName: sv.serviceName || "",
+                        categoryName: "",   //sv.categoryID
+                        rate: null,
+                        costPerDay: sv.costPerDay || 0
+                    }
+                });
+                return {
+                    services: abc
+                };
+            }),
+        },
+        onSubmit: (values) => {
+            console.log(values)
+        }
+    });
     return <span>done</span>;
 }
