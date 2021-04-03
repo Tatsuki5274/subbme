@@ -16,6 +16,7 @@ import styled from "styled-components"
 // }
 
 export type ServiceListCardType = {
+    serviceID: string
     serviceName: string
     planName: string
     formattedPrice: string

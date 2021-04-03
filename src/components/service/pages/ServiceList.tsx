@@ -55,9 +55,14 @@ export default function ServiceList(){
     const unitValue = getServiceUnitValue(unit);
     const unitString = getServiceUnitString(unit);
     const card: ServiceListCardType[] | null = serviceList?.map(service => {
+        if(!service.id){
+            throw new Error("ServiceID is not defined");
+        }
+        
         const cost = (service.costPerDay || 0) * unitValue;
         totalCost += cost;
         return {
+            serviceID: service.id,
             serviceName: service.serviceName || "",
             planName: service.planName || "",
             formattedPrice: `${"¥"}${Math.round(cost).toLocaleString()}/${unitString}`
