@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Text from "components/common/atoms/Text"
 import React from "react";
 import GrayText from "components/common/atoms/GrayText";
 

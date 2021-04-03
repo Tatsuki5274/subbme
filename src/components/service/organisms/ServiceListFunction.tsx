@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import { Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 import React from "react";
-import { getServiceUnitString, getServiceUnitValue } from "repositories/Services";
+import { getServiceUnitString } from "repositories/Services";
 const { Option } = Select;
 
 // export type ServiceListFunctionType = {

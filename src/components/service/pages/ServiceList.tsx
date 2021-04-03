@@ -10,18 +10,18 @@ import { getServiceUnitString, getServiceUnitValue } from "repositories/Services
 import PrivateRoute from "components/wrapper/PrivateRoute";
 
 
-const mock: ServiceListCardType[] = [
-    {
-        serviceName: "Dropbox",
-        planName: "Plusプラン",
-        formattedPrice: "¥900/月"
-    },
-    {
-        serviceName: "Dropbox",
-        planName: "Plusプラン",
-        formattedPrice: "¥20,000/3年"
-    },
-]
+// const mock: ServiceListCardType[] = [
+//     {
+//         serviceName: "Dropbox",
+//         planName: "Plusプラン",
+//         formattedPrice: "¥900/月"
+//     },
+//     {
+//         serviceName: "Dropbox",
+//         planName: "Plusプラン",
+//         formattedPrice: "¥20,000/3年"
+//     },
+// ]
 
 // function Convert(serviceInput: Service, toUnit: ServiceUnitType, toCurrency: unknown): ServiceListFunctionType{
 //     const originalCostPerUnitTerm = serviceInput.costPerUnitTerm ? parseInt(serviceInput.costPerUnitTerm) : 0;

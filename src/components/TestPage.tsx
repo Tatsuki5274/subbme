@@ -1,6 +1,5 @@
-import { Service } from "entities/Service";
-import { currentUser } from "repositories/User"
-import Result500 from "./common/organisms/500";
+// import { Service } from "entities/Service";
+// import Result500 from "./common/organisms/500";
 
 export default function TestPage() {
     return null;
