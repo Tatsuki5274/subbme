@@ -3,6 +3,7 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const funcs = {
     onCreateUser: './functions/onCreateAuth',
+    onDeleteUser: './functions/onDeleteAuth',
 };
 
 const loadFunctions = (names: any) => {
