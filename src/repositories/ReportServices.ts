@@ -1,14 +1,14 @@
-import { buildReport, Report } from "entities/Report";
+import { buildReportService, ReportService } from "entities/ReportService";
 import ManagerInterface from "./ManagerInterface"
 import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "libs/Types";
 
 
-export class ReportManager implements ManagerInterface<Report>{
+export class ReportServiceManager implements ManagerInterface<ReportService>{
   _ref: FirebaseCollectionReferenceType
 
-  constructor(){
-    const reportRef = db.collection('Report');
-    this._ref = reportRef;
+  constructor(reportID: string){
+    const reportServiceRef = db.collection('Report').doc(reportID).collection('Service');
+    this._ref = reportServiceRef;
   }
 
   /**
@@ -18,11 +18,11 @@ export class ReportManager implements ManagerInterface<Report>{
    */
   async _buildList(queryResult: FirebaseQueryType){
     try{
-      // const queryResult= await reportRef.where("userID", "==", "tatsuki");
+      // const queryResult= await reportServiceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
       const doc = get?.docs;
       const result = doc?.map(_doc => {
-          return buildReport(_doc.id, _doc.data());
+          return buildReportService(_doc.id, _doc.data());
       })
       return result;
     } catch (e) {
@@ -43,7 +43,7 @@ export class ReportManager implements ManagerInterface<Report>{
       if(!data){
           throw new Error("Empty");
       }
-      const user = buildReport(id, data);
+      const user = buildReportService(id, data);
       return user;
     } catch (e) {
       console.warn(e)
@@ -51,14 +51,14 @@ export class ReportManager implements ManagerInterface<Report>{
     }
   }
 
-  async set(report: Report){
+  async set(reportService: ReportService){
     try {
-      if (!report.id){
+      if (!reportService.id){
         throw new Error("id is undefined");
       }
-      const id = report.id;
-      delete report.id;
-      this._ref.doc(id).set(report);
+      const id = reportService.id;
+      delete reportService.id;
+      this._ref.doc(id).set(reportService);
       return true;
     } catch (e) {
       console.warn(e);
@@ -68,13 +68,13 @@ export class ReportManager implements ManagerInterface<Report>{
 
   /**
    * 
-   * @param report 追加したいデータ
+   * @param reportService 追加したいデータ
    * @returns 成功・失敗
    */
-  async add(report: Report){
+   async add(reportService: ReportService){
     try {
-      delete report.id;
-      const result = await this._ref.add(report);
+      delete reportService.id;
+      const result = await this._ref.add(reportService);
       return result;
     } catch (e) {
       console.warn(e);

@@ -1,17 +1,17 @@
 import { FirebaseDocumentDataType } from "libs/Types";
 import { NullablePartial } from "libs/Util";
 
-type ReportBase = {
+type ReportServiceBase = {
     id: string
     userID: string
     resultComment: string
     score: number
 }
 
-export type Report = NullablePartial<ReportBase>
+export type ReportService = NullablePartial<ReportServiceBase>
 
-export const buildReport = (id: string, data: FirebaseDocumentDataType) => {
-    const user: Report = {
+export const buildReportService = (id: string, data: FirebaseDocumentDataType) => {
+    const user: ReportService = {
         id,
         ...data
     }

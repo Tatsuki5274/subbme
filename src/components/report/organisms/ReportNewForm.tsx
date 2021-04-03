@@ -149,7 +149,7 @@ export default function ReportNewForm(props: PropsType){
                 userID: "me",
                 resultComment: "総評",
             }
-            await reportManager.add(mock);
+            await  reportManager.add(mock);
             console.log(values)
         }
     });

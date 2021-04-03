@@ -1,11 +1,11 @@
 import { buildUser, User } from "entities/User";
-import { db, FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
+import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "libs/Types";
 // import firebase from "libs/Firebase"
 import ManagerInterface from "./ManagerInterface";
 import { UserPaymentManager } from "./UserPayments";
 
 export class UserManager implements ManagerInterface<User> {
-    _ref: FirebaseReferenceType
+    _ref: FirebaseCollectionReferenceType
 
     constructor() {
         const serviceRef = db.collection('User');
@@ -57,16 +57,16 @@ export class UserManager implements ManagerInterface<User> {
      * @param service 追加したいデータ
      * @returns 成功・失敗
      */
-    async add(user: User) {
+     async add(user: User){
         try {
-            delete user.uid;
-            this._ref.add(user);
-            return true;
+          delete user.uid;
+          const result = await this._ref.add(user);
+          return result;
         } catch (e) {
-            console.warn(e);
-            return false;
+          console.warn(e);
+          return null;
         }
-    }
+      }
 
     async set(user: User){
         try {
@@ -90,7 +90,7 @@ export class UserManager implements ManagerInterface<User> {
      */
     async query(
         where:
-            (ref: FirebaseReferenceType)
+            (ref: FirebaseCollectionReferenceType)
                 => FirebaseQueryType
     ) {
         const query = await where(this._ref);

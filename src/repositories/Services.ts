@@ -1,10 +1,10 @@
 import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 import ManagerInterface from "./ManagerInterface"
-import { db, FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
+import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "libs/Types";
 
 
 export class ServiceManager implements ManagerInterface<Service>{
-  _ref: FirebaseReferenceType
+  _ref: FirebaseCollectionReferenceType
 
   constructor(){
     const serviceRef = db.collection('Service');
@@ -71,14 +71,14 @@ export class ServiceManager implements ManagerInterface<Service>{
    * @param service 追加したいデータ
    * @returns 成功・失敗
    */
-  async add(service: Service){
+   async add(service: Service){
     try {
       delete service.id;
-      this._ref.add(service);
-      return true;
+      const result = await this._ref.add(service);
+      return result;
     } catch (e) {
       console.warn(e);
-      return false;
+      return null;
     }
   }
 
@@ -89,7 +89,7 @@ export class ServiceManager implements ManagerInterface<Service>{
    */
   async query(
       where: 
-        (ref: FirebaseReferenceType)
+        (ref: FirebaseCollectionReferenceType)
           => FirebaseQueryType
     ){
     const query = await where(this._ref);

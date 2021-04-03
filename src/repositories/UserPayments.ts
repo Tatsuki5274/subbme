@@ -57,16 +57,16 @@ export class UserPaymentManager implements ManagerInterface<UserPayment> {
      * @param service 追加したいデータ
      * @returns 成功・失敗
      */
-    async add(payment: UserPayment) {
+     async add(payment: UserPayment){
         try {
-            delete payment.id;
-            this._ref.add(payment);
-            return true;
+          delete payment.id;
+          const result = await this._ref.add(payment);
+          return result;
         } catch (e) {
-            console.warn(e);
-            return false;
+          console.warn(e);
+          return null;
         }
-    }
+      }
 
     async set(service: UserPayment){
         try {
