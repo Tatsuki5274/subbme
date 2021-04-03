@@ -7,6 +7,12 @@ export const ServiceUnitEnum = {
     Day: "DAY",
 } as const;
 
+export const ServiceUnitDaysEnum = {
+    Year: 365,
+    Month: 30,
+    Day: 1
+} as const;
+
 export type ServiceUnitType = typeof ServiceUnitEnum[keyof typeof ServiceUnitEnum]
 
 type ServiceBase = {

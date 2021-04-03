@@ -1,5 +1,5 @@
 import {useFormik} from 'formik'
-import { Service } from "entities/Service";
+import { Service, ServiceUnitDaysEnum } from "entities/Service";
 import { ReportManager } from 'repositories/Reports';
 import { Report } from 'entities/Report';
 import { message } from 'antd';
@@ -247,9 +247,11 @@ export default function ReportNewForm(props: PropsType){
                         return (
                             <ServiceCard
                                 serviceName={service.serviceName}
+                                categoryName={service.categoryName}
                                 serviceIndex={serviceIdx}
                                 rankIndex={rankIdx}
                                 handleChange={formik.handleChange}
+                                formattedPrice={`¥${(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
                             />
                             // <>
                             //     <div>{service.serviceName}</div>
