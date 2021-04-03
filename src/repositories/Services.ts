@@ -1,6 +1,6 @@
 import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 import ManagerInterface from "./ManagerInterface"
-import { db, FirebaseReferenceType } from "libs/Types";
+import { db, FirebaseQueryType, FirebaseReferenceType } from "libs/Types";
 
 
 export class ServiceManager implements ManagerInterface<Service>{
@@ -16,7 +16,7 @@ export class ServiceManager implements ManagerInterface<Service>{
    * @param queryResult クエリ結果
    * @returns 整形結果
    */
-  async _buildList(queryResult: FirebaseReferenceType){
+  async _buildList(queryResult: FirebaseQueryType){
     try{
       // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
@@ -75,7 +75,7 @@ export class ServiceManager implements ManagerInterface<Service>{
   async query(
       where: 
         (ref: FirebaseReferenceType)
-          => FirebaseReferenceType
+          => FirebaseQueryType
     ){
     const query = await where(this._ref);
     const data = await this._buildList(query);

@@ -1,8 +1,8 @@
 import Title from "components/common/atoms/Title";
 import SimpleHeader from "components/common/organisms/SimpleHeader";
+import { useUser } from "hooks/UserHooks";
 import React from "react";
 import { Redirect } from "react-router";
-import { isSignedIn } from "repositories/User";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 import SignInServices from "../organisms/SignInServices";
@@ -10,7 +10,8 @@ import OSignUpForm from "../organisms/SignUpForm";
 import SignUpRegistUser from "../organisms/SignUpRegistUser";
 
 export default function SignUp(){
-    if(isSignedIn()){
+    const {isSignedIn} = useUser();
+    if(isSignedIn){
         return <Redirect to={routeBuilder.topPath()}/>
     }
     
