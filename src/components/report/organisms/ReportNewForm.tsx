@@ -2,9 +2,9 @@ import {useFormik} from 'formik'
 import { Service } from "entities/Service";
 import { ReportManager } from 'repositories/Reports';
 import { Report } from 'entities/Report';
-import { create } from 'node:domain';
 import { message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
+import { useUser } from 'hooks/UserHooks';
 
 
 
@@ -89,6 +89,7 @@ type FormType = {
         services: {
             serviceID: string,
             serviceName: string,
+            categoryID: string,
             categoryName: string,
             costPerDay: number,
             rate: number | null    // 自己評価
@@ -97,6 +98,7 @@ type FormType = {
 }
 
 export default function ReportNewForm(props: PropsType){
+    const {currentUser} = useUser();
     const mock :Service[] = [
         {
             id: "1",
@@ -126,7 +128,6 @@ export default function ReportNewForm(props: PropsType){
         res.C,
     ];
 
-    console.log(res);
     const formik = useFormik<FormType>({
         initialValues: {
             comment: "",
@@ -136,7 +137,8 @@ export default function ReportNewForm(props: PropsType){
                     return {
                         serviceID: sv.id || "",
                         serviceName: sv.serviceName || "",
-                        categoryName: "",   //sv.categoryID
+                        categoryID: "", //sv.categoryID
+                        categoryName: "",   
                         rate: null,
                         costPerDay: sv.costPerDay || 0
                     }
@@ -147,21 +149,46 @@ export default function ReportNewForm(props: PropsType){
             }),
         },
         onSubmit: async (values) => {
-            const reportManager = new ReportManager();
-            const mock: Report = {
-                userID: "me",
-                resultComment: "総評",
+            if (!currentUser?.uid) {
+                message.error("ユーザー情報を確認できせんでした");
+                return;
             }
-            const createdReport = await reportManager.add(mock);
+
+            const reportManager = new ReportManager();
+            const reportParam: Report = {
+                userID: currentUser.uid,
+                resultComment: values.comment,
+            }
+            const createdReport = await reportManager.add(reportParam);
+
             if(createdReport){
                 const reportServiceManager = new ReportServiceManager(createdReport.id);
-                await reportServiceManager.add({
-                    rank: "A",
-                    rate: 3,
-                    serviceName: "サービス名",
-                    costPerDay: 100,
-                    categoryID: null,
-                })
+                await Promise.all(values.ranks.map(async (rank, rankIdx) => {
+                    let rankStr: "A" | "B" | "C" = "C";
+                    switch(rankIdx){
+                        case 0:
+                            rankStr = "A";
+                            break;
+                        case 1:
+                            rankStr = "B";
+                            break;
+                        case 2:
+                            rankStr = "C";
+                            break;
+                        default:
+                            throw new Error(`rank index is unknown(${rankIdx})`)
+                    }
+
+                    await Promise.all(rank.services.map(async (service) => {
+                        await reportServiceManager.add({
+                            rank: rankStr,
+                            rate: service.rate,
+                            serviceName: service.serviceName,
+                            costPerDay: service.costPerDay,
+                            categoryID: service.categoryID,
+                        })
+                    }))
+                }))
             } else {
                 message.error("レポートの作成に失敗しました");
             }
