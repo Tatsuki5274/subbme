@@ -1,9 +1,27 @@
-import ReportListBox from "../organisms/ReportListBox";
+import Footer from "components/common/organisms/Footer";
+import DrawerContainer from "components/wrapper/Drawer";
+import React from "react";
+import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
 
-export default function ReportListTemplate() {
+type PropsType = {
+    data: ReportListBoxType[]
+}
+
+export default function ReportListTemplate(props: PropsType) {
     return (
         <>
-            <ReportListBox />
+            <DrawerContainer>
+                <>
+                    {props.data.map(dat => {
+                        return (
+                            <ReportListBox
+                                {...dat}
+                            />
+                        )
+                    })}
+                </>
+            </DrawerContainer>
+            <Footer></Footer>
         </>
     );
 }

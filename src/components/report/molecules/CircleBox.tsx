@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type PropsType = {
-    children: string
+    children: string | JSX.Element
 }
 
 export default function CircleBox(props: PropsType) {
