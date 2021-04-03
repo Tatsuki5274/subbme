@@ -1,6 +1,13 @@
 import { FirebaseDocumentDataType } from "libs/Types";
 import { NullablePartial } from "libs/Util";
 
+export const ReportServiceRankEnum = {
+    A: "A",
+    B: "B",
+    C: "C",
+} as const;
+export type ReportServiceRankType = typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum]
+
 type ReportServiceBase = {
     id: string
     rank: "A" | "B" | "C"

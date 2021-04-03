@@ -5,6 +5,7 @@ import { Report } from 'entities/Report';
 import { message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
 import { useUser } from 'hooks/UserHooks';
+import { ReportServiceRankType } from 'entities/ReportService';
 
 
 
@@ -164,7 +165,7 @@ export default function ReportNewForm(props: PropsType){
             if(createdReport){
                 const reportServiceManager = new ReportServiceManager(createdReport.id);
                 await Promise.all(values.ranks.map(async (rank, rankIdx) => {
-                    let rankStr: "A" | "B" | "C" = "C";
+                    let rankStr: ReportServiceRankType = "C";
                     switch(rankIdx){
                         case 0:
                             rankStr = "A";
