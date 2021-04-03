@@ -1,3 +1,4 @@
+import Title from "components/common/atoms/Title";
 import Footer from "components/common/organisms/Footer";
 import DrawerContainer from "components/wrapper/Drawer";
 import React from "react";
@@ -12,6 +13,7 @@ export default function ReportListTemplate(props: PropsType) {
         <>
             <DrawerContainer>
                 <>
+                    <Title>サービス分析一覧</Title>
                     {props.data.map(dat => {
                         return (
                             <ReportListBox

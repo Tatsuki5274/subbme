@@ -9,6 +9,8 @@ import { ReportServiceRankType } from 'entities/ReportService';
 import { useHistory } from 'react-router';
 import { routeBuilder } from 'router';
 import firebase from "libs/Firebase"
+import BorderLine from 'components/common/atoms/BorderLine';
+import ServiceCard from '../molecules/ServiceCard';
 
 
 
@@ -131,6 +133,11 @@ export default function ReportNewForm(props: PropsType){
         res.B,
         res.C,
     ];
+    const rankMessage = [
+        "ランクAのメッセージ",
+        "ランクBのメッセージ",
+        "ランクCのメッセージ",
+    ]
 
     const formik = useFormik<FormType>({
         initialValues: {
@@ -236,17 +243,25 @@ export default function ReportNewForm(props: PropsType){
             return (
                 <div>
                     <div>ランク{rankIdx}</div>
-                    <div>ランクメッセージ</div>
+                    <BorderLine />
+                    <div>{rankMessage[rankIdx]}</div>
                     {rank.services.map((service, serviceIdx) => {
                         return (
-                            <>
-                                <div>{service.serviceName}</div>
-                                <input
-                                    name={`ranks[${rankIdx}]services[${serviceIdx}]rate`}
-                                    type="number"
-                                    onChange={formik.handleChange}
-                                />
-                            </>
+                            <ServiceCard
+                                serviceName={service.serviceName}
+                                serviceIndex={serviceIdx}
+                                rankIndex={rankIdx}
+                                handleChange={formik.handleChange}
+                            />
+                            // <>
+                            //     <div>{service.serviceName}</div>
+                            //     <BorderLine />
+                            //     <input
+                            //         name={`ranks[${rankIdx}]services[${serviceIdx}]rate`}
+                            //         type="number"
+                            //         onChange={formik.handleChange}
+                            //     />
+                            // </>
                         )
                     })}
                 </div>
