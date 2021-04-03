@@ -1,7 +1,7 @@
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
-import LoadingScreen from "components/common/organisms/LoadingScreen";
+import ReportList from "components/report/pages/ReportList";
 import ServiceCreate from "components/service/pages/ServiceCreate";
 import ServiceDetail from "components/service/pages/ServiceDetail";
 import ServiceEdit from "components/service/pages/ServiceEdit";
@@ -10,19 +10,15 @@ import ServiceList from "components/service/pages/ServiceList";
 //  テストページ
 import TestPage from "components/TestPage"; 
 import { useUser } from "hooks/UserHooks";
-import React, { createContext, useContext } from "react";
-import { OmitNative } from "react-router";
+import { createContext } from "react";
 
 import {
     BrowserRouter,
     Switch,
     Route,
-    Redirect,
-    RouteProps,
 } from "react-router-dom";
-import { Path } from "typescript";
 
-const authContext = createContext<boolean | null>(null);
+export const authContext = createContext<boolean | null>(null);
 
 
 
@@ -38,61 +34,28 @@ function ProvideAuth(props: ProvideAuthType) {
     );
 }
 
-type AuthPropsType = {
-    children: JSX.Element,
-    rest?: RouteProps
-}
-function PrivateRoute(props: AuthPropsType & RouteProps) {
-    const isSignedIn = useContext(authContext);
-    console.log("status", isSignedIn)
-    if (isSignedIn === null) {
-        return <LoadingScreen />
-    }
-
-    return (
-      <Route
-        {...props.rest}
-        render={({ location }) =>
-          isSignedIn ? (
-            props.children
-          ) : (
-            <Redirect
-              to={{
-                pathname: routeBuilder.signInPath(),
-                state: { from: location }
-              }}
-            />
-          )
-        }
-      />
-    );
-  }
 
 const Router = () => {
     return (
         <ProvideAuth>
             <BrowserRouter>
                 <Switch>
+                    {/* トップ画面 */}
                     <Route exact path={routeBuilder.topPath()} component={ServiceList} />
                     <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
                     <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
-                    <PrivateRoute path={routeBuilder.serviceCreatePath()} >
-                        <ServiceCreate />
-                    </PrivateRoute>
-                    <PrivateRoute path={routeBuilder.serviceListPath()}>
-                        <ServiceList />
-                    </PrivateRoute>
-                    <PrivateRoute path={routeBuilder.serviceEditPath(":serviceID")}>
-                        <ServiceEdit />
-                    </PrivateRoute>
-                    <PrivateRoute path={routeBuilder.serviceDetailPath(":serviceID")}>
-                        <ServiceDetail />
-                    </PrivateRoute>
-                    {/* <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} /> */}
+
+                    {/* サービス関係 */}
+                    <Route exact path={routeBuilder.serviceCreatePath()} component={ServiceCreate} />
+                    <Route exact path={routeBuilder.serviceListPath()} component={ServiceList} />
+                    <Route exact path={routeBuilder.serviceEditPath(":serviceID")} component={ServiceEdit} />
+                    <Route exact path={routeBuilder.serviceDetailPath(":serviceID")} component={ServiceDetail} />
+
+                    {/* 分析関係 */}
+                    <Route exact path={routeBuilder.reportListPath()} component={ReportList} />
                     
                     <Route exact path="/test" component={TestPage} />
                     <Result404/>
-                    {/* <Redirect to={routeBuilder.topPath()} /> */}
                 </Switch>
             </BrowserRouter>
         </ProvideAuth>

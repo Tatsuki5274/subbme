@@ -1,3 +1,4 @@
+import PrivateRoute from "components/wrapper/PrivateRoute";
 import ServicedetailTemplate from "../templates/ServiceDetailTemplate";
 
 const mock = {
@@ -11,7 +12,12 @@ const mock = {
 
 export default function ServiceDetail(props: any) {
     console.log(props)
-    return <ServicedetailTemplate
-        {...mock}
-    />;
+    return <PrivateRoute>
+        <ServicedetailTemplate
+            {...mock}
+        />
+    </PrivateRoute>
+    // return <ServicedetailTemplate
+    //     {...mock}
+    // />;
 }

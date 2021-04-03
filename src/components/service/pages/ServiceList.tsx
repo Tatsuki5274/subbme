@@ -7,6 +7,7 @@ import { useUser } from "hooks/UserHooks";
 import { ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 // import { UnitConverter } from "libs/Util";
 import { getServiceUnitString, getServiceUnitValue } from "repositories/Services";
+import PrivateRoute from "components/wrapper/PrivateRoute";
 
 
 const mock: ServiceListCardType[] = [
@@ -79,14 +80,16 @@ export default function ServiceList(){
                 }
             }}
         >そーと</button> */}
-        <ServiceListTemplate
-            formattedTotalCost={`${"¥"}${Math.round(totalCost).toLocaleString()}/${unitString}`}
-            cardData={card}
-            setUnit={setUnit}
+            <PrivateRoute>
+                <ServiceListTemplate
+                    formattedTotalCost={`${"¥"}${Math.round(totalCost).toLocaleString()}/${unitString}`}
+                    cardData={card}
+                    setUnit={setUnit}
 
-            serviceList={serviceList}
-            setServiceList={setServiceList}
-        />
+                    serviceList={serviceList}
+                    setServiceList={setServiceList}
+                />
+            </PrivateRoute>
         </>
     );
 }
