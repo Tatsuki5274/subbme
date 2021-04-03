@@ -2,6 +2,7 @@ import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
 import ReportList from "components/report/pages/ReportList";
+import ReportNew from "components/report/pages/ReportNew";
 import ServiceCreate from "components/service/pages/ServiceCreate";
 import ServiceDetail from "components/service/pages/ServiceDetail";
 import ServiceEdit from "components/service/pages/ServiceEdit";
@@ -53,6 +54,7 @@ const Router = () => {
 
                     {/* 分析関係 */}
                     <Route exact path={routeBuilder.reportListPath()} component={ReportList} />
+                    <Route exact path={routeBuilder.reportNewPath()} component={ReportNew} />
                     
                     <Route exact path="/test" component={TestPage} />
                     <Result404/>
