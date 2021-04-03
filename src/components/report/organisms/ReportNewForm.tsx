@@ -8,7 +8,7 @@ import { useUser } from 'hooks/UserHooks';
 import { ReportServiceRankType } from 'entities/ReportService';
 import { useHistory } from 'react-router';
 import { routeBuilder } from 'router';
-
+import firebase from "libs/Firebase"
 
 
 
@@ -189,6 +189,8 @@ export default function ReportNewForm(props: PropsType){
                 userID: currentUser.uid,
                 resultComment: values.comment,
                 score: totalScore,
+                createdAt: firebase.firestore.Timestamp.now(),
+                updatedAt: firebase.firestore.Timestamp.now(),
             }
             const createdReport = await reportManager.add(reportParam);
 

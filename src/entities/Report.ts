@@ -1,4 +1,4 @@
-import { FirebaseDocumentDataType } from "libs/Types";
+import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "libs/Types";
 import { NullablePartial } from "libs/Util";
 
 type ReportBase = {
@@ -6,6 +6,8 @@ type ReportBase = {
     userID: string
     resultComment: string
     score: number
+    createdAt: FirebaseFirestoreTimestampType
+    updatedAt: FirebaseFirestoreTimestampType
 }
 
 export type Report = NullablePartial<ReportBase>
