@@ -6,6 +6,7 @@ import IconBadActive from "../atoms/IconBadActive"
 import IconBadInactive from "../atoms/IconBadInactive"
 import IconGoodActive from "../atoms/IconGoodActive"
 import IconGoodInactive from "../atoms/IconGoodInactive"
+import { ReportNewFormType } from "../organisms/ReportNewForm"
 
 type PropsType = {
     serviceName: string
@@ -13,11 +14,13 @@ type PropsType = {
     formattedPrice: string
     rankIndex: number
     serviceIndex: number
+    values: ReportNewFormType
     handleChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
 export default function ServiceCard(props: PropsType) {
     const {isBad, isGood, rate, clickBad, clickGood} = useRate();
+    props.values.ranks[props.rankIndex].services[props.serviceIndex].rate = rate;
     return (
         <>
             <ServiceTopBoxStyle>
@@ -29,11 +32,6 @@ export default function ServiceCard(props: PropsType) {
             <div>
                 {props.categoryName}
             </div>
-            <input
-                name={`ranks[${props.rankIndex}]services[${props.serviceIndex}]rate`}
-                type="number"
-                onChange={props.handleChange}
-            />
             {isGood ? 
             <IconGoodActive
                 onClick={clickGood}

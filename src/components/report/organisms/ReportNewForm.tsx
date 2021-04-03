@@ -100,6 +100,7 @@ type FormType = {
         }[]
     }[]
 }
+export type ReportNewFormType = FormType;
 
 export default function ReportNewForm(props: PropsType){
     const {currentUser} = useUser();
@@ -250,18 +251,10 @@ export default function ReportNewForm(props: PropsType){
                                 categoryName={service.categoryName}
                                 serviceIndex={serviceIdx}
                                 rankIndex={rankIdx}
+                                values={formik.values}
                                 handleChange={formik.handleChange}
                                 formattedPrice={`¥${(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
                             />
-                            // <>
-                            //     <div>{service.serviceName}</div>
-                            //     <BorderLine />
-                            //     <input
-                            //         name={`ranks[${rankIdx}]services[${serviceIdx}]rate`}
-                            //         type="number"
-                            //         onChange={formik.handleChange}
-                            //     />
-                            // </>
                         )
                     })}
                 </div>

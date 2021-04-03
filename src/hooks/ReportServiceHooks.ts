@@ -8,7 +8,7 @@ export function useRate(){
         if(isGood) {
             setRate(0);
         } else {
-            setRate(2);
+            setRate(1);
         }
         setIsBad(false);
         setIsGood(!isGood);
@@ -17,7 +17,7 @@ export function useRate(){
         if(isBad) {
             setRate(0);
         } else {
-            setRate(-2);
+            setRate(-1);
         }
         setIsGood(false);
         setIsBad(!isBad);
