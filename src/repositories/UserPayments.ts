@@ -68,6 +68,21 @@ export class UserPaymentManager implements ManagerInterface<UserPayment> {
         }
     }
 
+    async set(service: UserPayment){
+        try {
+          if (!service.id){
+            throw new Error("id is undefined");
+          }
+          const id = service.id;
+          delete service.id;
+          this._ref.doc(id).set(service);
+          return true;
+        } catch (e) {
+          console.warn(e);
+          return false;
+        }
+      }
+
     /**
      * 
      * @param where クエリ条件

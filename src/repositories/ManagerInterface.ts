@@ -6,6 +6,7 @@ export default interface ManagerInterface<T>{
     _buildList(queryResult: FirebaseQueryType): Promise<NullablePartial<T>[] | null>
     get(id: string): Promise<NullablePartial<T> | null>
     add(arg: T): Promise<boolean>
+    set(arg: T): Promise<boolean>
     query(
         where: (
             ref: FirebaseReferenceType

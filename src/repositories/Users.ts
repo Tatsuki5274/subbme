@@ -68,6 +68,21 @@ export class UserManager implements ManagerInterface<User> {
         }
     }
 
+    async set(user: User){
+        try {
+          if (!user.uid){
+            throw new Error("id is undefined");
+          }
+          const id = user.uid;
+          delete user.uid;
+          this._ref.doc(id).set(user);
+          return true;
+        } catch (e) {
+          console.warn(e);
+          return false;
+        }
+      } 
+
     /**
      * 
      * @param where クエリ条件
