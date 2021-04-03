@@ -94,7 +94,6 @@ type FormType = {
         services: {
             serviceID: string,
             serviceName: string,
-            categoryID: string,
             categoryName: string,
             costPerDay: number,
             rate: number | null    // 自己評価
@@ -109,7 +108,8 @@ export default function ReportNewForm(props: PropsType){
         {
             id: "1",
             costPerDay: 50,
-            serviceName: "50円"
+            serviceName: "50円",
+            categoryName: "保険"
         },
         {
             id: "2",
@@ -144,12 +144,10 @@ export default function ReportNewForm(props: PropsType){
             comment: "",
             ranks: serviceABC.map(svABC => {
                 const abc = svABC.map(sv => {
-                    // Todo カテゴリの参照を追加
                     return {
                         serviceID: sv.id || "",
                         serviceName: sv.serviceName || "",
-                        categoryID: "", //sv.categoryID
-                        categoryName: "",   
+                        categoryName: sv.categoryName || "",   
                         rate: null,
                         costPerDay: sv.costPerDay || 0
                     }
@@ -226,7 +224,7 @@ export default function ReportNewForm(props: PropsType){
                             rate: service.rate,
                             serviceName: service.serviceName,
                             costPerDay: service.costPerDay,
-                            categoryID: service.categoryID,
+                            categoryName: service.categoryName,
                         });
                     }));
                 }));

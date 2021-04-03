@@ -59,7 +59,7 @@ export default function ServiceCreateForm(){
         const data: Service = {
             serviceName: values.serviceName,
             planName: values.planName,
-            categoryID: values.category[values.category.length - 1],
+            categoryName: values.category[values.category.length - 1],
             detail: values.detail,
             unit: unit,
             unitTerm: unitTerm,
