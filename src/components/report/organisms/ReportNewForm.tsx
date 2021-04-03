@@ -2,6 +2,9 @@ import {useFormik} from 'formik'
 import { Service } from "entities/Service";
 import { ReportManager } from 'repositories/Reports';
 import { Report } from 'entities/Report';
+import { create } from 'node:domain';
+import { message } from 'antd';
+import { ReportServiceManager } from 'repositories/ReportServices';
 
 
 
@@ -149,7 +152,19 @@ export default function ReportNewForm(props: PropsType){
                 userID: "me",
                 resultComment: "総評",
             }
-            await  reportManager.add(mock);
+            const createdReport = await reportManager.add(mock);
+            if(createdReport){
+                const reportServiceManager = new ReportServiceManager(createdReport.id);
+                await reportServiceManager.add({
+                    rank: "A",
+                    rate: 3,
+                    serviceName: "サービス名",
+                    costPerDay: 100,
+                    categoryID: null,
+                })
+            } else {
+                message.error("レポートの作成に失敗しました");
+            }
             console.log(values)
         }
     });

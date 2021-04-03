@@ -3,9 +3,12 @@ import { NullablePartial } from "libs/Util";
 
 type ReportServiceBase = {
     id: string
-    userID: string
-    resultComment: string
-    score: number
+    rank: "A" | "B" | "C"
+    // serviceRef: 
+    rate: number
+    serviceName: string
+    costPerDay: number
+    categoryID: string
 }
 
 export type ReportService = NullablePartial<ReportServiceBase>
