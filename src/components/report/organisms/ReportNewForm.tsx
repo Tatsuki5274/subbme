@@ -148,7 +148,7 @@ export default function ReportNewForm(props: PropsType){
                     return {
                         serviceID: sv.id || "",
                         serviceName: sv.serviceName || "",
-                        categoryName: sv.categoryName || "",   
+                        categoryName: sv.categoryName || "分類なし",   
                         rate: null,
                         costPerDay: sv.costPerDay || 0
                     }

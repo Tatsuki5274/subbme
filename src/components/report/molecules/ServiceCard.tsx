@@ -22,7 +22,7 @@ export default function ServiceCard(props: PropsType) {
     const {isBad, isGood, rate, clickBad, clickGood} = useRate();
     props.values.ranks[props.rankIndex].services[props.serviceIndex].rate = rate;
     return (
-        <>
+        <BaseStyle>
             <ServiceTopBoxStyle>
                 <span>{props.serviceName}</span>
                 <span>{props.formattedPrice}</span>
@@ -32,26 +32,39 @@ export default function ServiceCard(props: PropsType) {
             <div>
                 {props.categoryName}
             </div>
-            {isGood ? 
-            <IconGoodActive
-                onClick={clickGood}
-             /> : 
-            <IconGoodInactive
-                onClick={clickGood}
-            />}
-            
-            {isBad ?
-            <IconBadActive
-                onClick={clickBad}
-            /> :
-            <IconBadInactive
-                onClick={clickBad}
-            />}
-        </>
+            <RatingStyle>
+                {isGood ? 
+                <IconGoodActive
+                    onClick={clickGood}
+                /> : 
+                <IconGoodInactive
+                    onClick={clickGood}
+                />}
+                
+                {isBad ?
+                <IconBadActive
+                    onClick={clickBad}
+                /> :
+                <IconBadInactive
+                    onClick={clickBad}
+                />}
+            </RatingStyle>
+        </BaseStyle>
     )
 }
+
+const BaseStyle = styled.div({
+    backgroundColor: "#FAFAFA",
+    borderRadius: "5px",
+    border: "solid 1px #707070"
+})
 
 const ServiceTopBoxStyle = styled.div({
     display: "flex",
     justifyContent: "space-between",
+})
+
+const RatingStyle = styled.div({
+    display: "flex",
+    justifyContent: "space-around",
 })

@@ -1,4 +1,5 @@
 import { ThumbDown } from "@material-ui/icons";
+import IconBox from "./IconBox";
 
 type PropsType = {
     onClick: React.MouseEventHandler<SVGSVGElement>
@@ -6,9 +7,12 @@ type PropsType = {
 
 export default function IconBadActive(props: PropsType){
     return (
-        <ThumbDown
-            color="primary"
-            onClick={props.onClick}
-        />
+        <IconBox>
+            <ThumbDown
+                color="primary"
+                onClick={props.onClick}
+            />
+        </IconBox>
+
     );
 }
