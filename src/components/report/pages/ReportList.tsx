@@ -7,7 +7,7 @@ export default function ReportList() {
         {
             reportID: "hogehoge",
             date: "2020/01/01",
-            cost: "¥15,000",
+            formattedCost: "¥15,000",
             comment: "モックコメントです",
             score: 23,
         }

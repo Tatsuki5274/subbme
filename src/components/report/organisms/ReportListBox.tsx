@@ -9,7 +9,7 @@ import CircleBox from "../molecules/CircleBox";
 type PropsType = {
     reportID: string
     date: string
-    cost: string
+    formattedCost: string
     comment: string
     score: number
 }
@@ -30,7 +30,7 @@ export default function ReportListBox(props: PropsType) {
                     </DateStyle>
                     <CostStyle>
                         <GrayText>
-                            {props.cost}
+                            {props.formattedCost}
                         </GrayText>
                     </CostStyle>
                 </TopStyle>
@@ -66,10 +66,12 @@ const BoxStyle = styled.div({
 
 const DateStyle = styled.span({
     fontSize: "26px",
+    marginLeft: "10px",
 })
 
 const CostStyle = styled.span({
     fontSize: "26px",
+    marginRight: "10px",
 })
 
 const TopStyle = styled.div({
@@ -81,6 +83,7 @@ const CommentStyle = styled.div({
     width: "calc( 100% - 100px )",
     display: "inline-block",
     fontSize: "14px",
+    margin: "10px",
 })
 
 const CircleStyle = styled.div({
@@ -88,7 +91,7 @@ const CircleStyle = styled.div({
     height: "70px",
     fontSize: "24px",
     display: "inline-block",
-    marginTop: "10px",
+    margin: "10px",
 })
 
 const BottomStyle = styled.div({
