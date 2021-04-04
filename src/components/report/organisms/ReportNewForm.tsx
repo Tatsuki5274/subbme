@@ -18,7 +18,7 @@ import React from 'react';
 
 
 type PropsType = {
-    // services: Service[]
+    services: Service[]
 }
 
 /**
@@ -108,33 +108,8 @@ export type ReportNewFormType = FormType;
 export default function ReportNewForm(props: PropsType){
     const {currentUser} = useUser();
     const history = useHistory();
-    const mock :Service[] = [
-        {
-            id: "1",
-            costPerDay: 50,
-            serviceName: "OO保険",
-            categoryName: "保険"
-        },
-        {
-            id: "2",
-            costPerDay: 20,
-            serviceName: "Onedrive",
-            categoryName: "クラウドストレージ"
-        },
-        {
-            id: "3",
-            costPerDay: 100,
-            serviceName: "Dropbox",
-            categoryName: "クラウドストレージ"
-        },
-        {
-            id: "4",
-            costPerDay: 150,
-            serviceName: "Netflix",
-            categoryName: "動画オンデマンド"
-        }
-    ]
-    const res = divABC(mock, 60, 30, 10);
+
+    const res = divABC(props.services, 60, 30, 10);
     const serviceABC: Service[][] = [
         res.A,
         res.B,
