@@ -13,9 +13,11 @@ export default function IconBox(props: PropsType) {
 }
 
 const BoxStyle = styled.div({
-    width: "100px",
-    height: "100px",
+    width: "90px",
+    height: "90px",
     border: "solid 1px #707070",
     borderRadius: "10px",
-    display: "inline-block",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 })

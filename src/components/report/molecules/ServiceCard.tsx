@@ -21,6 +21,9 @@ type PropsType = {
 export default function ServiceCard(props: PropsType) {
     const {isBad, isGood, rate, clickBad, clickGood} = useRate();
     props.values.ranks[props.rankIndex].services[props.serviceIndex].rate = rate;
+    const iconStyle: React.CSSProperties = {
+        fontSize: "60px",
+    }
     return (
         <BaseStyle>
             <ServiceTopBoxStyle>
@@ -36,17 +39,21 @@ export default function ServiceCard(props: PropsType) {
                 {isGood ? 
                 <IconGoodActive
                     onClick={clickGood}
+                    style={iconStyle}
                 /> : 
                 <IconGoodInactive
                     onClick={clickGood}
+                    style={iconStyle}
                 />}
                 
                 {isBad ?
                 <IconBadActive
                     onClick={clickBad}
+                    style={iconStyle}
                 /> :
                 <IconBadInactive
                     onClick={clickBad}
+                    style={iconStyle}
                 />}
             </RatingStyle>
         </BaseStyle>

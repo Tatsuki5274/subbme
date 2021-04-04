@@ -4,6 +4,7 @@ import IconBox from './IconBox';
 
 type PropsType = {
     onClick: React.MouseEventHandler<SVGSVGElement>
+    style: React.CSSProperties
 }
 
 export default function IconGoodActive(props: PropsType){
@@ -12,6 +13,7 @@ export default function IconGoodActive(props: PropsType){
             <ThumbUpIcon
                 color="primary"
                 onClick={props.onClick}
+                style={props.style}
             />
         </IconBox>
 

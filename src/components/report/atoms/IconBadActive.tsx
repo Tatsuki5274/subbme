@@ -3,6 +3,7 @@ import IconBox from "./IconBox";
 
 type PropsType = {
     onClick: React.MouseEventHandler<SVGSVGElement>
+    style: React.CSSProperties
 }
 
 export default function IconBadActive(props: PropsType){
@@ -11,6 +12,7 @@ export default function IconBadActive(props: PropsType){
             <ThumbDown
                 color="primary"
                 onClick={props.onClick}
+                style={props.style}
             />
         </IconBox>
 
