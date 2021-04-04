@@ -130,7 +130,7 @@ export default function ServiceCreateForm(){
                     name="unit"
                     rules={[{required: true, message: "入力が必須です"}]}
                     style={{width: "40%"}}
-
+                    tooltip="周期の単位を入力します。"
                 >
                     <Select>
                         <Select.Option value={ServiceUnitEnum.Year}>年(365日)</Select.Option>
@@ -143,16 +143,18 @@ export default function ServiceCreateForm(){
                     name="unitTerm"
                     rules={[{required: true, message: "入力が必須です"}]}
                     style={{width: "60%"}}
+                    tooltip="支払いの周期を入力します。"
                 >
                     <InputNumber />
                 </Form.Item>
             </Input.Group>
             <Input.Group compact>
                 <Form.Item
-                    label="通貨"
+                    label="通貨(β)"
                     name="currency"
                     style={{width: "40%"}}
                     rules={[{required: true, message: "入力が必須です"}]}
+                    tooltip="計算に使用する通貨を選択します。現在は機能しません。"
                 >
                     <Select
                         defaultValue="JPY"
@@ -168,6 +170,7 @@ export default function ServiceCreateForm(){
                         {required: true, message: "入力が必須です"},
                         {type: "number", min: 1, message: "0より大きい金額を入力してください"}
                     ]}
+                    tooltip="指定期間に対して支払う金額を入力します。例. 3500を入力した場合 ¥3,500/2ヶ月"
                 >
                     <InputNumber />
                 </Form.Item>
