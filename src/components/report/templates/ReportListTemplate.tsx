@@ -3,6 +3,7 @@ import EmptyData from "components/common/molecules/EmptyData";
 import Footer from "components/common/organisms/Footer";
 import DrawerContainer from "components/wrapper/Drawer";
 import React from "react";
+import styled from "styled-components";
 import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
 import ReportListCreateButton from "../organisms/ReportListCreateButton";
 
@@ -21,9 +22,12 @@ export default function ReportListTemplate(props: PropsType) {
                         props.data.length > 0 ?
                             props.data.map(dat => {
                                 return (
-                                    <ReportListBox
-                                        {...dat}
-                                    />
+                                    <BoxStyle>
+                                        <ReportListBox
+                                            {...dat}
+                                        />
+                                    </BoxStyle>
+
                                 )
                             }) :
                             <EmptyData />
@@ -35,3 +39,7 @@ export default function ReportListTemplate(props: PropsType) {
         </>
     );
 }
+
+const BoxStyle = styled.div({
+    margin: "15px 0",
+})
