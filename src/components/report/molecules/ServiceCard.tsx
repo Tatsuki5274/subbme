@@ -1,4 +1,5 @@
 import BorderLine from "components/common/atoms/BorderLine"
+import GrayText from "components/common/atoms/GrayText"
 import { useRate } from "hooks/ReportServiceHooks"
 import React from "react"
 import styled from "styled-components"
@@ -27,14 +28,16 @@ export default function ServiceCard(props: PropsType) {
     return (
         <BaseStyle>
             <ServiceTopBoxStyle>
-                <span>{props.serviceName}</span>
-                <span>{props.formattedPrice}</span>
+                <GrayText>{props.serviceName}</GrayText>
+                <GrayText>{props.formattedPrice}</GrayText>
             </ServiceTopBoxStyle>
 
             <BorderLine />
-            <div>
-                {props.categoryName}
-            </div>
+            <ServiceCategoryStyle>
+                <GrayText>
+                    {props.categoryName}
+                </GrayText>
+            </ServiceCategoryStyle>
             <RatingStyle>
                 {isGood ? 
                 <IconGoodActive
@@ -63,12 +66,14 @@ export default function ServiceCard(props: PropsType) {
 const BaseStyle = styled.div({
     backgroundColor: "#FAFAFA",
     borderRadius: "5px",
-    border: "solid 1px #707070"
+    border: "solid 1px #707070",
+    padding: "10px",
 })
 
 const ServiceTopBoxStyle = styled.div({
     display: "flex",
     justifyContent: "space-between",
+    fontSize: "26px",
 })
 
 const RatingStyle = styled.div({
@@ -76,4 +81,8 @@ const RatingStyle = styled.div({
     justifyContent: "space-around",
     marginTop: "10px",
     marginBottom: "30px",
+})
+
+const ServiceCategoryStyle = styled.div({
+    fontSize: "20px",
 })

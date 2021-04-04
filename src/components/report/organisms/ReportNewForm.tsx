@@ -2,7 +2,7 @@ import {useFormik} from 'formik'
 import { Service, ServiceUnitDaysEnum } from "entities/Service";
 import { ReportManager } from 'repositories/Reports';
 import { Report } from 'entities/Report';
-import { message } from 'antd';
+import { Button, Input, message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
 import { useUser } from 'hooks/UserHooks';
 import { convertRank, ReportServiceRankType } from 'entities/ReportService';
@@ -11,6 +11,10 @@ import { routeBuilder } from 'router';
 import firebase from "libs/Firebase"
 import BorderLine from 'components/common/atoms/BorderLine';
 import ServiceCard from '../molecules/ServiceCard';
+import styled from 'styled-components';
+import GrayText from 'components/common/atoms/GrayText';
+import React from 'react';
+import WideBox from 'components/wrapper/WideBox';
 
 
 
@@ -109,23 +113,26 @@ export default function ReportNewForm(props: PropsType){
         {
             id: "1",
             costPerDay: 50,
-            serviceName: "50円",
+            serviceName: "OO保険",
             categoryName: "保険"
         },
         {
             id: "2",
             costPerDay: 20,
-            serviceName: "20円"
+            serviceName: "Onedrive",
+            categoryName: "クラウドストレージ"
         },
         {
             id: "3",
             costPerDay: 100,
-            serviceName: "100円"
+            serviceName: "Dropbox",
+            categoryName: "クラウドストレージ"
         },
         {
             id: "4",
-            costPerDay: null,
-            serviceName: "未設定のサービス"
+            costPerDay: 150,
+            serviceName: "Netflix",
+            categoryName: "動画オンデマンド"
         }
     ]
     const res = divABC(mock, 60, 30, 10);
@@ -135,8 +142,8 @@ export default function ReportNewForm(props: PropsType){
         res.C,
     ];
     const rankMessage = [
-        "ランクAのメッセージ",
-        "ランクBのメッセージ",
+        "支出の多くを占めている分類です。この分類を見直すことで劇的な家計改善を期待できます。まずはこの項目を良い評価にしましょう。",
+        "支出の約３割を占めている分類です。家計改善が見込めます。",
         "ランクCのメッセージ",
     ]
 
@@ -163,6 +170,7 @@ export default function ReportNewForm(props: PropsType){
                 message.error("ユーザー情報を確認できせんでした");
                 return;
             }
+            console.log(values);
 
             // 各種合計を計算
             let groupAScore = 0;
@@ -239,27 +247,67 @@ export default function ReportNewForm(props: PropsType){
 
     return <form onSubmit={formik.handleSubmit}>
         {formik.values.ranks.map((rank, rankIdx) => {
+            let totalCost = 0;
+            rank.services.forEach(sv => {
+                totalCost += sv.costPerDay;
+            });
             return (
                 <div>
-                    <div>ランク{convertRank(rankIdx)}</div>
+                    <RankTopStyle>
+                        <GrayText>ランク{convertRank(rankIdx)}</GrayText>
+                        <GrayText>{`¥${(totalCost * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}</GrayText>
+                    </RankTopStyle>
                     <BorderLine />
-                    <div>{rankMessage[rankIdx]}</div>
+                    <RankMessageStyle>
+                        <GrayText>
+                            {rankMessage[rankIdx]}
+                        </GrayText>
+                    </RankMessageStyle>
                     {rank.services.map((service, serviceIdx) => {
                         return (
-                            <ServiceCard
-                                serviceName={service.serviceName}
-                                categoryName={service.categoryName}
-                                serviceIndex={serviceIdx}
-                                rankIndex={rankIdx}
-                                values={formik.values}
-                                handleChange={formik.handleChange}
-                                formattedPrice={`¥${(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
-                            />
+                            <CardStyle>
+                                <ServiceCard
+                                    serviceName={service.serviceName}
+                                    categoryName={service.categoryName}
+                                    serviceIndex={serviceIdx}
+                                    rankIndex={rankIdx}
+                                    values={formik.values}
+                                    handleChange={formik.handleChange}
+                                    formattedPrice={`¥${(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
+                                />
+                            </CardStyle>
                         )
                     })}
                 </div>
             )
         })}
-        <button type="submit">submit</button>
+        <CommentStyle>
+            <div>振り返りコメント</div>
+            <Input.TextArea
+                name="comment"
+                onChange={formik.handleChange}
+            />
+        </CommentStyle>
+        <Button type="primary" htmlType="submit">レポート作成</Button>
+
     </form>;
 }
+
+const CardStyle = styled.div({
+    margin: "20px",
+})
+
+const RankTopStyle = styled.div({
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "26px",
+})
+
+const RankMessageStyle = styled.div({
+    fontSize: "16px",
+    margin: "10px 0",
+})
+
+const CommentStyle = styled.div({
+    margin: "10px 0",
+})
