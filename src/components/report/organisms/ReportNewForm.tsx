@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import GrayText from 'components/common/atoms/GrayText';
 import React from 'react';
 import WideBox from 'components/wrapper/WideBox';
+import Tips from 'components/common/atoms/Tips';
 
 
 
@@ -282,7 +283,7 @@ export default function ReportNewForm(props: PropsType){
             )
         })}
         <CommentStyle>
-            <div>振り返りコメント</div>
+            <div><span>振り返りコメント</span><Tips>固定費の評価結果から改善できることや良かったことなどをメモして次回の改善に繋げましょう</Tips></div>
             <Input.TextArea
                 name="comment"
                 onChange={formik.handleChange}
