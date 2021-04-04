@@ -144,7 +144,6 @@ export default function ReportNewForm(props: PropsType){
                 message.error("ユーザー情報を確認できせんでした");
                 return;
             }
-            console.log(values);
 
             // 各種合計を計算
             let groupAScore = 0;
@@ -171,12 +170,20 @@ export default function ReportNewForm(props: PropsType){
                 groupBScore * groupBWeight +
                 groupCScore * groupCWeight;
 
+            let totalCostPerDay = 0;
+            values.ranks.forEach(rank => {
+                rank.services.forEach(sv => {
+                    totalCostPerDay += sv.costPerDay;
+                })
+            })
+
             // レポートを作成
             const reportManager = new ReportManager();
             const reportParam: Report = {
                 userID: currentUser.uid,
                 resultComment: values.comment,
                 score: totalScore,
+                totalCostPerDay: totalCostPerDay,
                 createdAt: firebase.firestore.Timestamp.now(),
                 updatedAt: firebase.firestore.Timestamp.now(),
             }

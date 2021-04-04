@@ -1,5 +1,4 @@
 import { Report } from "entities/Report";
-import { FirebaseCollectionReferenceType, FirebaseQueryType } from "libs/Types";
 import { NullablePartial } from "libs/Util";
 import { useEffect, useState } from "react";
 import { ReportManager } from "repositories/Reports";
@@ -16,7 +15,6 @@ export function useReportQuery(arg1: any): ReturnType{
     const [reportList, setReportList] = useState<Report[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isEmpty, setIsEmpty] = useState<boolean>(true);
-    const manager = new ReportManager();
     useEffect(() => {
         (async ()=> {
             let result: Report[] | null = null;
@@ -30,6 +28,7 @@ export function useReportQuery(arg1: any): ReturnType{
             } else if (typeof arg1 === "string") {
                 // 文字が入力された場合はユーザーIDとして解釈する
                 const userID = arg1;
+                const manager = new ReportManager();
                 result = await manager.query((ref)=>{
                     return ref.where("userID", "==", userID);
                 });

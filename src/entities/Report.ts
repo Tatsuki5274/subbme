@@ -6,6 +6,7 @@ type ReportBase = {
     userID: string
     resultComment: string
     score: number
+    totalCostPerDay: number
     createdAt: FirebaseFirestoreTimestampType
     updatedAt: FirebaseFirestoreTimestampType
 }
