@@ -25,12 +25,14 @@ export type ServiceListCardType = {
 export default function ServiceListCard(props: ServiceListCardType){
     return (
         <Card>
-            <ServiceNameStyle>
-                {props.serviceName}
-            </ServiceNameStyle>
-            <ServicePlanStyle>
-                {props.planName}
-            </ServicePlanStyle>
+            <ServiceTopStyle>
+                <ServiceNameStyle>
+                    {props.serviceName}
+                </ServiceNameStyle>
+                <ServicePlanStyle>
+                    {props.planName}
+                </ServicePlanStyle>
+            </ServiceTopStyle>
             <LineStyle>
                 <BorderLine />
             </LineStyle>
@@ -58,14 +60,12 @@ const LineStyle = styled.div({
 
 const ServiceNameStyle = styled.div({
     display: "inline-block",
-    width: "50%",
     textAlign: "left",
     fontSize: "22px",
 })
 
 const ServicePlanStyle = styled.div({
     display: "inline-block",
-    width: "50%",
     textAlign: "right",
     fontSize: "22px",
 })
@@ -75,4 +75,9 @@ const ConvertPriceStyle = styled.div({
     width: "50%",
     textAlign: "left",
     fontSize: "20px",
+})
+
+const ServiceTopStyle = styled.div({
+    display: "flex",
+    justifyContent: "space-between",
 })
