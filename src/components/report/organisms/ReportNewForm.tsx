@@ -5,7 +5,7 @@ import { Report } from 'entities/Report';
 import { message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
 import { useUser } from 'hooks/UserHooks';
-import { ReportServiceRankType } from 'entities/ReportService';
+import { convertRank, ReportServiceRankType } from 'entities/ReportService';
 import { useHistory } from 'react-router';
 import { routeBuilder } from 'router';
 import firebase from "libs/Firebase"
@@ -241,7 +241,7 @@ export default function ReportNewForm(props: PropsType){
         {formik.values.ranks.map((rank, rankIdx) => {
             return (
                 <div>
-                    <div>ランク{rankIdx}</div>
+                    <div>ランク{convertRank(rankIdx)}</div>
                     <BorderLine />
                     <div>{rankMessage[rankIdx]}</div>
                     {rank.services.map((service, serviceIdx) => {

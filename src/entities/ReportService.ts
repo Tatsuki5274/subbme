@@ -6,11 +6,11 @@ export const ReportServiceRankEnum = {
     B: "B",
     C: "C",
 } as const;
-export type ReportServiceRankType = typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum]
+export type ReportServiceRankType = typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum];
 
 type ReportServiceBase = {
     id: string
-    rank: "A" | "B" | "C"
+    rank: ReportServiceRankType
     // serviceRef: 
     rate: number
     serviceName: string
@@ -28,3 +28,19 @@ export const buildReportService = (id: string, data: FirebaseDocumentDataType) =
   
     return user
 }
+
+export function convertRank(num: number): string | null{
+    let resutl: string | null = null
+    switch(num){
+        case 0:
+            resutl = "A";
+            break;
+        case 1:
+            resutl = "B";
+            break;
+        case 2:
+            resutl = "C";
+            break
+    }
+    return resutl;
+};

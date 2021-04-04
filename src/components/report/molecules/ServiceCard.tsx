@@ -74,4 +74,6 @@ const ServiceTopBoxStyle = styled.div({
 const RatingStyle = styled.div({
     display: "flex",
     justifyContent: "space-around",
+    marginTop: "10px",
+    marginBottom: "30px",
 })
