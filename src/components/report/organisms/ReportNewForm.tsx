@@ -289,7 +289,7 @@ export default function ReportNewForm(props: PropsType){
                 name="comment"
                 onChange={formik.handleChange}
             />  
-        </Form.Item>z
+        </Form.Item>
         <Button type="primary" htmlType="submit">レポート作成</Button>
 
     </form>;

@@ -9,6 +9,7 @@ import Text from "components/common/atoms/Text";
 import ServiceListFunction from "../organisms/ServiceListFunction";
 import { Service, ServiceUnitType } from "entities/Service";
 import DrawerContainer from "components/wrapper/Drawer";
+import EmptyData from "components/common/molecules/EmptyData";
 
 
 type PropsType = {
@@ -34,18 +35,18 @@ export default function ServiceListTemplate(props: PropsType){
                                 serviceList={props.serviceList}
                                 setServiceList={props.setServiceList}
                             />
-                            {props.cardData ?
-                            <ServiceListData
-                                data={props.cardData}
-                            />
-                            : null}
+                            {
+                                props.cardData && props.cardData.length > 0 ?
+                                <ServiceListData
+                                    data={props.cardData}
+                                />
+                                : <EmptyData />
+                            }
                         </>
                     </ContentWrapper>
-                    <Footer />
                 </>
             </DrawerContainer>
-            {/* <Header /> */}
-
+            <Footer />
         </>
     );
 }
