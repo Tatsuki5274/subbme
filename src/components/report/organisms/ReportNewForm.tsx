@@ -236,7 +236,7 @@ export default function ReportNewForm(props: PropsType){
                 <div>
                     <RankTopStyle>
                         <GrayText>ランク{convertRank(rankIdx)}</GrayText>
-                        <GrayText>{`¥${(totalCost * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}</GrayText>
+                        <GrayText>{`¥${Math.round(totalCost * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}</GrayText>
                     </RankTopStyle>
                     <BorderLine />
                     <RankMessageStyle>
@@ -254,7 +254,7 @@ export default function ReportNewForm(props: PropsType){
                                     rankIndex={rankIdx}
                                     values={formik.values}
                                     handleChange={formik.handleChange}
-                                    formattedPrice={`¥${(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
+                                    formattedPrice={`¥${Math.round(service.costPerDay * ServiceUnitDaysEnum.Month).toLocaleString()}/月`}
                                 />
                             </CardStyle>
                         )

@@ -42,7 +42,10 @@ export default function ServiceListFunction(props: PropsType){
             >
                 {Object.values(ServiceUnitEnum).map(unit => {
                     return (
-                        <Option value={unit}>{getServiceUnitString(unit)}</Option>
+                        <Option
+                            key={unit}
+                            value={unit}
+                        >{getServiceUnitString(unit)}</Option>
                     )
                 })}
             </Select>
@@ -68,7 +71,12 @@ export default function ServiceListFunction(props: PropsType){
             >
                 {sortSelection.map(sel => {
                     return (
-                        <Option value={sel.value}>{sel.display}</Option>
+                        <Option
+                            key={sel.value}
+                            value={sel.value}
+                        >
+                            {sel.display}
+                        </Option>
                     )
                 })}
             </Select>

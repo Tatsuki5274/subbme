@@ -13,6 +13,7 @@ export default function ServiceListData(props: PropsType){
             {props.data.map(_data => {
                 return (
                     <LinkedBlock
+                        key={_data.serviceID}
                         to={routeBuilder.serviceDetailPath(_data.serviceID)}
                     >
                         <CardStyle>

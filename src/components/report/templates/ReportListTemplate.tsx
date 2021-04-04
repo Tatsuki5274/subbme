@@ -22,7 +22,9 @@ export default function ReportListTemplate(props: PropsType) {
                         props.data.length > 0 ?
                             props.data.map(dat => {
                                 return (
-                                    <BoxStyle>
+                                    <BoxStyle
+                                        key={dat.reportID}
+                                    >
                                         <ReportListBox
                                             {...dat}
                                         />
