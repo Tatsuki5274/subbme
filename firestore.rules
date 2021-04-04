@@ -1,9 +1,29 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 4, 18);
+
+    // ログイン状況の確認
+    function isAuthenticated() {
+        return request.auth != null;
+    }
+
+    // 所有者確認
+    function isOwner() {
+        return isAuthenticated() && resource.data.userID == request.auth.uid;
+    }
+
+    match /Service/{serviceID} {
+      allow read, update, delete: if isOwner()
+      allow create: if isAuthenticated()
+    }
+
+    match /User/{userID} {
+      allow read: if userID == request.auth.uid;
+    }
+
+    match /Report/{reportID}/{document=**} {
+      allow read, update, delete: if isOwner()
+      allow create: if isAuthenticated()
     }
   }
 }
