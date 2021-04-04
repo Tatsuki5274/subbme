@@ -2,7 +2,7 @@ import {useFormik} from 'formik'
 import { Service, ServiceUnitDaysEnum } from "entities/Service";
 import { ReportManager } from 'repositories/Reports';
 import { Report } from 'entities/Report';
-import { Button, Input, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { ReportServiceManager } from 'repositories/ReportServices';
 import { useUser } from 'hooks/UserHooks';
 import { convertRank, ReportServiceRankType } from 'entities/ReportService';
@@ -14,8 +14,6 @@ import ServiceCard from '../molecules/ServiceCard';
 import styled from 'styled-components';
 import GrayText from 'components/common/atoms/GrayText';
 import React from 'react';
-import WideBox from 'components/wrapper/WideBox';
-import Tips from 'components/common/atoms/Tips';
 
 
 
@@ -282,13 +280,16 @@ export default function ReportNewForm(props: PropsType){
                 </div>
             )
         })}
-        <CommentStyle>
-            <div><span>振り返りコメント</span><Tips>固定費の評価結果から改善できることや良かったことなどをメモして次回の改善に繋げましょう</Tips></div>
+        <Form.Item
+            label="振り返りコメント"
+            tooltip="固定費の評価結果から改善できることや良かったことなどをメモして次回の改善に繋げましょう"
+            wrapperCol={{span: 24}}
+        >
             <Input.TextArea
                 name="comment"
                 onChange={formik.handleChange}
-            />
-        </CommentStyle>
+            />  
+        </Form.Item>z
         <Button type="primary" htmlType="submit">レポート作成</Button>
 
     </form>;
@@ -306,9 +307,5 @@ const RankTopStyle = styled.div({
 
 const RankMessageStyle = styled.div({
     fontSize: "16px",
-    margin: "10px 0",
-})
-
-const CommentStyle = styled.div({
     margin: "10px 0",
 })
