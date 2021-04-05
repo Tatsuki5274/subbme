@@ -27,7 +27,8 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start:dev": "dotenv -e .env.development react-scripts start",
+    "start:emu": "REACT_APP_FIREBASE_EMULATOR=true dotenv -e .env.development react-scripts start",
     "build:prod": "dotenv -e .env.production react-scripts build",
     "build:dev": "dotenv -e .env.development react-scripts build",
     "test": "react-scripts test",
