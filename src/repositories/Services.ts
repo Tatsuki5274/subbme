@@ -96,6 +96,17 @@ export class ServiceManager implements ManagerInterface<Service>{
     const data = await this._buildList(query);
     return data;
   }
+
+  async delete(id: string){
+    try {
+      await this._ref.doc(id).delete();
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
 }
 
 /**

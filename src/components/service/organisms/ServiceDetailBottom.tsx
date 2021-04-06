@@ -1,7 +1,8 @@
-import { Button, Popconfirm } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import WideBox from "components/wrapper/WideBox";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { ServiceManager } from "repositories/Services";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 
@@ -10,11 +11,15 @@ type PropsType = {
 }
 
 export default function ServiceDetailBottom(props: PropsType) {
+    const history = useHistory();
     const onClickArchive = async () => {
         console.log("onClickArchive");
     };
     const onClickDelete = async () => {
-        console.log("onClickDelete");
+        const manager = new ServiceManager();
+        await manager.delete(props.serviceID);
+        message.success("削除しました");
+        history.push(routeBuilder.serviceListPath());
     };
     return <>
         <SpaceButtonStyle>
