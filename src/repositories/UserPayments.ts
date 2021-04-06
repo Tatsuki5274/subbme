@@ -97,4 +97,30 @@ export class UserPaymentManager implements ManagerInterface<UserPayment> {
         const data = await this._buildList(query);
         return data;
     }
+
+
+  async delete(id: string){
+    try {
+      await this._ref.doc(id).delete();
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  async update(payment: UserPayment){
+    try {
+      const id = payment.id;
+      if (!id) {
+        throw new Error("ID is not defined");
+      }
+      delete payment.id;
+      await this._ref.doc(id).update(payment);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
 }

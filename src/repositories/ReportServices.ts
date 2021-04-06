@@ -96,4 +96,30 @@ export class ReportServiceManager implements ManagerInterface<ReportService>{
     const data = await this._buildList(query);
     return data;
   }
+
+
+  async delete(id: string){
+    try {
+      await this._ref.doc(id).delete();
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  async update(service: ReportService){
+    try {
+      const serviceID = service.id;
+      if (!serviceID) {
+        throw new Error("ID is not defined");
+      }
+      delete service.id;
+      await this._ref.doc(serviceID).update(service);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
 }

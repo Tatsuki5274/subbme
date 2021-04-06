@@ -98,6 +98,32 @@ export class UserManager implements ManagerInterface<User> {
         return data;
     }
 
+
+  async delete(id: string){
+    try {
+      await this._ref.doc(id).delete();
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  async update(user: User){
+    try {
+      const serviceID = user.uid;
+      if (!serviceID) {
+        throw new Error("ID is not defined");
+      }
+      delete user.uid;
+      await this._ref.doc(serviceID).update(user);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
     getUserPaymentManager(){
         const payment = new UserPaymentManager(this._ref.id);
         return payment;

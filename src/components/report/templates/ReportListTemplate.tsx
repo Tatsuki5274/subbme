@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
-import ReportListCreateButton from "../organisms/ReportListCreateButton";
 
 type PropsType = {
     data: ReportListBoxType[]

@@ -7,6 +7,8 @@ export default interface ManagerInterface<T>{
     get(id: string): Promise<NullablePartial<T> | null>
     add(arg: T): Promise<FirebaseDocumentReferenceType | null>
     set(arg: T): Promise<boolean>
+    delete(id: string): Promise<boolean>
+    update(arg: T): Promise<boolean>
     query(
         where: (
             ref: FirebaseCollectionReferenceType

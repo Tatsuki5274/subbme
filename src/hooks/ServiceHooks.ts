@@ -50,7 +50,7 @@ export function useGetService(serviceID: string) {
             }
             setIsLoading(false)
         })()
-    }, []);
+    }, [serviceID]);
 
     return {service, isLoading};
 }
