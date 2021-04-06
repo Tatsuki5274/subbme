@@ -1,8 +1,16 @@
 import { Empty } from "antd";
 import React from "react";
 
-export default function EmptyData() {
+type PropsType = {
+    children?: JSX.Element
+}
+
+export default function EmptyData(props: PropsType) {
     return (
-        <Empty />
+        <Empty 
+            description="データがありません"
+        >
+            {props.children}
+        </Empty>
     )
 }

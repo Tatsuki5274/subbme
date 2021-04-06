@@ -1,8 +1,11 @@
+import { Button } from "antd";
 import Title from "components/common/atoms/Title";
 import EmptyData from "components/common/molecules/EmptyData";
 import Footer from "components/common/organisms/Footer";
 import DrawerContainer from "components/wrapper/Drawer";
 import React from "react";
+import { Link } from "react-router-dom";
+import { routeBuilder } from "router";
 import styled from "styled-components";
 import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
 import ReportListCreateButton from "../organisms/ReportListCreateButton";
@@ -17,7 +20,7 @@ export default function ReportListTemplate(props: PropsType) {
             <DrawerContainer>
                 <>
                     <Title>サービス分析一覧</Title>
-                    <ReportListCreateButton>レポート作成</ReportListCreateButton>
+                    {/* <ReportListCreateButton>レポート作成</ReportListCreateButton> */}
                     {
                         props.data.length > 0 ?
                             props.data.map(dat => {
@@ -32,7 +35,13 @@ export default function ReportListTemplate(props: PropsType) {
 
                                 )
                             }) :
-                            <EmptyData />
+                            <EmptyData>
+                                <Link to={routeBuilder.reportNewPath()}>
+                                    <Button
+                                        type="primary"
+                                    >レポート作成</Button>
+                                </Link>
+                            </EmptyData>
                     }
 
                 </>

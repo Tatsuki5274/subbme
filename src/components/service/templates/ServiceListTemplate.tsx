@@ -10,6 +10,9 @@ import ServiceListFunction from "../organisms/ServiceListFunction";
 import { Service, ServiceUnitType } from "entities/Service";
 import DrawerContainer from "components/wrapper/Drawer";
 import EmptyData from "components/common/molecules/EmptyData";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
+import { routeBuilder } from "router";
 
 
 type PropsType = {
@@ -40,7 +43,14 @@ export default function ServiceListTemplate(props: PropsType){
                                 <ServiceListData
                                     data={props.cardData}
                                 />
-                                : <EmptyData />
+                                : <EmptyData>
+                                    <Link to={routeBuilder.serviceCreatePath()}>
+                                        <Button
+                                            type="primary"
+                                        >サービス作成</Button>
+                                    </Link>
+
+                                </EmptyData>
                             }
                         </>
                     </ContentWrapper>

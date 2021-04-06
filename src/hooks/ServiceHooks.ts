@@ -20,7 +20,7 @@ export function useListService(userID?: string){
                 // const data = await listService(query);
                 setServiceList(data);
                 setIsLoading(false);
-                if(data){
+                if(data && data.length > 0){
                     setIsEmpty(false);
                 } else {
                     setIsEmpty(true);
