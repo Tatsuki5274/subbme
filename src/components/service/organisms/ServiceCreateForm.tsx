@@ -186,7 +186,11 @@ export default function ServiceCreateForm(){
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit">登録</Button>
+                <Button
+                    type="primary"
+                    block
+                    htmlType="submit"
+                >登録</Button>
             </Form.Item>
         </Form>
     );

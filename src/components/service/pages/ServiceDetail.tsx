@@ -1,3 +1,4 @@
+import Result500 from "components/common/organisms/500";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import PrivateRoute from "components/wrapper/PrivateRoute";
 import { useGetService } from "hooks/ServiceHooks";
@@ -23,35 +24,38 @@ type PropsType = {
 
 export default function ServiceDetail(props: PropsType) {
     const serviceID = props.match.params.serviceID;
-    const {isLoading, service} = useGetService(serviceID);
+    const { isLoading, service } = useGetService(serviceID);
 
-    console.log(service)
+    try {
 
-    if (isLoading) {
-        return <LoadingScreen />
+        if (isLoading) {
+            return <LoadingScreen />
+        }
+
+        if (!service?.id) {
+            throw new Error("ドキュメントの取得に失敗しました");
+        }
+        const cost = (service.costPerDay || 0) * (service.unitTerm || 0) * convertUnitToDay(service.unit);
+
+        const data = {
+            serviceID: service.id,
+            serviceName: service.serviceName || "",
+            planName: service.planName || "",
+            originalPrice: `¥${cost.toLocaleString()}/${service.unitTerm}${convertUnitToString(service.unit)}`,
+            categoryName: service.categoryName || [],
+            detail: service.detail || "",
+            isArchived: service.isArchived || false,
+        }
+
+        return <PrivateRoute>
+            <ServicedetailTemplate
+                {...data}
+            />
+        </PrivateRoute>
+    } catch(e) {
+        console.error(e);
+        return <Result500/>
     }
-
-    if (!service?.id) {
-        throw new Error("必須属性が存在しません");
-    }
-    const cost = (service.costPerDay || 0) * (service.unitTerm || 0) * convertUnitToDay(service.unit);
-
-    const data = {
-        serviceID: service.id,
-        serviceName: service.serviceName || "",
-        planName: service.planName || "",
-        // originalPrice: "¥2000/2月",
-        originalPrice: `¥${cost.toLocaleString()}/${service.unitTerm}${convertUnitToString(service.unit)}`,
-        categoryName: service.categoryName || [],
-        detail: service.detail || "",
-        isArchived: service.isArchived || false,
-    }
-
-    return <PrivateRoute>
-        <ServicedetailTemplate
-            {...data}
-        />
-    </PrivateRoute>
     // return <ServicedetailTemplate
     //     {...mock}
     // />;

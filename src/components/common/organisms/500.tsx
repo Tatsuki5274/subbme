@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import { routeBuilder } from 'router';
 import SimpleHeader from './SimpleHeader';
 
-type PropsType = {
-    error: any
-}
 
-export default function Result500(props: PropsType){
-    console.error(props.error);
+
+export default function Result500(){
+    // console.error(props.error);
 
     return (
         <>

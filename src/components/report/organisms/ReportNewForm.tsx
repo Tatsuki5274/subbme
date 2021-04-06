@@ -272,7 +272,11 @@ export default function ReportNewForm(props: PropsType){
                 onChange={formik.handleChange}
             />  
         </Form.Item>
-        <Button type="primary" htmlType="submit">レポート作成</Button>
+        <Button
+            type="primary"
+            block
+            htmlType="submit"
+        >レポート作成</Button>
 
     </form>;
 }
