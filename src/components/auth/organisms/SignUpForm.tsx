@@ -1,7 +1,7 @@
 import { Form, Input, Button, message } from 'antd';
 import { formLayout } from 'common/styles';
 import { useHistory } from 'react-router';
-import { signUpUser } from 'repositories/User';
+import { signUpUser } from 'libs/User';
 import { routeBuilder } from 'router';
 
 type FormType = {

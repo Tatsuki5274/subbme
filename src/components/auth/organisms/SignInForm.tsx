@@ -1,4 +1,4 @@
-import { signInUser } from "repositories/User";
+import { signInUser } from "libs/User";
 import { Form, Input, Button, message } from 'antd';
 import { routeBuilder } from "router";
 import { useHistory } from "react-router";
