@@ -11,7 +11,7 @@ type PropsType = {
     serviceName: string
     planName: string
     originalPrice: string
-    categoryName: string
+    categoryName: string[]
     detail: string
     isArchived: boolean
 }

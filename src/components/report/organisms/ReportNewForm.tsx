@@ -97,7 +97,7 @@ type FormType = {
         services: {
             serviceID: string,
             serviceName: string,
-            categoryName: string,
+            categoryName: string[],
             costPerDay: number,
             rate: number | null    // 自己評価
         }[]
@@ -129,7 +129,7 @@ export default function ReportNewForm(props: PropsType){
                     return {
                         serviceID: sv.id || "",
                         serviceName: sv.serviceName || "",
-                        categoryName: sv.categoryName || "分類なし",   
+                        categoryName: sv.categoryName || ["分類なし"],   
                         rate: null,
                         costPerDay: sv.costPerDay || 0
                     }

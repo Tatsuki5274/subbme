@@ -6,7 +6,7 @@ type PropsType = {
     serviceName: string
     planName: string
     originalPrice: string
-    categoryName: string
+    categoryName: string[]
 }
 
 export default function ServiceDetailTop(props: PropsType) {
@@ -21,7 +21,7 @@ export default function ServiceDetailTop(props: PropsType) {
             <GrayText>{props.originalPrice}</GrayText>
         </OriginalPriceStyle>
         <CategoryNameStyle>
-            <GrayText>{props.categoryName}</GrayText>
+            <GrayText>{props.categoryName.join('/')}</GrayText>
         </CategoryNameStyle>
     </div>;
 }

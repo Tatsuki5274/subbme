@@ -21,7 +21,7 @@ type ServiceBase = {
     serviceName: string
     planName: string
     detail: string
-    categoryName: string
+    categoryName: string[]
     unit: ServiceUnitType
     // costPerUnitTerm: number
     costPerDay: number

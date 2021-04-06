@@ -15,7 +15,7 @@ type ReportServiceBase = {
     rate: number
     serviceName: string
     costPerDay: number
-    categoryName: string
+    categoryName: string[]
 }
 
 export type ReportService = NullablePartial<ReportServiceBase>

@@ -42,7 +42,7 @@ export default function ServiceDetail(props: PropsType) {
         planName: service.planName || "",
         // originalPrice: "¥2000/2月",
         originalPrice: `¥${cost.toLocaleString()}/${service.unitTerm}${convertUnitToString(service.unit)}`,
-        categoryName: service.categoryName || "",
+        categoryName: service.categoryName || [],
         detail: service.detail || "",
         isArchived: service.isArchived || false,
     }

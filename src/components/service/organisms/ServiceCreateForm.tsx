@@ -59,7 +59,8 @@ export default function ServiceCreateForm(){
         const data: Service = {
             serviceName: values.serviceName,
             planName: values.planName,
-            categoryName: values.category[values.category.length - 1],
+            // categoryName: values.category[values.category.length - 1],
+            categoryName: values.category,
             detail: values.detail,
             unit: unit,
             unitTerm: unitTerm,
@@ -67,6 +68,7 @@ export default function ServiceCreateForm(){
             costPerDay: costPerUnitTerm / unitValue / unitTerm,
             paymentMethod: values.paymentMethod,
             userID: currentUser?.uid,
+            isArchived: false,
             createdAt: firebase.firestore.Timestamp.now(),
             updatedAt: firebase.firestore.Timestamp.now(),
         }
