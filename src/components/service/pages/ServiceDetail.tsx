@@ -43,7 +43,8 @@ export default function ServiceDetail(props: PropsType) {
         // originalPrice: "¥2000/2月",
         originalPrice: `¥${cost.toLocaleString()}/${service.unitTerm}${convertUnitToString(service.unit)}`,
         categoryName: service.categoryName || "",
-        detail: service.detail || ""
+        detail: service.detail || "",
+        isArchived: service.isArchived || false,
     }
 
     return <PrivateRoute>

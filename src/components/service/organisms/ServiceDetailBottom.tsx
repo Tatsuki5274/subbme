@@ -1,6 +1,5 @@
 import { Button, message, Popconfirm } from "antd";
-import WideBox from "components/wrapper/WideBox";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { ServiceManager } from "repositories/Services";
 import { routeBuilder } from "router";
@@ -8,23 +7,38 @@ import styled from "styled-components";
 
 type PropsType = {
     serviceID: string
+    isArchived: boolean
 }
 
 export default function ServiceDetailBottom(props: PropsType) {
     const history = useHistory();
+    const [isArchived, setIsArchived] = useState(props.isArchived);
     const onClickArchive = async () => {
-        console.log("onClickArchive");
         const manager = new ServiceManager();
         const result = await manager.update({
             id: props.serviceID,
             isArchived: true
         });
         if (result) {
+            setIsArchived(true);
             message.success("アーカイブしました");
         } else {
             message.error("アーカイブに失敗しました");
         }
     };
+    const onClickUnarchive = async () => {
+        const manager = new ServiceManager();
+        const result = await manager.update({
+            id: props.serviceID,
+            isArchived: false
+        });
+        if (result) {
+            setIsArchived(false);
+            message.success("アーカイブを解除しました");
+        } else {
+            message.error("アーカイブの解除に失敗しました");
+        }
+    }
     const onClickDelete = async () => {
         const manager = new ServiceManager();
         await manager.delete(props.serviceID);
@@ -42,12 +56,22 @@ export default function ServiceDetailBottom(props: PropsType) {
         </SpaceButtonStyle>
 
         <SpaceButtonStyle>
-            <Button
-                danger
-                block
-                onClick={onClickArchive}
-            >アーカイブ</Button>
+            {
+                isArchived ?
+                    <Button
+                        danger
+                        block
+                        onClick={onClickUnarchive}
+                    >アーカイブ解除</Button> :
+
+                    <Button
+                        danger
+                        block
+                        onClick={onClickArchive}
+                    >アーカイブ</Button>
+            }
         </SpaceButtonStyle>
+        
         <SpaceButtonStyle>
             <Popconfirm
                 title="サービス情報を削除しますか？この操作は取り消せません。"

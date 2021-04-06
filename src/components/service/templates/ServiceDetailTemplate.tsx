@@ -13,6 +13,7 @@ type PropsType = {
     originalPrice: string
     categoryName: string
     detail: string
+    isArchived: boolean
 }
 
 export default function ServicedetailTemplate(props: PropsType) {
@@ -31,6 +32,7 @@ export default function ServicedetailTemplate(props: PropsType) {
                     />
                     <ServiceDetailBottom
                         serviceID={props.serviceID}
+                        isArchived={props.isArchived}
                     />
                 </>
             </ContentWrapper>
