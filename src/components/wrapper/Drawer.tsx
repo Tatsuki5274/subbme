@@ -135,7 +135,10 @@ const container = undefined
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar} style={{backgroundColor: "#5794C3"}}>
+      <AppBar position="fixed" className={classes.appBar} style={{
+        backgroundColor: "#5794C3",
+        zIndex: "auto",
+      }}>
         <Toolbar>
           <IconButton
             color="inherit"
