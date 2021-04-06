@@ -31,7 +31,7 @@ export default function ServiceCreateForm(){
         detail: "",
         unit: "",
         unitTerm: "",
-        currency: "",
+        currency: "JPY",
         costPerUnitTerm: "",
         paymentMethod: "",
     }
@@ -152,17 +152,17 @@ export default function ServiceCreateForm(){
             </Input.Group>
             <Input.Group compact>
                 <Form.Item
-                    label="通貨(β)"
+                    label="通貨"
                     name="currency"
                     style={{width: "40%"}}
                     rules={[{required: true, message: "入力が必須です"}]}
-                    tooltip="計算に使用する通貨を選択します。現在は機能しません。"
+                    tooltip="通貨の選択をします。現在は準備中です。"
                 >
                     <Select
-                        defaultValue="JPY"
+                        disabled
                     >
                         <Select.Option value="JPY">円</Select.Option>
-                    </Select>            
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     label="価格"
