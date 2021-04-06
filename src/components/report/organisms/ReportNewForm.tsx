@@ -249,7 +249,7 @@ export default function ReportNewForm(props: PropsType){
                             <CardStyle>
                                 <ServiceCard
                                     serviceName={service.serviceName}
-                                    categoryName={service.categoryName}
+                                    categoryName={service.categoryName[service.categoryName.length - 1]}
                                     serviceIndex={serviceIdx}
                                     rankIndex={rankIdx}
                                     values={formik.values}

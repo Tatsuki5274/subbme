@@ -11,7 +11,7 @@ import { ReportNewFormType } from "../organisms/ReportNewForm"
 
 type PropsType = {
     serviceName: string
-    categoryName: string[]
+    categoryName: string
     formattedPrice: string
     rankIndex: number
     serviceIndex: number
