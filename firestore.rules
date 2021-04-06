@@ -8,13 +8,13 @@ service cloud.firestore {
     }
 
     // 所有者確認
-    function isOwner() {
-        return isAuthenticated() && resource.data.userID == request.auth.uid;
+    function isOwner(userID) {
+        return isAuthenticated() && userID == request.auth.uid;
     }
 
     match /Service/{serviceID} {
-      allow read, update, delete: if isOwner()
-      allow create: if isAuthenticated()
+      allow read, update, delete: if isOwner(resource.data.userID)
+      allow create: if isOwner(request.resource.data.userID)
     }
 
     match /User/{userID} {
@@ -22,8 +22,8 @@ service cloud.firestore {
     }
 
     match /Report/{reportID}/{document=**} {
-      allow read, update, delete: if isOwner()
-      allow create: if isAuthenticated()
+      allow read, update, delete: if isOwner(resource.data.userID)
+      allow create: if isOwner(request.resource.data.userID)
     }
   }
 }
