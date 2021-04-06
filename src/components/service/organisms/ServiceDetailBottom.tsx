@@ -14,6 +14,16 @@ export default function ServiceDetailBottom(props: PropsType) {
     const history = useHistory();
     const onClickArchive = async () => {
         console.log("onClickArchive");
+        const manager = new ServiceManager();
+        const result = await manager.update({
+            id: props.serviceID,
+            isArchived: true
+        });
+        if (result) {
+            message.success("アーカイブしました");
+        } else {
+            message.error("アーカイブに失敗しました");
+        }
     };
     const onClickDelete = async () => {
         const manager = new ServiceManager();

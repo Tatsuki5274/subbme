@@ -107,6 +107,21 @@ export class ServiceManager implements ManagerInterface<Service>{
     }
   }
 
+  async update(service: Service){
+    try {
+      const serviceID = service.id;
+      if (!serviceID) {
+        throw new Error("ID is not defined");
+      }
+      delete service.id;
+      await this._ref.doc(serviceID).update(service);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
 }
 
 /**
