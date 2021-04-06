@@ -36,3 +36,21 @@ export function useListService(userID?: string){
     // console.log(serviceList, isLoading, isEmpty)
     return {serviceList, setServiceList, isLoading, isEmpty};
 }
+
+export function useGetService(serviceID: string) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [service, setService] = useState<Service | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const manager = new ServiceManager();
+            const data = await manager.get(serviceID);
+            if(data) {
+                setService(data);
+            }
+            setIsLoading(false)
+        })()
+    }, []);
+
+    return {service, isLoading};
+}
