@@ -1,7 +1,6 @@
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
-import ReportChart from "components/report/pages/ReportChart";
 import ReportList from "components/report/pages/ReportList";
 import ReportNew from "components/report/pages/ReportNew";
 import ServiceCreate from "components/service/pages/ServiceCreate";
@@ -56,7 +55,6 @@ const Router = () => {
                     {/* 分析関係 */}
                     <Route exact path={routeBuilder.reportListPath()} component={ReportList} />
                     <Route exact path={routeBuilder.reportNewPath()} component={ReportNew} />
-                    <Route exact path={routeBuilder.reportChartPath()} component={ReportChart} />
                     
                     <Route exact path="/test" component={TestPage} />
                     <Result404/>
@@ -99,9 +97,6 @@ export const routeBuilder = {
     },
     reportEditPath: (reportID: string, host="") => {
         return `${host}/report/${reportID}/edit`;
-    },
-    reportChartPath: (host="") => {
-        return `${host}/chart/`;
     },
     settingsPath: (host="") => {
         return `${host}/settings`;

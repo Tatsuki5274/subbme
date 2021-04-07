@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Tabs } from "antd";
 import Title from "components/common/atoms/Title";
 import EmptyData from "components/common/molecules/EmptyData";
 import Footer from "components/common/organisms/Footer";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
+import ReportListChartRender from "../organisms/ReportListChartRender";
 
 type PropsType = {
     data: ReportListBoxType[]
@@ -22,18 +23,34 @@ export default function ReportListTemplate(props: PropsType) {
                     {/* <ReportListCreateButton>レポート作成</ReportListCreateButton> */}
                     {
                         props.data.length > 0 ?
-                            props.data.map(dat => {
-                                return (
-                                    <BoxStyle
-                                        key={dat.reportID}
-                                    >
-                                        <ReportListBox
-                                            {...dat}
-                                        />
-                                    </BoxStyle>
+                            <Tabs>
+                                <Tabs.TabPane
+                                    tab="ボックス表示"
+                                    key="box"
+                                >
+                                    {
+                                        props.data.map(dat => {
+                                            return (
+                                                <BoxStyle
+                                                    key={dat.reportID}
+                                                >
+                                                    <ReportListBox
+                                                        {...dat}
+                                                    />
+                                                </BoxStyle>
 
-                                )
-                            }) :
+                                            )
+                                        })
+                                    }
+                                </Tabs.TabPane>
+                                <Tabs.TabPane
+                                    tab="グラフ表示"
+                                    key="line"
+                                >
+                                    <ReportListChartRender/>
+                                </Tabs.TabPane>
+                            </Tabs>
+ :
                             <EmptyData>
                                 <Link to={routeBuilder.reportNewPath()}>
                                     <Button
