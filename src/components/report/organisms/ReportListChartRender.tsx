@@ -10,18 +10,26 @@ import { Line } from "react-chartjs-2";
           ticks: {
             beginAtZero: true,
           },
+          scaleLabel: {
+            display: true,
+            labelString: 'スコア',
+          }
         }
       ],
       xAxes: [
-          {
-              type: "time",
-              unit: "month",
-              time: {
-                displayFormats: {
-                    "day": "M/D"
-                }
-              }
+        {
+          type: "time",
+          unit: "month",
+          time: {
+            displayFormats: {
+                "day": "M/D"
+            }
+          },
+          scaleLabel: {
+            display: true,
+            labelString: '作成日',
           }
+        }
       ]
     },
   }
@@ -41,7 +49,7 @@ export default function ReportChartRender(props: PropsType){
     }),
     datasets: [
       {
-        label: '# of Votes',
+        label: '分析スコア',
         // data: [12, 19, 3, 5, 2, 3],
         data: props.data.map(dat => {
           return dat.score;
