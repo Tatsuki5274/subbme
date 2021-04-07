@@ -11,7 +11,30 @@ import ReportListBox, { ReportListBoxType } from "../organisms/ReportListBox";
 import ReportListChartRender from "../organisms/ReportListChartRender";
 
 type PropsType = {
-    data: ReportListBoxType[]
+    boxData: ReportListBoxType[]
+    chartData: ReportListChartType[]
+}
+
+export type ReportListChartType = {
+    date: Date,
+    score: number,  
+}
+
+function ConvertChartFormat(data: ReportListBoxType[]): ReportListChartType[] {
+    console.log(data)
+    const result: ReportListChartType[] = [];
+    data.forEach(dat => {
+        try {
+            const date: Date = new Date(dat.date);
+            result.push({
+                score: dat.score,
+                date: date,
+            });
+        } catch(e) {
+            //日付の入力に異常がある場合はデータを無視する
+        }
+    })
+    return result;
 }
 
 export default function ReportListTemplate(props: PropsType) {
@@ -36,14 +59,14 @@ export default function ReportListTemplate(props: PropsType) {
                     <Title>サービス分析一覧</Title>
                     {/* <ReportListCreateButton>レポート作成</ReportListCreateButton> */}
                     {
-                        props.data.length > 0 ?
+                        props.boxData.length > 0 ?
                             <Tabs>
                                 <Tabs.TabPane
                                     tab="ボックス表示"
                                     key="box"
                                 >
                                     {
-                                        props.data.map(dat => {
+                                        props.boxData.map(dat => {
                                             return (
                                                 <BoxStyle
                                                     key={dat.reportID}
@@ -58,11 +81,11 @@ export default function ReportListTemplate(props: PropsType) {
                                     }
                                 </Tabs.TabPane>
                                 <Tabs.TabPane
-                                    tab="グラフ表示"
+                                    tab="グラフ表示(β)"
                                     key="line"
                                 >
                                     <ReportListChartRender
-                                        data={chartMock}
+                                        data={props.chartData}
                                     />
                                 </Tabs.TabPane>
                             </Tabs>

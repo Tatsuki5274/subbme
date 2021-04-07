@@ -2,7 +2,7 @@ import PrivateRoute from "components/wrapper/PrivateRoute";
 import { useReportQuery } from "hooks/ReportHooks";
 import { useUser } from "hooks/UserHooks";
 import { ReportListBoxType } from "../organisms/ReportListBox";
-import ReportListTemplate from "../templates/ReportListTemplate";
+import ReportListTemplate, { ReportListChartType } from "../templates/ReportListTemplate";
 import dateFormat from "dateformat";
 import { ServiceUnitDaysEnum } from "entities/Service";
 
@@ -19,6 +19,7 @@ export default function ReportList() {
     const { currentUser } = useUser();
     const { reportList } = useReportQuery(currentUser?.uid)
     let reports: ReportListBoxType[] = []
+    let reportsChart: ReportListChartType[] = [];
     const format = "yyyy/mm/dd";
 
     if (reportList) {
@@ -35,10 +36,20 @@ export default function ReportList() {
                 score: report.score || 0,
             }
         })
+
+        reportList.forEach(report => {
+            if (report.createdAt) {
+                reportsChart.push({
+                    score: report.score || 0,
+                    date: report.createdAt.toDate()
+                })
+            }
+        })
     }
     return <PrivateRoute>
         <ReportListTemplate
-            data={reports}
+            boxData={reports}
+            chartData={reportsChart}
         />
     </PrivateRoute> ;
 }
