@@ -15,6 +15,20 @@ type PropsType = {
 }
 
 export default function ReportListTemplate(props: PropsType) {
+    const chartMock = [
+        {
+            date: new Date(2020, 1),
+            score: 3
+        },
+        {
+            date: new Date(2020, 3),
+            score: 10
+        },
+        {
+            date: new Date(2020, 4, 15),
+            score: 7
+        }
+    ]
     return (
         <>
             <DrawerContainer>
@@ -47,7 +61,9 @@ export default function ReportListTemplate(props: PropsType) {
                                     tab="グラフ表示"
                                     key="line"
                                 >
-                                    <ReportListChartRender/>
+                                    <ReportListChartRender
+                                        data={chartMock}
+                                    />
                                 </Tabs.TabPane>
                             </Tabs>
  :
