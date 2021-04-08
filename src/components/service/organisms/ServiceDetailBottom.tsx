@@ -51,7 +51,7 @@ export default function ServiceDetailBottom(props: PropsType) {
                 <Button
                     block
                     type="primary"
-                >プラン変更</Button>
+                >サービス情報変更</Button>
             </Link>
         </SpaceButtonStyle>
 

@@ -9,12 +9,8 @@ export default function ServiceCreateTemplate(){
         <>
         <DrawerContainer>
             <>
-                <ContentWrapper>
-                    <>
-                        <Title>サービス登録</Title>
-                        <ServiceCreateForm />
-                    </>
-                </ContentWrapper>
+                <Title>サービス登録</Title>
+                <ServiceCreateForm />
             </>
         </DrawerContainer>
         <Footer />
