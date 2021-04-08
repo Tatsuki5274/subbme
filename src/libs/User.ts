@@ -5,7 +5,9 @@ type ErrorType = {
 }
 
 export const signUpUser = async(email: string, password: string) => {
-    const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const user = await firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
+        user.user?.sendEmailVerification();
+    });
     return user;
 }
 
