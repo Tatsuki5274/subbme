@@ -18,7 +18,7 @@ type FormType = {
     unit: string,
     unitTerm: string,
     currency: string,
-    costPerUnitTerm: string,
+    costPerUnitTerm: number,
     paymentMethod: string
 }
 
@@ -37,7 +37,7 @@ export default function ServiceEditForm(props: PropsType){
         unit: props.service.unit || "",
         unitTerm: props.service.unitTerm?.toString() || "",
         currency: "JPY",
-        costPerUnitTerm: ((props.service.unitTerm || 0) * (props.service.costPerDay || 0) * convertUnitToDay(props.service.unit)).toString(),
+        costPerUnitTerm: Math.round((props.service.unitTerm || 0) * (props.service.costPerDay || 0) * convertUnitToDay(props.service.unit)),
         paymentMethod: props.service.paymentMethod || "",
     }
     const labelCol = {
@@ -48,23 +48,27 @@ export default function ServiceEditForm(props: PropsType){
 
     }
     const onFinish = async (values: FormType) => {
-        if(!isSignedIn){
+        if (!isSignedIn){
             throw new Error("User is not signed in");
+        }
+        if (!props.service.id) {
+            throw new Error("ServiceID is not defined");
         }
         const unitTerm: number = parseInt(values.unitTerm);
         let unit: ServiceUnitType | null = null;
-        if(isServiceUnitType(values.unit)){
+        if (isServiceUnitType(values.unit)){
             unit = values.unit;
         } else {
             throw new TypeError("unit is known type");
         }
-        const costPerUnitTerm: number = parseInt(values.costPerUnitTerm);
+        const costPerUnitTerm: number = values.costPerUnitTerm;
         const unitValue = getServiceUnitValue(unit);
 
+
         const data: Service = {
+            id: props.service.id,
             serviceName: values.serviceName,
             planName: values.planName,
-            // categoryName: values.category[values.category.length - 1],
             categoryName: values.category,
             detail: values.detail,
             unit: unit,
@@ -72,13 +76,10 @@ export default function ServiceEditForm(props: PropsType){
             currency: values.currency,
             costPerDay: costPerUnitTerm / unitValue / unitTerm,
             paymentMethod: values.paymentMethod,
-            userID: currentUser?.uid,
-            isArchived: false,
-            createdAt: firebase.firestore.Timestamp.now(),
             updatedAt: firebase.firestore.Timestamp.now(),
         }
         const serviceManager = new ServiceManager();
-        const result = await serviceManager.add(data);
+        const result = await serviceManager.update(data);
         if(result){
             message.success("保存に成功しました");
             history.push(routeBuilder.serviceListPath());
