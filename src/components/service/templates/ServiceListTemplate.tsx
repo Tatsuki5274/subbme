@@ -3,7 +3,6 @@ import Footer from "components/common/organisms/Footer";
 import React from "react";
 import { ServiceListCardType } from "../molecules/ServiceListCard";
 import ServiceListData from "../organisms/ServiceListData";
-import ContentWrapper from "components/wrapper/ContentWrapper"
 import styled from "styled-components";
 import Text from "components/common/atoms/Text";
 import ServiceListFunction from "../organisms/ServiceListFunction";
@@ -29,31 +28,27 @@ export default function ServiceListTemplate(props: PropsType){
         <>
             <DrawerContainer>
                 <>
-                    <ContentWrapper>
-                        <>
-                            <Title>サービス一覧</Title>
-                            <TotalCostStyle><Text>{props.formattedTotalCost}</Text></TotalCostStyle>
-                            <ServiceListFunction
-                                setUnit={props.setUnit}
-                                serviceList={props.serviceList}
-                                setServiceList={props.setServiceList}
-                            />
-                            {
-                                props.cardData && props.cardData.length > 0 ?
-                                <ServiceListData
-                                    data={props.cardData}
-                                />
-                                : <EmptyData>
-                                    <Link to={routeBuilder.serviceCreatePath()}>
-                                        <Button
-                                            type="primary"
-                                        >サービス作成</Button>
-                                    </Link>
+                    <Title>サービス一覧</Title>
+                    <TotalCostStyle><Text>{props.formattedTotalCost}</Text></TotalCostStyle>
+                    <ServiceListFunction
+                        setUnit={props.setUnit}
+                        serviceList={props.serviceList}
+                        setServiceList={props.setServiceList}
+                    />
+                    {
+                        props.cardData && props.cardData.length > 0 ?
+                        <ServiceListData
+                            data={props.cardData}
+                        />
+                        : <EmptyData>
+                            <Link to={routeBuilder.serviceCreatePath()}>
+                                <Button
+                                    type="primary"
+                                >サービス作成</Button>
+                            </Link>
 
-                                </EmptyData>
-                            }
-                        </>
-                    </ContentWrapper>
+                        </EmptyData>
+                    }
                 </>
             </DrawerContainer>
             <Footer />

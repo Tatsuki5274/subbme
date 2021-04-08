@@ -1,6 +1,5 @@
 import Title from "components/common/atoms/Title";
 import Footer from "components/common/organisms/Footer";
-import ContentWrapper from "components/wrapper/ContentWrapper";
 import DrawerContainer from "components/wrapper/Drawer";
 import ServiceCreateForm from "../organisms/ServiceCreateForm";
 
