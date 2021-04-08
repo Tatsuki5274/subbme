@@ -30,8 +30,8 @@
   "scripts": {
     "start:dev": "dotenv -e .env.development react-scripts start",
     "start:emu": "REACT_APP_FIREBASE_EMULATOR=true dotenv -e .env.development react-scripts start",
-    "build:prod": "dotenv -e .env.production react-scripts build",
-    "build:dev": "dotenv -e .env.development react-scripts build",
+    "build:prod": "GENERATE_SOURCEMAP=false dotenv -e .env.production react-scripts build",
+    "build:dev": "GENERATE_SOURCEMAP=false dotenv -e .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
