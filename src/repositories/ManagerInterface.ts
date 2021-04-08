@@ -1,5 +1,5 @@
-import { FirebaseQueryType, FirebaseCollectionReferenceType, FirebaseDocumentReferenceType } from "libs/Types";
-import { NullablePartial } from "libs/Util";
+import { FirebaseQueryType, FirebaseCollectionReferenceType, FirebaseDocumentReferenceType } from "../libs/Types";
+import { NullablePartial } from "../libs/Util";
 
 export default interface ManagerInterface<T>{
     _ref: FirebaseCollectionReferenceType

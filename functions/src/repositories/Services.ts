@@ -1,11 +1,10 @@
 import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
-// import ManagerInterface from "./ManagerInterface"
-import firebase from "libs/Firebase"
+import ManagerInterface from "./ManagerInterface"
+import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "../libs/Types";
 
-const db = firebase.firestore();
 
-export class ServiceManager {
-  _ref: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>
+export class ServiceManager implements ManagerInterface<Service>{
+  _ref: FirebaseCollectionReferenceType
 
   constructor(){
     const serviceRef = db.collection('Service');
@@ -17,7 +16,7 @@ export class ServiceManager {
    * @param queryResult クエリ結果
    * @returns 整形結果
    */
-  async _buildList(queryResult: FirebaseFirestore.Query<FirebaseFirestore.DocumentData>){
+  async _buildList(queryResult: FirebaseQueryType){
     try{
       // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
@@ -52,19 +51,34 @@ export class ServiceManager {
     }
   }
 
+  async set(service: Service){
+    try {
+      if (!service.id){
+        throw new Error("id is undefined");
+      }
+      const id = service.id;
+      delete service.id;
+      this._ref.doc(id).set(service);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
   /**
    * 
    * @param service 追加したいデータ
    * @returns 成功・失敗
    */
-  async add(service: Service){
+   async add(service: Service){
     try {
       delete service.id;
-      this._ref.add(service);
-      return true;
+      const result = await this._ref.add(service);
+      return result;
     } catch (e) {
       console.warn(e);
-      return false;
+      return null;
     }
   }
 
@@ -75,13 +89,39 @@ export class ServiceManager {
    */
   async query(
       where: 
-        (ref: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>)
-          => FirebaseFirestore.Query<FirebaseFirestore.DocumentData>
+        (ref: FirebaseCollectionReferenceType)
+          => FirebaseQueryType
     ){
     const query = await where(this._ref);
     const data = await this._buildList(query);
     return data;
   }
+
+  async delete(id: string){
+    try {
+      await this._ref.doc(id).delete();
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
+  async update(service: Service){
+    try {
+      const serviceID = service.id;
+      if (!serviceID) {
+        throw new Error("ID is not defined");
+      }
+      delete service.id;
+      await this._ref.doc(serviceID).update(service);
+      return true;
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+  }
+
 }
 
 /**

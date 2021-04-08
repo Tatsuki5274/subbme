@@ -1,5 +1,5 @@
 import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "../libs/Types";
-import { NullablePartial } from "libs/Util"
+import { NullablePartial } from "../libs/Util"
 
 type UserBase = {
     uid: string

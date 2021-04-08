@@ -1,6 +1,6 @@
-import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
+import { buildService, Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
 import ManagerInterface from "./ManagerInterface"
-import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "libs/Types";
+import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "../libs/Types";
 
 
 export class ServiceManager implements ManagerInterface<Service>{

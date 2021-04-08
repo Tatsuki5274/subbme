@@ -1,7 +1,8 @@
 import admin from "./Firebase"
 
 // フロントエンド用型定義
-export type FirebaseReferenceType = FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
+export type FirebaseCollectionReferenceType = FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
+export type FirebaseDocumentReferenceType  = FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>;
 export type FirebaseQueryType = FirebaseFirestore.Query<FirebaseFirestore.DocumentData>;
 export type FirebaseFirestoreTimestampType = FirebaseFirestore.Timestamp;
 export type FirebaseDocumentDataType = FirebaseFirestore.DocumentData;

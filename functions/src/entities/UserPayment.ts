@@ -1,5 +1,5 @@
-import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "libs/Types";
-import { NullablePartial } from "libs/Util"
+import { FirebaseDocumentDataType, FirebaseFirestoreTimestampType } from "../libs/Types";
+import { NullablePartial } from "../libs/Util"
 
 type UserPaymentBase = {
     id: string,

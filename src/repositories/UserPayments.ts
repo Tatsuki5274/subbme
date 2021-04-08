@@ -1,6 +1,6 @@
 // import { buildUser, User } from "entities/User";
-import { buildUserPayment, UserPayment } from "entities/UserPayment";
-import firebase from "libs/Firebase"
+import { buildUserPayment, UserPayment } from "../entities/UserPayment";
+import firebase from "../libs/Firebase"
 import ManagerInterface from "./ManagerInterface";
 
 const db = firebase.firestore();
