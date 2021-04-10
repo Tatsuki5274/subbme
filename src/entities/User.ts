@@ -6,6 +6,7 @@ type UserBase = {
     lastLoginDate: FirebaseFirestoreTimestampType
     currency: "JPY",
     lastCreateReportDate: FirebaseFirestoreTimestampType
+    email: string
 // isSendReportEmail
     createdAt: FirebaseFirestoreTimestampType
     updatedAt: FirebaseFirestoreTimestampType
