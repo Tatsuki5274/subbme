@@ -27,6 +27,8 @@ export default functions.auth.user().onCreate(async (user) => {
     const userManager = new UserManager();
     await userManager.set({
       uid: user.uid,
+      email: user.email,
+      createdAt: admin.firestore.Timestamp.now()
     });
 
     await admin.auth().setCustomUserClaims(user.uid, {
