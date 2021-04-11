@@ -14,7 +14,7 @@ export default function SignInServices() {
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((value) => {
+      .then(() => {
         message.success("ログインに成功しました");
         history.push(routeBuilder.topPath());
       })

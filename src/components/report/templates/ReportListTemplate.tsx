@@ -20,38 +20,21 @@ export type ReportListChartType = {
   score: number;
 };
 
-function ConvertChartFormat(data: ReportListBoxType[]): ReportListChartType[] {
-  console.log(data);
-  const result: ReportListChartType[] = [];
-  data.forEach((dat) => {
-    try {
-      const date: Date = new Date(dat.date);
-      result.push({
-        score: dat.score,
-        date: date,
-      });
-    } catch (e) {
-      //日付の入力に異常がある場合はデータを無視する
-    }
-  });
-  return result;
-}
-
 export default function ReportListTemplate(props: PropsType) {
-  const chartMock = [
-    {
-      date: new Date(2020, 1),
-      score: 3,
-    },
-    {
-      date: new Date(2020, 3),
-      score: 10,
-    },
-    {
-      date: new Date(2020, 4, 15),
-      score: 7,
-    },
-  ];
+  // const chartMock = [
+  //   {
+  //     date: new Date(2020, 1),
+  //     score: 3,
+  //   },
+  //   {
+  //     date: new Date(2020, 3),
+  //     score: 10,
+  //   },
+  //   {
+  //     date: new Date(2020, 4, 15),
+  //     score: 7,
+  //   },
+  // ];
   return (
     <>
       <DrawerContainer>

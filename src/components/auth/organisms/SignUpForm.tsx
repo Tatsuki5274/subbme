@@ -13,7 +13,7 @@ export default function SignUpForm() {
   const history = useHistory();
   const onFinish = async (values: FormType) => {
     signUpUser(values.email, values.password)
-      .then((user) => {
+      .then(() => {
         message.success("ログインに成功しました");
         history.push(routeBuilder.topPath());
       })
@@ -23,15 +23,12 @@ export default function SignUpForm() {
       });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
   return (
     <Form
       {...formLayout}
       name="signup"
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // onFinishFailed={onFinishFailed}
     >
       <Form.Item
         label="メールアドレス"

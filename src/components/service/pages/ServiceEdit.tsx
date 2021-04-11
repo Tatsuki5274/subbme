@@ -2,7 +2,7 @@ import Result404 from "components/common/organisms/404";
 import Result500 from "components/common/organisms/500";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import PrivateRoute from "components/wrapper/PrivateRoute";
-import { Service, ServiceUnitEnum } from "entities/Service";
+import { Service } from "entities/Service";
 import { useEffect, useState } from "react";
 import { ServiceManager } from "repositories/Services";
 import ServiceEditTemplate from "../templates/ServiceEditTemplate";
@@ -16,17 +16,17 @@ type PropsType = {
 };
 
 export default function ServiceEdit(props: PropsType) {
-  const mockService: Service = {
-    id: "userid",
-    serviceName: "mock service",
-    costPerDay: 50,
-    unit: ServiceUnitEnum.Month,
-    unitTerm: 2,
-    planName: "プランモック",
-    detail: "説明ですよ",
-    categoryName: ["モック", "消えたカテゴリ"],
-    paymentMethod: "Paypay",
-  };
+  // const mockService: Service = {
+  //   id: "userid",
+  //   serviceName: "mock service",
+  //   costPerDay: 50,
+  //   unit: ServiceUnitEnum.Month,
+  //   unitTerm: 2,
+  //   planName: "プランモック",
+  //   detail: "説明ですよ",
+  //   categoryName: ["モック", "消えたカテゴリ"],
+  //   paymentMethod: "Paypay",
+  // };
   const { isLoading, service } = useService(props.match.params.serviceID);
   if (isLoading) {
     return <LoadingScreen />;

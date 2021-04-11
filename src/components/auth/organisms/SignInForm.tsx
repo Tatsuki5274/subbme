@@ -16,7 +16,7 @@ export default function SingInForm() {
   };
   const onFinish = async (values: FormType) => {
     signInUser(values.email, values.password)
-      .then((user) => {
+      .then(() => {
         message.success("ログインに成功しました");
         history.push(routeBuilder.topPath());
       })
@@ -25,16 +25,13 @@ export default function SingInForm() {
         console.error(reason);
       });
   };
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <Form
       name="singin"
       initialValues={initialValues}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // onFinishFailed={onFinishFailed}
     >
       <Form.Item
         label="メールアドレス"

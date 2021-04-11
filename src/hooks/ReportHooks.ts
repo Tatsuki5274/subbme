@@ -11,7 +11,7 @@ type ReturnType = {
 
 export function useReportQuery(userID?: string): ReturnType;
 
-export function useReportQuery(arg1: any): ReturnType {
+export function useReportQuery(arg1: unknown): ReturnType {
   const [reportList, setReportList] = useState<Report[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);

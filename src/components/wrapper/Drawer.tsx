@@ -125,7 +125,7 @@ function DrawerContainer(props: PropsType) {
         <ListItem
           button
           onClick={() => {
-            firebase.auth().onAuthStateChanged((user) => {
+            firebase.auth().onAuthStateChanged(() => {
               firebase
                 .auth()
                 .signOut()

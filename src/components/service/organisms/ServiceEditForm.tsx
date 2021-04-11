@@ -39,7 +39,7 @@ type PropsType = {
 };
 
 export default function ServiceEditForm(props: PropsType) {
-  const { currentUser, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const history = useHistory();
   const initialValues: FormType = {
     serviceName: props.service.serviceName || "",
