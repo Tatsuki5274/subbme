@@ -5,7 +5,11 @@ import {UserManager} from "../repositories/Users";
 import * as admin from "firebase-admin";
 import { MailManager } from "../repositories/Mails";
 
-export default functions.auth.user().onCreate(async (user) => {
+export default functions
+.region("asia-northeast1")
+.auth
+.user()
+.onCreate(async (user) => {
   try {
     // pay.jpの顧客を作成
     const sk = functions.config().payjp.sk;
@@ -28,7 +32,7 @@ export default functions.auth.user().onCreate(async (user) => {
     const userManager = new UserManager();
     await userManager.set({
       uid: user.uid,
-      email: user.email,
+      email: user.email,  // 認証済みのメールアドレスとして扱う(仮実装)
       createdAt: admin.firestore.Timestamp.now()
     });
 

@@ -5,7 +5,11 @@ import * as Payjp from "payjp";
 import { UserManager } from "../repositories/Users";
 // import * as admin from 'firebase-admin';
 
-export default functions.auth.user().onDelete(async (user) => {
+export default functions
+.region("asia-northeast1")
+.auth
+.user()
+.onDelete(async (user) => {
   try {
     const manager = new UserManager();
     await manager.delete(user.uid);

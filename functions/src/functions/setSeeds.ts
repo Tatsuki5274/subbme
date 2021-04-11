@@ -2,7 +2,10 @@ import { MailTemplate } from "../entities/MailTemplate";
 import * as functions from "firebase-functions";
 import { MailTemplateManager } from "../repositories/MailTemplates";
 
-export default functions.https.onRequest(async (req, res) => {
+export default functions
+.region("asia-northeast1")
+.https
+.onRequest(async (req, res) => {
     const templateManager = new MailTemplateManager();
     const template: MailTemplate[] = [
         {
