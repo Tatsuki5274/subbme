@@ -1,5 +1,4 @@
-import {Category} from "../entities/Category";
-
+import { Category } from "../entities/Category";
 
 export const listCategories = () => {
   return categoryList;

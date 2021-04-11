@@ -1,33 +1,30 @@
-/* eslint-disable valid-jsdoc, require-jsdoc */
-
-import {buildReportService, ReportService} from "../entities/ReportService";
+import { buildReportService, ReportService } from "../entities/ReportService";
 import ManagerInterface from "./ManagerInterface";
-import
-{db, FirebaseQueryType, FirebaseCollectionReferenceType}
-  from "../libs/Types";
+import {
+  db,
+  FirebaseQueryType,
+  FirebaseCollectionReferenceType,
+} from "../libs/Types";
 
-/**
- * @description コレクションリファレンスを管理するクラス
- */
 export class ReportServiceManager implements ManagerInterface<ReportService> {
-  _ref: FirebaseCollectionReferenceType
+  _ref: FirebaseCollectionReferenceType;
 
-  /**
-   * @description コレクションリファレンスの場所を決定する
-   */
   constructor(reportID: string) {
-    const reportServiceRef =
-      db.collection("Report").doc(reportID).collection("Service");
+    const reportServiceRef = db
+      .collection("Report")
+      .doc(reportID)
+      .collection("Service");
     this._ref = reportServiceRef;
   }
 
   /**
    *
    * @param queryResult クエリ結果
-   * @return 整形結果
+   * @returns 整形結果
    */
   async _buildList(queryResult: FirebaseQueryType) {
     try {
+      // const queryResult= await reportServiceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
       const doc = get?.docs;
       const result = doc?.map((_doc) => {
@@ -35,6 +32,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       });
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -43,7 +41,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
   /**
    *
    * @param id ドキュメントI
-   * @return 取得結果のデータ
+   * @returns 取得結果のデータ
    */
   async get(id: string) {
     try {
@@ -55,6 +53,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       const user = buildReportService(id, data);
       return user;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -70,6 +69,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       this._ref.doc(id).set(reportService);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -78,7 +78,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
   /**
    *
    * @param reportService 追加したいデータ
-   * @return 成功・失敗
+   * @returns 成功・失敗
    */
   async add(reportService: ReportService) {
     try {
@@ -86,6 +86,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       const result = await this._ref.add(reportService);
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -94,24 +95,22 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
   /**
    *
    * @param where クエリ条件
-   * @return クエリ結果
+   * @returns クエリ結果
    */
   async query(
-      where:
-        (ref: FirebaseCollectionReferenceType)
-          => FirebaseQueryType
+    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ) {
     const query = await where(this._ref);
     const data = await this._buildList(query);
     return data;
   }
 
-
   async delete(id: string) {
     try {
       await this._ref.doc(id).delete();
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -127,6 +126,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       await this._ref.doc(serviceID).update(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }

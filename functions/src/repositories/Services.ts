@@ -1,22 +1,19 @@
-/* eslint-disable valid-jsdoc, require-jsdoc */
-
-import
-{buildService, Service, ServiceUnitEnum, ServiceUnitType}
-  from "../entities/Service";
+import {
+  buildService,
+  Service,
+  ServiceUnitEnum,
+  ServiceUnitType,
+} from "../entities/Service";
 import ManagerInterface from "./ManagerInterface";
-import
-{db, FirebaseQueryType, FirebaseCollectionReferenceType}
-  from "../libs/Types";
+import {
+  db,
+  FirebaseQueryType,
+  FirebaseCollectionReferenceType,
+} from "../libs/Types";
 
-/**
- * @description コレクションリファレンスを管理するクラス
- */
 export class ServiceManager implements ManagerInterface<Service> {
-  _ref: FirebaseCollectionReferenceType
+  _ref: FirebaseCollectionReferenceType;
 
-  /**
-   * @description コレクションリファレンスの場所を決定する
-  */
   constructor() {
     const serviceRef = db.collection("Service");
     this._ref = serviceRef;
@@ -25,7 +22,7 @@ export class ServiceManager implements ManagerInterface<Service> {
   /**
    *
    * @param queryResult クエリ結果
-   * @return 整形結果
+   * @returns 整形結果
    */
   async _buildList(queryResult: FirebaseQueryType) {
     try {
@@ -37,6 +34,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       });
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -45,7 +43,7 @@ export class ServiceManager implements ManagerInterface<Service> {
   /**
    *
    * @param id ドキュメントI
-   * @return 取得結果のデータ
+   * @returns 取得結果のデータ
    */
   async get(id: string) {
     try {
@@ -57,6 +55,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       const user = buildService(id, data);
       return user;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -72,6 +71,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       this._ref.doc(id).set(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -80,7 +80,7 @@ export class ServiceManager implements ManagerInterface<Service> {
   /**
    *
    * @param service 追加したいデータ
-   * @return 成功・失敗
+   * @returns 成功・失敗
    */
   async add(service: Service) {
     try {
@@ -88,6 +88,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       const result = await this._ref.add(service);
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -96,12 +97,10 @@ export class ServiceManager implements ManagerInterface<Service> {
   /**
    *
    * @param where クエリ条件
-   * @return クエリ結果
+   * @returns クエリ結果
    */
   async query(
-      where:
-        (ref: FirebaseCollectionReferenceType)
-          => FirebaseQueryType
+    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ) {
     const query = await where(this._ref);
     const data = await this._buildList(query);
@@ -113,6 +112,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       await this._ref.doc(id).delete();
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -128,6 +128,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       await this._ref.doc(serviceID).update(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -137,7 +138,7 @@ export class ServiceManager implements ManagerInterface<Service> {
 /**
  *
  * @param unit チェック対象の単位
- * @return 型チェック結果
+ * @returns 型チェック結果
  */
 export const isServiceUnitType = (unit?: string): unit is ServiceUnitType => {
   for (const value of Object.values(ServiceUnitEnum)) {

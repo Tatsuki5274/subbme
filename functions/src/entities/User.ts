@@ -1,18 +1,19 @@
-import
-{FirebaseDocumentDataType, FirebaseFirestoreTimestampType}
-  from "../libs/Types";
-import {NullablePartial} from "../libs/Util";
+import {
+  FirebaseDocumentDataType,
+  FirebaseFirestoreTimestampType,
+} from "../libs/Types";
+import { NullablePartial } from "../libs/Util";
 
 type UserBase = {
-    uid: string
-    lastLoginDate: FirebaseFirestoreTimestampType
-    currency: "JPY",
-    lastCreateReportDate: FirebaseFirestoreTimestampType
-    email: string
-// isSendReportEmail
-    createdAt: FirebaseFirestoreTimestampType
-    updatedAt: FirebaseFirestoreTimestampType
-}
+  uid: string;
+  lastLoginDate: FirebaseFirestoreTimestampType;
+  currency: "JPY";
+  lastCreateReportDate: FirebaseFirestoreTimestampType;
+  email: string;
+  // isSendReportEmail
+  createdAt: FirebaseFirestoreTimestampType;
+  updatedAt: FirebaseFirestoreTimestampType;
+};
 
 export type User = NullablePartial<UserBase>;
 

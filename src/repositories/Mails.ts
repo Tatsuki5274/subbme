@@ -1,4 +1,4 @@
-import { buildReport, Report } from "../entities/Report";
+import { buildMail, Mail } from "../entities/Mail";
 import ManagerInterface from "./ManagerInterface";
 import {
   db,
@@ -6,12 +6,12 @@ import {
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 
-export class ReportManager implements ManagerInterface<Report> {
+export class MailManager implements ManagerInterface<Mail> {
   _ref: FirebaseCollectionReferenceType;
 
   constructor() {
-    const reportRef = db.collection("Report");
-    this._ref = reportRef;
+    const mailRef = db.collection("Mail");
+    this._ref = mailRef;
   }
 
   /**
@@ -21,11 +21,10 @@ export class ReportManager implements ManagerInterface<Report> {
    */
   async _buildList(queryResult: FirebaseQueryType) {
     try {
-      // const queryResult= await reportRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
       const doc = get?.docs;
       const result = doc?.map((_doc) => {
-        return buildReport(_doc.id, _doc.data());
+        return buildMail(_doc.id, _doc.data());
       });
       return result;
     } catch (e) {
@@ -47,7 +46,7 @@ export class ReportManager implements ManagerInterface<Report> {
       if (!data) {
         throw new Error("Empty");
       }
-      const user = buildReport(id, data);
+      const user = buildMail(id, data);
       return user;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -56,14 +55,14 @@ export class ReportManager implements ManagerInterface<Report> {
     }
   }
 
-  async set(report: Report) {
+  async set(mail: Mail) {
     try {
-      if (!report.id) {
+      if (!mail.id) {
         throw new Error("id is undefined");
       }
-      const id = report.id;
-      delete report.id;
-      this._ref.doc(id).set(report);
+      const id = mail.id;
+      delete mail.id;
+      this._ref.doc(id).set(mail);
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -74,13 +73,13 @@ export class ReportManager implements ManagerInterface<Report> {
 
   /**
    *
-   * @param report 追加したいデータ
+   * @param mail 追加したいデータ
    * @returns 成功・失敗
    */
-  async add(report: Report) {
+  async add(mail: Mail) {
     try {
-      delete report.id;
-      const result = await this._ref.add(report);
+      delete mail.id;
+      const result = await this._ref.add(mail);
       return result;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -113,14 +112,14 @@ export class ReportManager implements ManagerInterface<Report> {
     }
   }
 
-  async update(report: Report) {
+  async update(mail: Mail) {
     try {
-      const id = report.id;
-      if (!id) {
+      const mailID = mail.id;
+      if (!mailID) {
         throw new Error("ID is not defined");
       }
-      delete report.id;
-      await this._ref.doc(id).update(report);
+      delete mail.id;
+      await this._ref.doc(mailID).update(mail);
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
