@@ -2,7 +2,7 @@
 
 import * as functions from "firebase-functions";
 import * as Payjp from "payjp";
-import { UserManager } from "repositories/Users";
+import { UserManager } from "../repositories/Users";
 // import * as admin from 'firebase-admin';
 
 export default functions.auth.user().onDelete(async (user) => {

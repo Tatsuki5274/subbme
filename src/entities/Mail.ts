@@ -1,5 +1,5 @@
-import { FirebaseDocumentDataType } from "libs/Types";
-import { NullablePartial } from "libs/Util";
+import { FirebaseDocumentDataType } from "../libs/Types";
+import { NullablePartial } from "../libs/Util";
 
 type MailBase = {
   id: string;

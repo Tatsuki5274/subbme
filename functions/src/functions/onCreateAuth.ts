@@ -3,6 +3,7 @@ import * as functions from "firebase-functions";
 import {UserManager} from "../repositories/Users";
 // import * as Payjp from 'payjp';
 import * as admin from "firebase-admin";
+import { MailManager } from "../repositories/Mails";
 
 export default functions.auth.user().onCreate(async (user) => {
   try {
@@ -34,6 +35,18 @@ export default functions.auth.user().onCreate(async (user) => {
     await admin.auth().setCustomUserClaims(user.uid, {
       plan: "free",
     });
+
+    // welcomeメールを送信
+    const mailManager = new MailManager();
+    const result = await mailManager.add({
+      toUids: [
+        user.uid
+      ],
+      template: {
+        name: "welcome",
+      },
+    })
+    console.log("result", JSON.stringify(result));
     return user.uid;
   } catch (e) {
     console.error(e);

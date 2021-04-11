@@ -4,6 +4,7 @@ admin.initializeApp();
 const funcs = {
   onCreateUser: "./functions/onCreateAuth",
   onDeleteUser: "./functions/onDeleteAuth",
+  setSeeds: "./functions/setSeeds",
 };
 
 const loadFunctions = (names: {[name:string]: string}) => {
