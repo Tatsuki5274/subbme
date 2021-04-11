@@ -100,7 +100,6 @@ export default function ServiceEditForm(props: PropsType) {
     } else {
       message.error("失敗しました");
     }
-    console.log(result);
   };
   return (
     <Form initialValues={initialValues} onFinish={onFinish}>

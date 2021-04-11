@@ -39,6 +39,7 @@ if (firebase.apps.length === 0) {
 
   if (isEmulating === "true") {
     // エミュレーターでの動作の場合
+    // eslint-disable-next-line no-console
     console.log("Emulating mode");
     firebase.auth().useEmulator("http://localhost:9099");
     firebase.functions().useEmulator("localhost", 5001);

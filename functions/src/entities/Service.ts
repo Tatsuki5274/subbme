@@ -15,8 +15,7 @@ export const ServiceUnitDaysEnum = {
   Day: 1,
 } as const;
 
-export type ServiceUnitType =
-  typeof ServiceUnitEnum[keyof typeof ServiceUnitEnum]
+export type ServiceUnitType = typeof ServiceUnitEnum[keyof typeof ServiceUnitEnum]
 
 type ServiceBase = {
     id: string

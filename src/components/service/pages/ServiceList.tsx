@@ -53,7 +53,6 @@ export default function ServiceList() {
     currentUser?.uid
   );
   const [unit, setUnit] = useState<ServiceUnitType>(ServiceUnitEnum.Month);
-  console.log(serviceList);
 
   let totalCost = 0;
   const unitValue = getServiceUnitValue(unit);

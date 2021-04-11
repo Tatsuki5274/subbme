@@ -32,6 +32,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       });
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -52,6 +53,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       const user = buildReportService(id, data);
       return user;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -67,6 +69,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       this._ref.doc(id).set(reportService);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -83,6 +86,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       const result = await this._ref.add(reportService);
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -106,6 +110,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       await this._ref.doc(id).delete();
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -121,6 +126,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       await this._ref.doc(serviceID).update(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }

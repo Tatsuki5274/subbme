@@ -57,10 +57,8 @@ export default function ServiceDetail(props: PropsType) {
       </PrivateRoute>
     );
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     return <Result500 />;
   }
-  // return <ServicedetailTemplate
-  //     {...mock}
-  // />;
 }

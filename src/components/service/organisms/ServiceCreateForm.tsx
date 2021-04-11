@@ -91,7 +91,6 @@ export default function ServiceCreateForm() {
     } else {
       message.error("失敗しました");
     }
-    console.log(result);
   };
   return (
     <Form initialValues={initialValues} onFinish={onFinish}>

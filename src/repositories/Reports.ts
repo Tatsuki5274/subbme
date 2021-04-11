@@ -29,6 +29,7 @@ export class ReportManager implements ManagerInterface<Report> {
       });
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -49,6 +50,7 @@ export class ReportManager implements ManagerInterface<Report> {
       const user = buildReport(id, data);
       return user;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -64,6 +66,7 @@ export class ReportManager implements ManagerInterface<Report> {
       this._ref.doc(id).set(report);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -80,6 +83,7 @@ export class ReportManager implements ManagerInterface<Report> {
       const result = await this._ref.add(report);
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -103,6 +107,7 @@ export class ReportManager implements ManagerInterface<Report> {
       await this._ref.doc(id).delete();
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -118,6 +123,7 @@ export class ReportManager implements ManagerInterface<Report> {
       await this._ref.doc(id).update(report);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }

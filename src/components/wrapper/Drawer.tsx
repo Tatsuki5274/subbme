@@ -135,7 +135,8 @@ function DrawerContainer(props: PropsType) {
                 })
                 .catch((error) => {
                   message.error("ログアウト時にエラーが発生しました");
-                  console.log(`ログアウト時にエラーが発生しました (${error})`);
+                  // eslint-disable-next-line no-console
+                  console.error(error);
                 });
             });
           }}

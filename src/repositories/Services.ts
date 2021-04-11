@@ -34,6 +34,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       });
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -54,6 +55,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       const user = buildService(id, data);
       return user;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -69,6 +71,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       this._ref.doc(id).set(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -85,6 +88,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       const result = await this._ref.add(service);
       return result;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return null;
     }
@@ -108,6 +112,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       await this._ref.doc(id).delete();
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }
@@ -123,6 +128,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       await this._ref.doc(serviceID).update(service);
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return false;
     }

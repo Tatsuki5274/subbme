@@ -20,6 +20,7 @@ export default function SignInServices() {
       })
       .catch((reason) => {
         message.error("ログインに失敗しました");
+        // eslint-disable-next-line no-console
         console.error(reason);
       });
   };

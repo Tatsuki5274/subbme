@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -26,7 +28,6 @@ type Config = {
 };
 
 export function register(config?: Config) {
-  console.log("a");
   if (
     (process.env.NODE_ENV === "production" ||
       process.env.NODE_ENV === "development") &&

@@ -19,6 +19,7 @@ export default function SignUpForm() {
       })
       .catch((reason) => {
         message.error("ログインに失敗しました");
+        // eslint-disable-next-line no-console
         console.error(reason);
       });
   };
