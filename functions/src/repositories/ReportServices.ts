@@ -1,29 +1,38 @@
-import { buildReportService, ReportService } from "../entities/ReportService";
-import ManagerInterface from "./ManagerInterface"
-import { db, FirebaseQueryType, FirebaseCollectionReferenceType } from "../libs/Types";
+/* eslint-disable valid-jsdoc, require-jsdoc */
 
+import {buildReportService, ReportService} from "../entities/ReportService";
+import ManagerInterface from "./ManagerInterface";
+import
+{db, FirebaseQueryType, FirebaseCollectionReferenceType}
+  from "../libs/Types";
 
-export class ReportServiceManager implements ManagerInterface<ReportService>{
+/**
+ * @description コレクションリファレンスを管理するクラス
+ */
+export class ReportServiceManager implements ManagerInterface<ReportService> {
   _ref: FirebaseCollectionReferenceType
 
-  constructor(reportID: string){
-    const reportServiceRef = db.collection('Report').doc(reportID).collection('Service');
+  /**
+   * @description コレクションリファレンスの場所を決定する
+   */
+  constructor(reportID: string) {
+    const reportServiceRef =
+      db.collection("Report").doc(reportID).collection("Service");
     this._ref = reportServiceRef;
   }
 
   /**
-   * 
+   *
    * @param queryResult クエリ結果
-   * @returns 整形結果
+   * @return 整形結果
    */
-  async _buildList(queryResult: FirebaseQueryType){
-    try{
-      // const queryResult= await reportServiceRef.where("userID", "==", "tatsuki");
+  async _buildList(queryResult: FirebaseQueryType) {
+    try {
       const get = await queryResult?.get();
       const doc = get?.docs;
-      const result = doc?.map(_doc => {
-          return buildReportService(_doc.id, _doc.data());
-      })
+      const result = doc?.map((_doc) => {
+        return buildReportService(_doc.id, _doc.data());
+      });
       return result;
     } catch (e) {
       console.warn(e);
@@ -32,28 +41,28 @@ export class ReportServiceManager implements ManagerInterface<ReportService>{
   }
 
   /**
-   * 
+   *
    * @param id ドキュメントI
-   * @returns 取得結果のデータ
+   * @return 取得結果のデータ
    */
-  async get(id: string){
+  async get(id: string) {
     try {
       const snapshot = await this._ref.doc(id).get();
       const data = snapshot.data();
-      if(!data){
-          throw new Error("Empty");
+      if (!data) {
+        throw new Error("Empty");
       }
       const user = buildReportService(id, data);
       return user;
     } catch (e) {
-      console.warn(e)
+      console.warn(e);
       return null;
     }
   }
 
-  async set(reportService: ReportService){
+  async set(reportService: ReportService) {
     try {
-      if (!reportService.id){
+      if (!reportService.id) {
         throw new Error("id is undefined");
       }
       const id = reportService.id;
@@ -67,11 +76,11 @@ export class ReportServiceManager implements ManagerInterface<ReportService>{
   }
 
   /**
-   * 
+   *
    * @param reportService 追加したいデータ
-   * @returns 成功・失敗
+   * @return 成功・失敗
    */
-   async add(reportService: ReportService){
+  async add(reportService: ReportService) {
     try {
       delete reportService.id;
       const result = await this._ref.add(reportService);
@@ -83,22 +92,22 @@ export class ReportServiceManager implements ManagerInterface<ReportService>{
   }
 
   /**
-   * 
+   *
    * @param where クエリ条件
-   * @returns クエリ結果
+   * @return クエリ結果
    */
   async query(
-      where: 
+      where:
         (ref: FirebaseCollectionReferenceType)
           => FirebaseQueryType
-    ){
+  ) {
     const query = await where(this._ref);
     const data = await this._buildList(query);
     return data;
   }
 
 
-  async delete(id: string){
+  async delete(id: string) {
     try {
       await this._ref.doc(id).delete();
       return true;
@@ -108,7 +117,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService>{
     }
   }
 
-  async update(service: ReportService){
+  async update(service: ReportService) {
     try {
       const serviceID = service.id;
       if (!serviceID) {

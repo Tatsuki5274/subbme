@@ -1,17 +1,17 @@
-import * as admin from 'firebase-admin';
+import * as admin from "firebase-admin";
 
 admin.initializeApp();
 const funcs = {
-    onCreateUser: './functions/onCreateAuth',
-    onDeleteUser: './functions/onDeleteAuth',
+  onCreateUser: "./functions/onCreateAuth",
+  onDeleteUser: "./functions/onDeleteAuth",
 };
 
-const loadFunctions = (names: any) => {
-    for (const name in names) {
-        if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === name) {
-            module.exports[name] = require(names[name]);
-        }
+const loadFunctions = (names: {[name:string]: string}) => {
+  for (const name in names) {
+    if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === name) {
+      module.exports[name] = require(names[name]);
     }
+  }
 };
 
 loadFunctions(funcs);
