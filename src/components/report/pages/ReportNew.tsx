@@ -32,20 +32,17 @@ import ReportNewTemplate from "../templates/ReportNewTemplate";
 //     }
 // ];
 
-export default function ReportNew(){
+export default function ReportNew() {
+  const { currentUser } = useUser();
+  const { serviceList } = useListService(currentUser?.uid);
 
-    const { currentUser } = useUser();
-    const { serviceList } = useListService(currentUser?.uid)
+  if (!serviceList) {
+    return <LoadingScreen />;
+  }
 
-    if (!serviceList) {
-        return <LoadingScreen />
-    }
-
-    return (
-        <PrivateRoute>
-            <ReportNewTemplate
-                services={serviceList}
-            />
-        </PrivateRoute>
-    )
+  return (
+    <PrivateRoute>
+      <ReportNewTemplate services={serviceList} />
+    </PrivateRoute>
+  );
 }

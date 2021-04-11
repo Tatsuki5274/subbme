@@ -3,18 +3,16 @@ import Footer from "components/common/organisms/Footer";
 import DrawerContainer from "components/wrapper/Drawer";
 import ServiceCreateForm from "../organisms/ServiceCreateForm";
 
-export default function ServiceCreateTemplate(){
-    return (
+export default function ServiceCreateTemplate() {
+  return (
+    <>
+      <DrawerContainer>
         <>
-        <DrawerContainer>
-            <>
-                <Title>サービス登録</Title>
-                <ServiceCreateForm />
-            </>
-        </DrawerContainer>
-        <Footer />
-
+          <Title>サービス登録</Title>
+          <ServiceCreateForm />
         </>
-
-    );
+      </DrawerContainer>
+      <Footer />
+    </>
+  );
 }

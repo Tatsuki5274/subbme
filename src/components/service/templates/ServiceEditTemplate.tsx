@@ -6,21 +6,19 @@ import React from "react";
 import ServiceEditForm from "../organisms/ServiceEditForm";
 
 type PropsType = {
-    service: Service
-}
+  service: Service;
+};
 
-export default function ServiceEditTemplate(props: PropsType){
-    return (
+export default function ServiceEditTemplate(props: PropsType) {
+  return (
+    <>
+      <DrawerContainer>
         <>
-            <DrawerContainer>
-                <>
-                    <Title>サービス変更</Title>
-                    <ServiceEditForm
-                        service={props.service}
-                    />
-                </>
-            </DrawerContainer>
-            <Footer />
+          <Title>サービス変更</Title>
+          <ServiceEditForm service={props.service} />
         </>
-    );
+      </DrawerContainer>
+      <Footer />
+    </>
+  );
 }

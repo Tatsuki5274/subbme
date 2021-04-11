@@ -10,27 +10,27 @@ import OSignInForm from "../organisms/SignInForm";
 import SignInNewUser from "../organisms/SignInNewUser";
 import SignInServices from "../organisms/SignInServices";
 
-export default function SignIn(){
-    const {isSignedIn} = useUser();
-    if(isSignedIn){
-        return <Redirect to={routeBuilder.topPath()}/>
-    }
+export default function SignIn() {
+  const { isSignedIn } = useUser();
+  if (isSignedIn) {
+    return <Redirect to={routeBuilder.topPath()} />;
+  }
 
-    return (
-        <>
-            <SimpleHeader/>
-            <Title>ログイン</Title>
-            <SubTitle>メールアドレスでログイン</SubTitle>
-            <OSignInForm />
-            <SignInNewUser />
-            <SubTitle>サービスでログイン</SubTitle>
-            <SignInServices />
-            <Footer/>
-        </>
-    );
+  return (
+    <>
+      <SimpleHeader />
+      <Title>ログイン</Title>
+      <SubTitle>メールアドレスでログイン</SubTitle>
+      <OSignInForm />
+      <SignInNewUser />
+      <SubTitle>サービスでログイン</SubTitle>
+      <SignInServices />
+      <Footer />
+    </>
+  );
 }
 
 const SubTitle = styled.div({
-    fontSize: "26px",
-    color: "#868E96"
-})
+  fontSize: "26px",
+  color: "#868E96",
+});

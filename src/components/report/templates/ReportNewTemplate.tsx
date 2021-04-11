@@ -11,35 +11,30 @@ import { routeBuilder } from "router";
 import ReportNewForm from "../organisms/ReportNewForm";
 
 type PropsType = {
-    services: Service[] | null
-}
+  services: Service[] | null;
+};
 
-export default function ReportNewTemplate(props: PropsType){
-    if(!props.services){
-        return <LoadingScreen />
-    }
-    return (
+export default function ReportNewTemplate(props: PropsType) {
+  if (!props.services) {
+    return <LoadingScreen />;
+  }
+  return (
+    <>
+      <DrawerContainer>
         <>
-            <DrawerContainer>
-                <>
-                    <Title>サービス分析</Title>
-                    {
-                        props.services && props.services.length > 0 ?
-                        <ReportNewForm
-                            services={props.services}
-                        /> :
-                        <EmptyData>
-                            <Link to={routeBuilder.serviceCreatePath()}>
-                                <Button
-                                    type="primary"
-                                >サービス作成</Button>
-                            </Link>
-                        </EmptyData>
-                    }
-
-                </>
-            </DrawerContainer>
-            <Footer />
+          <Title>サービス分析</Title>
+          {props.services && props.services.length > 0 ? (
+            <ReportNewForm services={props.services} />
+          ) : (
+            <EmptyData>
+              <Link to={routeBuilder.serviceCreatePath()}>
+                <Button type="primary">サービス作成</Button>
+              </Link>
+            </EmptyData>
+          )}
         </>
-    );
+      </DrawerContainer>
+      <Footer />
+    </>
+  );
 }
