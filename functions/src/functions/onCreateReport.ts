@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { ReportManager } from "repositories/Reports";
+import { ReportManager } from "../repositories/Reports";
 import admin from "../libs/Firebase";
 import { UserManager } from "../repositories/Users";
 
@@ -21,6 +21,7 @@ export default functions.firestore.document("Report/{reportID}").onCreate(async 
       throw new Error("userID in the created report is undefined");
     }
     
+
     // レポートの最終作成日を記録
     const userManager = new UserManager();
     await userManager.update({
