@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
+    // "google",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],
