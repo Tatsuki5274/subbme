@@ -7,6 +7,7 @@ import React from "react";
 import styled from "styled-components";
 import CircleBox from "../molecules/CircleBox";
 import ReportDetailCommentCard from "../organisms/ReportDetailCommentCard";
+import ReportDetailRank from "../organisms/ReportDetailRank";
 
 type PropsType = {
   recommend?: {
@@ -39,6 +40,11 @@ export default function ReportDetailTemplate(props: PropsType) {
               <GrayText>{props.score}</GrayText>
             </CircleBox>
           </CircleStyle>
+          <ReportDetailRank
+            title="ランクA"
+            description="ランクAです"
+            services={props.serviceListA}
+          />
         </>
       </DrawerContainer>
       <Footer />
