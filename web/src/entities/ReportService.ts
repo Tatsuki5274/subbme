@@ -8,6 +8,13 @@ export const ReportServiceRankEnum = {
 } as const;
 export type ReportServiceRankType = typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum];
 
+export const ReportServiceAdviceStatusEnum = {
+  SUCCESS: "SUCCESS",
+  WARNING: "WARNING",
+  DANGER: "DANGER",
+} as const;
+export type ReportServiceAdviceStatusType = typeof ReportServiceAdviceStatusEnum[keyof typeof ReportServiceAdviceStatusEnum];
+
 type ReportServiceBase = {
   id: string;
   rank: ReportServiceRankType;
@@ -16,6 +23,10 @@ type ReportServiceBase = {
   serviceName: string;
   costPerDay: number;
   categoryName: string[];
+  advice: {
+    comment?: string;
+    status?: ReportServiceAdviceStatusType;
+  };
 };
 
 export type ReportService = NullablePartial<ReportServiceBase>;
