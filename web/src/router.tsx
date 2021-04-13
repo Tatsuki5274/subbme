@@ -1,6 +1,7 @@
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
+import ReportDetail from "components/report/pages/ReportDetail";
 import ReportList from "components/report/pages/ReportList";
 import ReportNew from "components/report/pages/ReportNew";
 import ServiceCreate from "components/service/pages/ServiceCreate";
@@ -71,6 +72,11 @@ const Router = () => {
             exact
             path={routeBuilder.reportNewPath()}
             component={ReportNew}
+          />
+          <Route
+            exact
+            path={routeBuilder.reportDetailPath(":reportID")}
+            component={ReportDetail}
           />
 
           <Route exact path="/test" component={TestPage} />
