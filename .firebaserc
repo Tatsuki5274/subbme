@@ -1,7 +1,0 @@
-{
-  "projects": {
-    "default": "subbme-dev",
-    "development": "subbme-dev",
-    "production": "subbme-prod"
-  }
-}
