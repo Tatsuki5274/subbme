@@ -42,7 +42,7 @@ export default function ReportDetailTemplate(props: PropsType) {
           </CircleStyle>
           <ReportDetailRank
             title="ランクA"
-            description="ランクAです"
+            description="支出の多くを占めている分類です。この分類を見直すことで劇的な家計改善を期待できます。"
             services={props.serviceListA}
           />
         </>
