@@ -26,6 +26,7 @@ type ReportServiceBase = {
   advice: {
     comment?: string;
     status?: ReportServiceAdviceStatusType;
+    actionLink?: string;
   };
 };
 

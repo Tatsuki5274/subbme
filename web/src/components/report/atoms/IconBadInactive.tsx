@@ -3,7 +3,7 @@ import React from "react";
 import IconBox from "./IconBox";
 
 type PropsType = {
-  onClick: React.MouseEventHandler<SVGSVGElement>;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
   style: React.CSSProperties;
 };
 

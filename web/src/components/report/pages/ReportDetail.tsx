@@ -7,7 +7,7 @@ export default function ReportDetail() {
       id: "hoge",
       serviceName: "DropBox",
       costPerDay: 50,
-      rate: 2,
+      rate: -1,
       categoryName: ["保険", "自動車保険"],
       rank: "A",
     },

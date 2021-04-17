@@ -2,8 +2,8 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import IconBox from "./IconBox";
 
 type PropsType = {
-  onClick: React.MouseEventHandler<SVGSVGElement>;
-  style: React.CSSProperties;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
+  style?: React.CSSProperties;
 };
 
 export default function IconGoodInactive(props: PropsType) {
