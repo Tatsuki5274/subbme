@@ -21,9 +21,13 @@ service cloud.firestore {
       allow read: if userID == request.auth.uid;
     }
 
-    match /Report/{reportID}/{document=**} {
+    match /Report/{reportID} {
       allow read, update, delete: if isOwner(resource.data.userID)
       allow create: if isOwner(request.resource.data.userID)
+
+      match /Service/{reportServiceID} {
+        allow read, write: if isOwner(get(/databases/$(database)/documents/Report/$(reportID)).data.userID)
+      }
     }
   }
 }
