@@ -1,7 +1,36 @@
 import { ReportService } from "entities/ReportService";
+import { useEffect, useState } from "react";
+import { ReportServiceManager } from "repositories/ReportServices";
 import ReportDetailTemplate from "../templates/ReportDetailTemplate";
 
-export default function ReportDetail() {
+function useReportServiceList(reportID: string) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [reportServiceList, setReportServiceList] = useState<ReportService[]>(
+    []
+  );
+  useEffect(() => {
+    (async () => {
+      const manager = new ReportServiceManager(reportID);
+      const result = await manager.query();
+      console.log("result", result);
+    })();
+  });
+  return {
+    isLoading,
+    reportServiceList,
+  };
+}
+
+export default function ReportDetail(props: {
+  match: {
+    params: {
+      reportID: string;
+    };
+  };
+}) {
+  const { isLoading, reportServiceList } = useReportServiceList(
+    props.match.params.reportID
+  );
   const mockServiceList: ReportService[] = [
     {
       id: "hoge",
