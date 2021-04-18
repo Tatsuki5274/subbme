@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "subbme-dev",
+    "development": "subbme-dev",
+    "production": "subbme-prod"
+  },
+  "targets": {
+    "subbme-dev": {
+      "hosting": {
+        "app": [
+          "subbme-dev"
+        ]
+      }
+    }
+  }
+}
