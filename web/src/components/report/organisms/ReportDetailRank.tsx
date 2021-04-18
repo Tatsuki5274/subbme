@@ -37,26 +37,27 @@ export default function ReportDetailRank(props: {
       <DescriptionStyle>{props.description}</DescriptionStyle>
       {props.services.map((sv) => {
         return (
-          <ServiceAdviceCard
-            key={sv.id}
-            serviceName={sv.serviceName || ""}
-            serviceRate={sv.rate || 0}
-            categoryName={sv.categoryName?.join("/") || ""}
-            formattedCost={`¥${Math.round(
-              (sv.costPerDay || 0) * ServiceUnitDaysEnum.Month
-            ).toLocaleString()}/1ヶ月`}
-            advice={
-              sv.advice
-                ? {
-                    comment: sv.advice.comment || "",
-                    status:
-                      sv.advice?.status ||
-                      ReportServiceAdviceStatusEnum.WARNING,
-                    link: sv.advice?.actionLink,
-                  }
-                : undefined
-            }
-          />
+          <CardStyle key={sv.id}>
+            <ServiceAdviceCard
+              serviceName={sv.serviceName || ""}
+              serviceRate={sv.rate || 0}
+              categoryName={sv.categoryName?.join("/") || ""}
+              formattedCost={`¥${Math.round(
+                (sv.costPerDay || 0) * ServiceUnitDaysEnum.Month
+              ).toLocaleString()}/1ヶ月`}
+              advice={
+                sv.advice
+                  ? {
+                      comment: sv.advice.comment || "",
+                      status:
+                        sv.advice?.status ||
+                        ReportServiceAdviceStatusEnum.WARNING,
+                      link: sv.advice?.actionLink,
+                    }
+                  : undefined
+              }
+            />
+          </CardStyle>
         );
       })}
     </>
@@ -72,4 +73,7 @@ const TitleStyle = styled.span({});
 const CostStyle = styled.span({});
 const DescriptionStyle = styled.div({
   margin: "20px 0",
+});
+const CardStyle = styled.div({
+  margin: "30px 0",
 });
