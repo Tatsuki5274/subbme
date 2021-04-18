@@ -7,10 +7,14 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
+    "skipLibCheck": true,
     "baseUrl": "./src"
   },
   "compileOnSave": true,
   "include": [
     "./src"
+  ],
+  "exclude": [
+    "./node_modules"
   ]
 }

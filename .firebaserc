@@ -9,6 +9,9 @@
       "hosting": {
         "app": [
           "subbme-dev"
+        ],
+        "web": [
+          "subbme-dev-web"
         ]
       }
     }

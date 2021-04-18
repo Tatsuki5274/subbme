@@ -24,6 +24,16 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "target": "web",
+      "public": "web/.next/server",
+      "rewrites": [
+        {
+          "source": "**/**",
+          "function": "nextAppWeb"
+        }
+      ]
     }
   ],
   "storage": {
