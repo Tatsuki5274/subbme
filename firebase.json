@@ -12,7 +12,7 @@
   "hosting": [
     {
       "target": "app",
-      "public": "web/build",
+      "public": "app/build",
       "ignore": [
         "firebase.json",
         "**/.*",
