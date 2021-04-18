@@ -20,7 +20,7 @@ export default function ReportDetailRank(props: {
     costPerDaySum += sv.costPerDay || 0;
   });
   // 月単位の金額にフォーマットする
-  const formattedCost = `¥${(
+  const formattedCost = `¥${Math.round(
     (costPerDaySum || 0) * ServiceUnitDaysEnum.Month
   ).toLocaleString()}/1ヶ月`;
   return (
@@ -42,7 +42,7 @@ export default function ReportDetailRank(props: {
             serviceName={sv.serviceName || ""}
             serviceRate={sv.rate || 0}
             categoryName={sv.categoryName?.join("/") || ""}
-            formattedCost={`¥${(
+            formattedCost={`¥${Math.round(
               (sv.costPerDay || 0) * ServiceUnitDaysEnum.Month
             ).toLocaleString()}/1ヶ月`}
             advice={
