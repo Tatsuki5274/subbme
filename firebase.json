@@ -27,11 +27,11 @@
     },
     {
       "target": "web",
-      "public": "web/.next/server",
+      "public": "web/public",
       "rewrites": [
         {
-          "source": "**/**",
-          "function": "nextAppWeb"
+          "source": "**",
+          "destination": "/index.html"
         }
       ]
     }

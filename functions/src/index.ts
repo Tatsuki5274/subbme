@@ -6,7 +6,6 @@ const funcs = {
   onDeleteUser: "./functions/onDeleteAuth",
   onCreateReport: "./functions/onCreateReport",
   setSeeds: "./functions/setSeeds",
-  nextAppWeb: "./functions/nextAppWeb",
 };
 
 const loadFunctions = (names: {[name:string]: string}) => {
