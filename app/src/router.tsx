@@ -1,3 +1,4 @@
+import ResetPassword from "components/auth/pages/ResetPassword";
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
@@ -39,6 +40,11 @@ const Router = () => {
           <Route exact path={routeBuilder.topPath()} component={ServiceList} />
           <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
           <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
+          <Route
+            exact
+            path={routeBuilder.resetPasword()}
+            component={ResetPassword}
+          />
 
           {/* サービス関係 */}
           <Route
@@ -96,6 +102,9 @@ export const routeBuilder = {
   },
   signUpPath: (host = "") => {
     return `${host}/signup`;
+  },
+  resetPasword: (host = "") => {
+    return `${host}/resetpassword`;
   },
   serviceCreatePath: (host = "") => {
     return `${host}/services/new`;

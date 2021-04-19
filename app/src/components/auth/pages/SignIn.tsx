@@ -1,5 +1,4 @@
 import Title from "components/common/atoms/Title";
-import Footer from "components/common/organisms/Footer";
 import SimpleHeader from "components/common/organisms/SimpleHeader";
 import { useUser } from "hooks/UserHooks";
 import React from "react";
@@ -25,7 +24,7 @@ export default function SignIn() {
       <SignInNewUser />
       <SubTitle>サービスでログイン</SubTitle>
       <SignInServices />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
