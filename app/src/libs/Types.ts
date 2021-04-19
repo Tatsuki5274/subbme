@@ -7,4 +7,7 @@ export type FirebaseQueryType = firebase.firestore.Query<firebase.firestore.Docu
 export type FirebaseFirestoreTimestampType = firebase.firestore.Timestamp;
 export type FirebaseDocumentDataType = firebase.firestore.DocumentData;
 
+firebase.auth().languageCode = "ja";
+
 export const db = firebase.firestore();
+export const auth = firebase.auth();

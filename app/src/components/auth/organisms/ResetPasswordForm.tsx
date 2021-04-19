@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from "antd";
 import React from "react";
-import firebase from "libs/Firebase";
+import { auth } from "libs/Types";
 
 type FormType = {
   email: string;
@@ -14,7 +14,6 @@ export default function ResetPasswordForm() {
       }}
       onFinish={async (values) => {
         try {
-          const auth = firebase.auth();
           await auth.sendPasswordResetEmail(values.email);
           message.success("パスワードリセットメールの送信に成功しました");
         } catch (e) {
