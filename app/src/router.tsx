@@ -9,6 +9,7 @@ import ServiceCreate from "components/service/pages/ServiceCreate";
 import ServiceDetail from "components/service/pages/ServiceDetail";
 import ServiceEdit from "components/service/pages/ServiceEdit";
 import ServiceList from "components/service/pages/ServiceList";
+import Settings from "components/settings/pages/Settings";
 
 //  テストページ
 import TestPage from "components/TestPage";
@@ -85,6 +86,13 @@ const Router = () => {
             component={ReportDetail}
           />
 
+          {/* 設定関係 */}
+          <Route
+            exact
+            path={routeBuilder.settingsPath()}
+            component={Settings}
+          />
+
           <Route exact path="/test" component={TestPage} />
           <Result404 />
         </Switch>
@@ -132,6 +140,12 @@ export const routeBuilder = {
   },
   settingsPath: (host = "") => {
     return `${host}/settings`;
+  },
+  settingMailPath: (host = "") => {
+    return `${host}/settings/mail`;
+  },
+  settingsPasswordPath: (host = "") => {
+    return `${host}/settings/password`;
   },
 };
 
