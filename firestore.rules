@@ -18,7 +18,27 @@ service cloud.firestore {
     }
 
     match /User/{userID} {
-      allow read: if userID == request.auth.uid;
+      // stripe指定のルール
+      allow read: if request.auth.uid == userID;
+      match /checkout_sessions/{id} {
+        allow read, write: if request.auth.uid == userID;
+      }
+      match /subscriptions/{id} {
+        allow read: if request.auth.uid == userID;
+      }
+    }
+
+    // stripe指定のルール
+    match /Products/{id} {
+      allow read: if true;
+
+      match /prices/{id} {
+        allow read: if true;
+      }
+
+      match /tax_rates/{id} {
+        allow read: if true;
+      }
     }
 
     match /Report/{reportID} {

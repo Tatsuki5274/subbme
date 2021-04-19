@@ -1,7 +1,6 @@
 // import * as admin from 'firebase-admin';
 import * as functions from "firebase-functions";
 import {UserManager} from "../repositories/Users";
-import * as Payjp from "payjp";
 import * as admin from "firebase-admin";
 import { MailManager } from "../repositories/Mails";
 
@@ -17,16 +16,6 @@ export default functions
       // 秘密鍵がfunctions configに設定されていない場合
       throw new Error("SecretKey is not set");
     }
-
-    const payjp = Payjp(sk);
-    await payjp.customers.create({
-        id: user.uid,
-    }).then(charge => {
-        console.log(JSON.stringify(charge));
-    }).catch((e: Payjp.ResponseError) => {
-        e.response?.body
-        throw new Error(e.message);
-    });
 
     // firestoreへユーザー情報を追加
     const userManager = new UserManager();
