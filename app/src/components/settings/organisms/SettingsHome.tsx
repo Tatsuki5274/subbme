@@ -5,7 +5,8 @@ import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
 import { Form, FormInstance, Input, message } from "antd";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useUser } from "hooks/UserHooks";
 
 type PasswordFormType = {
   newPassword: string;
@@ -13,16 +14,23 @@ type PasswordFormType = {
 };
 
 export default function SettingsHome() {
+  const { currentUser } = useUser();
   const modalPassword = useModal();
   const updatePasswordFormRef = useRef<FormInstance<PasswordFormType>>(null);
   const minLengthPassword = 7;
   const handleOKUpdatePassword = () => {
     updatePasswordFormRef.current?.submit();
   };
-  const onFinishUpdatePassword = (values: PasswordFormType) => {
+  const onFinishUpdatePassword = async (values: PasswordFormType) => {
     if (values.newPassword !== values.newPasswordConfirm) {
       message.error("入力したパスワードが異なります");
       return;
+    }
+    try {
+      await currentUser?.updatePassword(values.newPassword);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn(e.message);
     }
     modalPassword.handleClose();
     console.log("update", values);
