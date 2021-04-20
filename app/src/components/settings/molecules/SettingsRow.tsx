@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SettingsRow(props: {
-  link: string;
+  onClick?: () => void;
   label: string;
   value: string;
   disabled?: boolean;
@@ -17,7 +17,8 @@ export default function SettingsRow(props: {
         </Tooltip>
       ) : (
         <LinkStyle>
-          <Link to={props.link}>変更</Link>
+          <span onClick={props.onClick}>変更</span>
+          {/* <Link to={props.link}>変更</Link> */}
         </LinkStyle>
       )}
 
