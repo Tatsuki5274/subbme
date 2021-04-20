@@ -4,22 +4,28 @@ import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
-import { Form, FormInstance, Input } from "antd";
+import { Form, FormInstance, Input, message } from "antd";
 import { useRef } from "react";
 
 type PasswordFormType = {
   newPassword: string;
+  newPasswordConfirm: string;
 };
 
 export default function SettingsHome() {
   const modalPassword = useModal();
   const updatePasswordFormRef = useRef<FormInstance<PasswordFormType>>(null);
+  const minLengthPassword = 7;
   const handleOKUpdatePassword = () => {
     updatePasswordFormRef.current?.submit();
-    modalPassword.handleClose();
   };
-  const onFinishUpdatePassword = () => {
-    console.log("update");
+  const onFinishUpdatePassword = (values: PasswordFormType) => {
+    if (values.newPassword !== values.newPasswordConfirm) {
+      message.error("入力したパスワードが異なります");
+      return;
+    }
+    modalPassword.handleClose();
+    console.log("update", values);
   };
 
   // const credential = firebase.auth.EmailAuthProvider.credential(
@@ -57,11 +63,33 @@ export default function SettingsHome() {
           cancelText="キャンセル"
         >
           <Form<PasswordFormType>
-            name="changePasswordForm"
             onFinish={onFinishUpdatePassword}
             ref={updatePasswordFormRef}
           >
-            <Form.Item label="新しいパスワード" name="newPassword">
+            <Form.Item
+              label="新しいパスワード"
+              name="newPassword"
+              rules={[
+                { required: true, message: "入力してください" },
+                {
+                  min: minLengthPassword,
+                  message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="パスワード確認"
+              name="newPasswordConfirm"
+              rules={[
+                { required: true, message: "入力してください" },
+                {
+                  min: minLengthPassword,
+                  message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+                },
+              ]}
+            >
               <Input.Password />
             </Form.Item>
           </Form>
