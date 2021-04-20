@@ -5,7 +5,7 @@ import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
 import { Form, FormInstance, Input, message } from "antd";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useUser } from "hooks/UserHooks";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
@@ -38,10 +38,9 @@ export default function SettingsHome() {
       values.currentPassword
     );
     try {
-      const reauthResult = await currentUser.reauthenticateWithCredential(
-        credential
-      );
+      await currentUser.reauthenticateWithCredential(credential);
       await currentUser?.updatePassword(values.newPassword);
+      message.success("パスワードの変更が成功しました");
       modalPassword.handleClose();
     } catch (e) {
       // eslint-disable-next-line no-console
