@@ -9,7 +9,12 @@ export default function SettingsHome() {
       <Title>設定</Title>
       <SubTitle>認証情報</SubTitle>
       <RowsWrapperStyle>
-        <SettingsRow link="" label="メールアドレス" value="hoge@subbme.com" />
+        <SettingsRow
+          link=""
+          label="メールアドレス"
+          value="hoge@subbme.com"
+          disabled
+        />
         <SettingsRow link="" label="パスワード" value="********" />
       </RowsWrapperStyle>
     </>

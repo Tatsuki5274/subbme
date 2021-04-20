@@ -1,3 +1,4 @@
+import { Tooltip } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -6,12 +7,20 @@ export default function SettingsRow(props: {
   link: string;
   label: string;
   value: string;
+  disabled?: boolean;
 }) {
   return (
     <ContainerStyle>
-      <LinkStyle>
-        <Link to={props.link}>変更</Link>
-      </LinkStyle>
+      {props.disabled ? (
+        <Tooltip title="機能は現在準備中です">
+          <DisableStyle>変更</DisableStyle>
+        </Tooltip>
+      ) : (
+        <LinkStyle>
+          <Link to={props.link}>変更</Link>
+        </LinkStyle>
+      )}
+
       <LabelStyle>{props.label}</LabelStyle>
       <ValueStyle>{props.value}</ValueStyle>
     </ContainerStyle>
@@ -28,3 +37,10 @@ const LinkStyle = styled.td({
 });
 const LabelStyle = styled.td({});
 const ValueStyle = styled.td({});
+
+const DisableStyle = styled.div({
+  color: "currentcolor",
+  cursor: "not-allowed",
+  opacity: "0.5",
+  textDecoration: "none",
+});
