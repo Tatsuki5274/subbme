@@ -1,22 +1,25 @@
-import Form from "antd/lib/form/Form";
 import Modal from "antd/lib/modal/Modal";
 import SubTitle from "components/common/atoms/SubTitle";
 import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
-import { useUser } from "hooks/UserHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
-import firebase from "libs/Firebase";
+import { Form, FormInstance, Input } from "antd";
+import { useRef } from "react";
 
 type PasswordFormType = {
   newPassword: string;
 };
 
 export default function SettingsHome() {
-  const { currentUser } = useUser();
   const modalPassword = useModal();
+  const updatePasswordFormRef = useRef<FormInstance<PasswordFormType>>(null);
   const handleOKUpdatePassword = () => {
+    updatePasswordFormRef.current?.submit();
     modalPassword.handleClose();
+  };
+  const onFinishUpdatePassword = () => {
+    console.log("update");
   };
 
   // const credential = firebase.auth.EmailAuthProvider.credential(
@@ -53,7 +56,15 @@ export default function SettingsHome() {
           onCancel={modalPassword.handleClose}
           cancelText="キャンセル"
         >
-          {/* <Form onFinish={}></Form> */}
+          <Form<PasswordFormType>
+            name="changePasswordForm"
+            onFinish={onFinishUpdatePassword}
+            ref={updatePasswordFormRef}
+          >
+            <Form.Item label="新しいパスワード" name="newPassword">
+              <Input.Password />
+            </Form.Item>
+          </Form>
         </Modal>
       </div>
     </>
