@@ -7,8 +7,11 @@ import SettingsRow from "../molecules/SettingsRow";
 import { Form, FormInstance, Input, message } from "antd";
 import { useRef, useState } from "react";
 import { useUser } from "hooks/UserHooks";
+import firebase from "libs/Firebase";
+import { messageAuth } from "common/lang";
 
 type PasswordFormType = {
+  currentPassword: string;
   newPassword: string;
   newPasswordConfirm: string;
 };
@@ -26,14 +29,25 @@ export default function SettingsHome() {
       message.error("入力したパスワードが異なります");
       return;
     }
+    if (!currentUser?.email) {
+      // ユーザーのemailが取得できない場合
+      throw new Error("User is not signedin.");
+    }
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentUser.email,
+      values.currentPassword
+    );
     try {
+      const reauthResult = await currentUser.reauthenticateWithCredential(
+        credential
+      );
       await currentUser?.updatePassword(values.newPassword);
+      modalPassword.handleClose();
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.warn(e.message);
+      console.warn(e.message, e.code);
+      message.warn(messageAuth(e));
     }
-    modalPassword.handleClose();
-    console.log("update", values);
   };
 
   // const credential = firebase.auth.EmailAuthProvider.credential(
@@ -74,6 +88,13 @@ export default function SettingsHome() {
             onFinish={onFinishUpdatePassword}
             ref={updatePasswordFormRef}
           >
+            <Form.Item
+              label="現在のパスワード"
+              name="currentPassword"
+              rules={[{ required: true, message: "入力してください" }]}
+            >
+              <Input.Password />
+            </Form.Item>
             <Form.Item
               label="新しいパスワード"
               name="newPassword"
