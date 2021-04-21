@@ -1,7 +1,6 @@
 /* eslint-disable new-cap */
 
 import * as functions from "firebase-functions";
-import * as Payjp from "payjp";
 import { UserManager } from "../repositories/Users";
 // import * as admin from 'firebase-admin';
 
@@ -20,10 +19,6 @@ export default functions
       // 秘密鍵がfunctions configに設定されていない場合
       throw new Error("SecretKey is not set");
     }
-
-    const payjp = Payjp(sk);
-    const resultPayjp = await payjp.customers.delete(user.uid);
-    console.log(JSON.stringify(resultPayjp));
   } catch (e) {
     throw new Error(e);
   }
