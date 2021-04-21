@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 
 export function useModal() {
   const [isVisible, SetIsVisible] = useState(false);
@@ -13,4 +14,12 @@ export function useModal() {
     handleOpen,
     handleClose,
   };
+}
+
+/**
+ *
+ * @description クエリパラメータの検索を行う
+ */
+export function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }

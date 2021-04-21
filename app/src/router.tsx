@@ -1,3 +1,4 @@
+import MailActions from "components/auth/pages/MailActions";
 import ResetPassword from "components/auth/pages/ResetPassword";
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
@@ -93,6 +94,12 @@ const Router = () => {
             component={Settings}
           />
 
+          <Route
+            exact
+            path={routeBuilder.settingsActionLinkPath()}
+            component={MailActions}
+          />
+
           <Route exact path="/test" component={TestPage} />
           <Result404 />
         </Switch>
@@ -140,6 +147,9 @@ export const routeBuilder = {
   },
   settingsPath: (host = "") => {
     return `${host}/settings`;
+  },
+  settingsActionLinkPath: (host = "") => {
+    return `${host}/actions`;
   },
   settingMailPath: (host = "") => {
     return `${host}/settings/mail`;
