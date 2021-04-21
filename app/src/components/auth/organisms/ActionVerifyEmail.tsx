@@ -11,6 +11,7 @@ function useVerify(code: string) {
     (async () => {
       try {
         await auth.applyActionCode(code);
+        // TODO userコレクションのメールアドレスを反映する
         setStatus("SUCCESS");
       } catch (e) {
         setStatus("FAILD");
