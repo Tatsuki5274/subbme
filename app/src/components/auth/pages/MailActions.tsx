@@ -1,8 +1,9 @@
 import Result404 from "components/common/organisms/404";
 import { useQuery } from "hooks/CommonHooks";
-import ActionRecoverEmail from "../organisms/ActionRecoverEmail";
-import ActionResetPassword from "../organisms/ActionResetPassword";
-import ActionVerifyEmail from "../organisms/ActionVerifyEmail";
+import React from "react";
+import ActionRecoverEmailTemplate from "../templates/ActionRecoverEmailTemplate";
+import ActionResetPasswordTemplate from "../templates/ActionResetPasswordTemplate";
+import ActionVerifyEmailTemplate from "../templates/ActionVerifyEmailTemplate";
 
 export default function MailActions() {
   const query = useQuery();
@@ -18,7 +19,7 @@ export default function MailActions() {
     case "resetPassword":
       // Display reset password handler and UI.
       return (
-        <ActionResetPassword
+        <ActionResetPasswordTemplate
           actionCode={actionCode}
           continueUrl={continueUrl}
           lang={lang}
@@ -26,11 +27,11 @@ export default function MailActions() {
       );
     case "recoverEmail":
       // Display email recovery handler and UI.
-      return <ActionRecoverEmail actionCode={actionCode} lang={lang} />;
+      return <ActionRecoverEmailTemplate actionCode={actionCode} lang={lang} />;
     case "verifyEmail":
       // Display email verification handler and UI.
       return (
-        <ActionVerifyEmail
+        <ActionVerifyEmailTemplate
           actionCode={actionCode}
           continueUrl={continueUrl}
           lang={lang}
