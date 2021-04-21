@@ -4,6 +4,11 @@ export default functions
 .region("asia-northeast1")
 .https
 .onRequest((req, res) => {
-  console.log(JSON.stringify(req));
-  res.send({message: "OK"});
+  const method = req.method;
+  console.log("method", method);
+  console.log("params", req.query);
+  console.log("mode", req.query.mode);
+  console.log("oobCode", req.query.oobCode);
+  res.send({message: "OK", params: req.query});
 });
+
