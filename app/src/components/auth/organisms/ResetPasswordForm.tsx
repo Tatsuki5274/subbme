@@ -1,14 +1,17 @@
 import { Button, Form, Input, message } from "antd";
 import React from "react";
 import { auth } from "libs/Types";
+import { useForm } from "antd/lib/form/Form";
 
 type FormType = {
   email: string;
 };
 
 export default function ResetPasswordForm() {
+  const [form] = useForm();
   return (
     <Form<FormType>
+      form={form}
       initialValues={{
         email: "",
       }}
