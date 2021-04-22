@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { useModal } from "hooks/CommonHooks";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -14,7 +15,10 @@ export default function SignInNewUser() {
       </div>
       <div>
         パスワードを忘れた方は
-        <span onClick={modal.handleOpen}>こちら</span>
+        <Button type="link" size="large" onClick={modal.handleOpen}>
+          こちら
+        </Button>
+        {/* <span onClick={modal.handleOpen}>こちら</span> */}
         {/* <Link to={routeBuilder.resetPasword()}>こちら</Link> */}
       </div>
       <ResetPasswordForm
