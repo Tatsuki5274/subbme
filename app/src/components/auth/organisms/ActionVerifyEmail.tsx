@@ -1,5 +1,5 @@
 import { message } from "antd";
-import { messageAuth } from "common/lang";
+import { messageAuth, MessageAuthType } from "common/lang";
 import Result500 from "components/common/organisms/500";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import { auth } from "libs/Types";
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 function useVerify(code: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState<"SUCCESS" | "FAILD" | null>(null);
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<MessageAuthType | null>(null);
   useEffect(() => {
     (async () => {
       try {
@@ -42,7 +42,9 @@ export default function ActionVerifyEmail(props: {
   if (isLoading) return <LoadingScreen />;
   else if (status === "SUCCESS") return <span>success!</span>;
   else if (status === "FAILD") {
-    message.error(messageAuth(error));
+    if (error) {
+      message.error(messageAuth(error));
+    }
     return <span>faild...</span>;
   }
   return <Result500 />;

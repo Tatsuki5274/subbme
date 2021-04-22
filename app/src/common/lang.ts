@@ -1,4 +1,6 @@
-export function messageAuth(error: { code: string; message: string }): string {
+export type MessageAuthType = { code: string; message: string };
+
+export function messageAuth(error: MessageAuthType): string {
   switch (error.code) {
     // case "auth/cancelled-popup-request":
     // case "auth/popup-closed-by-user":
