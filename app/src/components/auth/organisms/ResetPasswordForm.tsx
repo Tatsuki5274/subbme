@@ -3,6 +3,7 @@ import React from "react";
 import { auth } from "libs/Types";
 import useForm from "antd/lib/form/hooks/useForm";
 import { messageAuth } from "common/lang";
+import AsyncButton from "components/common/atoms/AsyncButton";
 
 type FormType = {
   email: string;
@@ -13,9 +14,19 @@ export default function ResetPasswordForm(props: {
   handleClose: () => void;
 }) {
   const [form] = useForm();
+  const onFinish = async (values: FormType) => {
+    try {
+      await auth.sendPasswordResetEmail(values.email);
+      form.resetFields();
+      props.handleClose();
+      message.success("パスワードリセットメールの送信に成功しました");
+    } catch (e) {
+      message.error(messageAuth(e));
+    }
+  };
   const onClickOK = async () => {
     await form.validateFields();
-    form.submit();
+    await onFinish(form.getFieldsValue());
   };
   const onClickCancel = () => {
     form.resetFields();
@@ -26,24 +37,23 @@ export default function ResetPasswordForm(props: {
       visible={props.visible}
       title="パスワードリセット"
       cancelText="キャンセル"
-      onOk={onClickOK}
-      onCancel={onClickCancel}
+      // onOk={onClickOK}
+      // onCancel={onClickCancel}
+      footer={[
+        <Button key="cancel" onClick={onClickCancel}>
+          キャンセル
+        </Button>,
+        <AsyncButton key="ok" type="primary" onClick={onClickOK}>
+          OK
+        </AsyncButton>,
+      ]}
     >
       <Form<FormType>
         form={form}
         initialValues={{
           email: "",
         }}
-        onFinish={async (values) => {
-          try {
-            await auth.sendPasswordResetEmail(values.email);
-            form.resetFields();
-            props.handleClose();
-            message.success("パスワードリセットメールの送信に成功しました");
-          } catch (e) {
-            message.error(messageAuth(e));
-          }
-        }}
+        // onFinish={}
       >
         <Form.Item
           label="メールアドレス"

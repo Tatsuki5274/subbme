@@ -6,9 +6,15 @@ export default function AsyncButton(props: ButtonProps) {
   const onClick = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (props.onClick) {
       setIsLoading(true);
-      // クリック処理を同期実行する
-      await props.onClick(event);
-      setIsLoading(false);
+      try {
+        // クリック処理を同期実行する
+        await props.onClick(event);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
   return (
