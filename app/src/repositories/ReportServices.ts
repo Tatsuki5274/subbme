@@ -66,7 +66,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       }
       const id = reportService.id;
       delete reportService.id;
-      this._ref.doc(id).set(reportService);
+      this._ref.doc(id).set(reportService, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console

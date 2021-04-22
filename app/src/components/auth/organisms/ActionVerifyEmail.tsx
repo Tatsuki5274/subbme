@@ -3,6 +3,7 @@ import { messageAuth, MessageAuthType } from "common/lang";
 import Result500 from "components/common/organisms/500";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import { auth } from "libs/Types";
+import { confirmEmail } from "libs/User";
 import { useEffect, useState } from "react";
 
 function useVerify(code: string) {
@@ -12,8 +13,13 @@ function useVerify(code: string) {
   useEffect(() => {
     (async () => {
       try {
+        const res = await auth.checkActionCode(code);
+        const email = res.data.email;
         await auth.applyActionCode(code);
-        // TODO userコレクションのメールアドレスを反映する
+        if (!email) {
+          throw new Error("invalid code");
+        }
+        await confirmEmail({ email: email });
         setStatus("SUCCESS");
       } catch (e) {
         setError(e);

@@ -62,7 +62,7 @@ export class MailTemplateManager implements ManagerInterface<MailTemplate> {
       }
       const id = mailTemplate.id;
       delete mailTemplate.id;
-      this._ref.doc(id).set(mailTemplate);
+      this._ref.doc(id).set(mailTemplate, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console

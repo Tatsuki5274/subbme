@@ -5,7 +5,7 @@ const funcs = {
   onCreateUser: "./functions/onCreateAuth",
   onDeleteUser: "./functions/onDeleteAuth",
   onCreateReport: "./functions/onCreateReport",
-  onRequestActionLink: "./functions/onRequestActionLink",
+  onConfirmEmail: "./functions/onConfirmEmail",
   setSeeds: "./functions/setSeeds",
 };
 

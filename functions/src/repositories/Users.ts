@@ -79,7 +79,7 @@ export class UserManager implements ManagerInterface<User> {
       }
       const id = user.uid;
       delete user.uid;
-      this._ref.doc(id).set(user);
+      this._ref.doc(id).set(user, {merge: true});
       return true;
     } catch (e) {
       console.warn(e);

@@ -62,7 +62,7 @@ export class MailManager implements ManagerInterface<Mail> {
       }
       const id = mail.id;
       delete mail.id;
-      this._ref.doc(id).set(mail);
+      this._ref.doc(id).set(mail, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console

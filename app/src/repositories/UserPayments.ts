@@ -77,7 +77,7 @@ export class UserPaymentManager implements ManagerInterface<UserPayment> {
       }
       const id = service.id;
       delete service.id;
-      this._ref.doc(id).set(service);
+      this._ref.doc(id).set(service, { merge: true });
       return true;
     } catch (e) {
       console.warn(e);

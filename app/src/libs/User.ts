@@ -27,3 +27,16 @@ export const signInUser = async (email: string, password: string) => {
     } as ErrorType;
   }
 };
+
+/**
+ *
+ * @param args email を入力したらemailのユーザーのemailを確認。入力がない場合は認証ユーザーのemailを確認
+ * @returns
+ */
+export async function confirmEmail(args: { email?: string }) {
+  const confirmEmail = firebase
+    .functions()
+    .httpsCallable("onConfirmEmail-httpEvent");
+  const result = await confirmEmail(args);
+  return result;
+}

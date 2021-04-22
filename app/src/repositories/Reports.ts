@@ -63,7 +63,7 @@ export class ReportManager implements ManagerInterface<Report> {
       }
       const id = report.id;
       delete report.id;
-      this._ref.doc(id).set(report);
+      this._ref.doc(id).set(report, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console

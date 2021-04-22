@@ -21,7 +21,7 @@ export default functions
     const userManager = new UserManager();
     await userManager.set({
       uid: user.uid,
-      email: user.email,  // 認証済みのメールアドレスとして扱う(仮実装)
+      // email: user.email,  // 認証済みのメールアドレスとして扱う(仮実装)
       createdAt: admin.firestore.Timestamp.now()
     });
 

@@ -68,7 +68,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       }
       const id = service.id;
       delete service.id;
-      this._ref.doc(id).set(service);
+      this._ref.doc(id).set(service, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
