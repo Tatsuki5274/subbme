@@ -8,7 +8,7 @@ export default function ResetPassword() {
     <>
       <SimpleHeader />
       <Title>パスワードリセット</Title>
-      <ResetPasswordForm />
+      {/* <ResetPasswordForm /> */}
       {/* <Footer /> */}
     </>
   );

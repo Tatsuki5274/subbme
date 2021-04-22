@@ -42,11 +42,11 @@ const Router = () => {
           <Route exact path={routeBuilder.topPath()} component={ServiceList} />
           <Route exact path={routeBuilder.signInPath()} component={PSignIn} />
           <Route exact path={routeBuilder.signUpPath()} component={PSignUp} />
-          <Route
+          {/* <Route
             exact
             path={routeBuilder.resetPasword()}
             component={ResetPassword}
-          />
+          /> */}
 
           {/* サービス関係 */}
           <Route
