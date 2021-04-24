@@ -14,5 +14,19 @@ module.exports = {
         components: path.join(__dirname, "src", "components"),
       },
     },
+    {
+      resolve: "gatsby-plugin-antd",
+      options: {
+        style: true,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-less",
+      options: {
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+      },
+    },
   ],
 };

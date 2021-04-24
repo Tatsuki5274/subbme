@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { Link } from "gatsby";
 import React from "react";
 
@@ -11,6 +12,7 @@ export default function TopTemplate() {
       </p>
       <p>Now go build something great.</p>
       <Link to="/page-2/">Go to page 2</Link>
+      <Button type="primary">Primary</Button>
     </div>
   );
 }
