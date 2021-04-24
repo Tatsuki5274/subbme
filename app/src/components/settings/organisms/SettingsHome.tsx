@@ -4,8 +4,8 @@ import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
-import { Button, Form, FormInstance, Input, message } from "antd";
-import React, { useRef } from "react";
+import { Button, Form, Input, message } from "antd";
+import React from "react";
 import { useUser } from "hooks/UserHooks";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
@@ -19,12 +19,53 @@ type PasswordFormType = {
 };
 
 export default function SettingsHome() {
-  const { currentUser } = useUser();
-  const [formPassword] = useForm<PasswordFormType>();
   const modalPassword = useModal();
+  return (
+    <>
+      <Title>設定</Title>
+      <SubTitle>認証情報</SubTitle>
+      <RowsWrapperStyle>
+        <SettingsRow label="メールアドレス" value="hoge@subbme.com" disabled />
+        <SettingsRow
+          onClick={modalPassword.handleOpen}
+          label="パスワード"
+          value="********"
+        />
+      </RowsWrapperStyle>
+      <div>
+        <ModalUpdatePassword
+          visible={modalPassword.isVisible}
+          handleClose={modalPassword.handleClose}
+        />
+      </div>
+    </>
+  );
+}
+
+const RowsWrapperStyle = styled.table({
+  borderCollapse: "separate",
+  borderSpacing: "15px 0",
+  // border-collapse:separate;
+});
+
+/**
+ * @description パスワード変更モーダルの処理
+ */
+function ModalUpdatePassword(props: {
+  visible: boolean;
+  handleClose: () => void;
+}) {
+  const { currentUser } = useUser();
+  const [form] = useForm<PasswordFormType>();
   const minLengthPassword = 7;
-  const handleOKUpdatePassword = () => {
-    formPassword.submit();
+  const handleOK = async () => {
+    // form.submit();
+    await form.validateFields();
+    await onFinishUpdatePassword(form.getFieldsValue());
+  };
+  const handleClose = () => {
+    form.resetFields();
+    props.handleClose();
   };
   const onFinishUpdatePassword = async (values: PasswordFormType) => {
     if (values.newPassword !== values.newPasswordConfirm) {
@@ -43,110 +84,64 @@ export default function SettingsHome() {
       await currentUser.reauthenticateWithCredential(credential);
       await currentUser?.updatePassword(values.newPassword);
       message.success("パスワードの変更が成功しました");
-      modalPassword.handleClose();
+      props.handleClose();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.warn(e.message, e.code);
       message.warn(messageAuth(e));
     }
   };
-
-  // const credential = firebase.auth.EmailAuthProvider.credential(
-  //   currentUser?.email || "",
-  //   "currentPassword"
-  // );
-  // currentUser
-  //   ?.reauthenticateWithCredential(credential)
-  //   .then(function () {
-  //     // User re-authenticated.
-  //   })
-  //   .catch(function (error) {
-  //     // An error happened.
-  //     console.error(error);
-  //   });
-
   return (
-    <>
-      <Title>設定</Title>
-      <SubTitle>認証情報</SubTitle>
-      <RowsWrapperStyle>
-        <SettingsRow label="メールアドレス" value="hoge@subbme.com" disabled />
-        <SettingsRow
-          onClick={modalPassword.handleOpen}
-          label="パスワード"
-          value="********"
-        />
-      </RowsWrapperStyle>
-      <div>
-        <Modal
-          title="パスワード変更"
-          visible={modalPassword.isVisible}
-          onOk={handleOKUpdatePassword}
-          onCancel={modalPassword.handleClose}
-          cancelText="キャンセル"
-          footer={[
-            <Button key="cancel" onClick={modalPassword.handleClose}>
-              キャンセル
-            </Button>,
-            <AsyncButton
-              key="ok"
-              type="primary"
-              onClick={handleOKUpdatePassword}
-            >
-              OK
-            </AsyncButton>,
+    <Modal
+      title="パスワード変更"
+      visible={props.visible}
+      cancelText="キャンセル"
+      onCancel={handleClose}
+      onOk={handleOK}
+      footer={[
+        <Button key="cancel" onClick={handleClose}>
+          キャンセル
+        </Button>,
+        <AsyncButton key="ok" type="primary" onClick={handleOK}>
+          OK
+        </AsyncButton>,
+      ]}
+    >
+      <Form<PasswordFormType> form={form} onFinish={onFinishUpdatePassword}>
+        <Form.Item
+          label="現在のパスワード"
+          name="currentPassword"
+          rules={[{ required: true, message: "入力してください" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+        <Form.Item
+          label="新しいパスワード"
+          name="newPassword"
+          rules={[
+            { required: true, message: "入力してください" },
+            {
+              min: minLengthPassword,
+              message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+            },
           ]}
         >
-          <Form<PasswordFormType>
-            form={formPassword}
-            onFinish={onFinishUpdatePassword}
-          >
-            <Form.Item
-              label="現在のパスワード"
-              name="currentPassword"
-              rules={[{ required: true, message: "入力してください" }]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item
-              label="新しいパスワード"
-              name="newPassword"
-              rules={[
-                { required: true, message: "入力してください" },
-                {
-                  min: minLengthPassword,
-                  message: `パスワードは最低${minLengthPassword}文字以上必要です`,
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item
-              label="パスワード確認"
-              name="newPasswordConfirm"
-              rules={[
-                { required: true, message: "入力してください" },
-                {
-                  min: minLengthPassword,
-                  message: `パスワードは最低${minLengthPassword}文字以上必要です`,
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-          </Form>
-        </Modal>
-      </div>
-    </>
+          <Input.Password />
+        </Form.Item>
+        <Form.Item
+          label="パスワード確認"
+          name="newPasswordConfirm"
+          rules={[
+            { required: true, message: "入力してください" },
+            {
+              min: minLengthPassword,
+              message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+      </Form>
+    </Modal>
   );
-}
-
-const RowsWrapperStyle = styled.table({
-  borderCollapse: "separate",
-  borderSpacing: "15px 0",
-  // border-collapse:separate;
-});
-
-function modalUpdatePassword() {
-  return null;
 }
