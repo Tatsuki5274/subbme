@@ -2,7 +2,6 @@ import { Button, Form, Input, message } from "antd";
 import { messageAuth } from "common/lang";
 import { auth } from "libs/Types";
 import React from "react";
-import { useHistory } from "react-router";
 
 type PasswordFormType = {
   newPassword: string;

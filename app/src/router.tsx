@@ -1,5 +1,4 @@
 import MailActions from "components/auth/pages/MailActions";
-import ResetPassword from "components/auth/pages/ResetPassword";
 import PSignIn from "components/auth/pages/SignIn";
 import PSignUp from "components/auth/pages/SignUp";
 import Result404 from "components/common/organisms/404";
