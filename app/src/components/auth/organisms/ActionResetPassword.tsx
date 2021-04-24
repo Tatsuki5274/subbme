@@ -2,6 +2,7 @@ import { Button, Form, Input, message } from "antd";
 import { messageAuth } from "common/lang";
 import { auth } from "libs/Types";
 import React from "react";
+import { useHistory } from "react-router";
 
 type PasswordFormType = {
   newPassword: string;
@@ -25,6 +26,10 @@ export default function ActionResetPassword(props: {
         // アカウントの検証に成功
         await auth.confirmPasswordReset(props.actionCode, values.newPassword);
         message.success("パスワードの更新に成功しました");
+        if (props.continueUrl) {
+          // history.push(props.continueUrl);
+          location.href = props.continueUrl;
+        }
       } else {
         // 確認コードの間違いなどにより、検証に失敗
         message.error("アカウントの検証に失敗しました");

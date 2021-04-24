@@ -4,6 +4,7 @@ import { auth } from "libs/Types";
 import useForm from "antd/lib/form/hooks/useForm";
 import { messageAuth } from "common/lang";
 import AsyncButton from "components/common/atoms/AsyncButton";
+import { routeBuilder } from "router";
 
 type FormType = {
   email: string;
@@ -16,7 +17,11 @@ export default function ResetPasswordForm(props: {
   const [form] = useForm();
   const onFinish = async (values: FormType) => {
     try {
-      await auth.sendPasswordResetEmail(values.email);
+      const host = process.env.REACT_APP_HOST_NAME;
+      await auth.sendPasswordResetEmail(values.email, {
+        url: routeBuilder.settingsPath(host),
+        handleCodeInApp: false,
+      });
       form.resetFields();
       props.handleClose();
       message.success("パスワードリセットメールの送信に成功しました");
