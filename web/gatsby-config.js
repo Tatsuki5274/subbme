@@ -1,15 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: "My Gatsby Site",
+    title: `Gatsby Typescript Starter`,
   },
   plugins: [
-    "gatsby-plugin-styled-components",
-    // "gatsby-plugin-sitemap",
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        icon: "src/images/icon.png",
-      },
-    },
+    `gatsby-plugin-react-helmet`,
+    // Add typescript stack into webpack
+    `gatsby-plugin-typescript`
   ],
-};
+}
