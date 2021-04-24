@@ -4,11 +4,13 @@ import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
-import { Form, FormInstance, Input, message } from "antd";
-import { useRef } from "react";
+import { Button, Form, FormInstance, Input, message } from "antd";
+import React, { useRef } from "react";
 import { useUser } from "hooks/UserHooks";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
+import { useForm } from "antd/lib/form/Form";
+import AsyncButton from "components/common/atoms/AsyncButton";
 
 type PasswordFormType = {
   currentPassword: string;
@@ -18,11 +20,11 @@ type PasswordFormType = {
 
 export default function SettingsHome() {
   const { currentUser } = useUser();
+  const [formPassword] = useForm<PasswordFormType>();
   const modalPassword = useModal();
-  const updatePasswordFormRef = useRef<FormInstance<PasswordFormType>>(null);
   const minLengthPassword = 7;
   const handleOKUpdatePassword = () => {
-    updatePasswordFormRef.current?.submit();
+    formPassword.submit();
   };
   const onFinishUpdatePassword = async (values: PasswordFormType) => {
     if (values.newPassword !== values.newPasswordConfirm) {
@@ -82,10 +84,22 @@ export default function SettingsHome() {
           onOk={handleOKUpdatePassword}
           onCancel={modalPassword.handleClose}
           cancelText="キャンセル"
+          footer={[
+            <Button key="cancel" onClick={modalPassword.handleClose}>
+              キャンセル
+            </Button>,
+            <AsyncButton
+              key="ok"
+              type="primary"
+              onClick={handleOKUpdatePassword}
+            >
+              OK
+            </AsyncButton>,
+          ]}
         >
           <Form<PasswordFormType>
+            form={formPassword}
             onFinish={onFinishUpdatePassword}
-            ref={updatePasswordFormRef}
           >
             <Form.Item
               label="現在のパスワード"
@@ -132,3 +146,7 @@ const RowsWrapperStyle = styled.table({
   borderSpacing: "15px 0",
   // border-collapse:separate;
 });
+
+function modalUpdatePassword() {
+  return null;
+}
