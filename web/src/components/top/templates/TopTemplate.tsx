@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import { Link } from "gatsby";
 import React from "react";
+import styled from "styled-components";
 
 export default function TopTemplate() {
   return (
@@ -13,6 +14,11 @@ export default function TopTemplate() {
       <p>Now go build something great.</p>
       <Link to="/page-2/">Go to page 2</Link>
       <Button type="primary">Primary</Button>
+      <Style>Styled Component!</Style>
     </div>
   );
 }
+
+const Style = styled.div({
+  color: "red",
+});

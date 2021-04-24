@@ -5,9 +5,9 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    // Add typescript stack into webpack
     `gatsby-plugin-typescript`,
     "gatsby-plugin-eslint",
+    "gatsby-plugin-styled-components",
     {
       resolve: "gatsby-plugin-root-import",
       options: {
