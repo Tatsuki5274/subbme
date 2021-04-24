@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = {
   siteMetadata: {
     title: `Gatsby Typescript Starter`,
@@ -7,5 +8,11 @@ module.exports = {
     // Add typescript stack into webpack
     `gatsby-plugin-typescript`,
     "gatsby-plugin-eslint",
+    {
+      resolve: "gatsby-plugin-root-import",
+      options: {
+        components: path.join(__dirname, "src", "components"),
+      },
+    },
   ],
 };

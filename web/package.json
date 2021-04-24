@@ -38,6 +38,7 @@
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "gatsby-plugin-root-import": "^2.0.6",
     "prettier": "^2.2.1"
   },
   "contributors": [
