@@ -46,12 +46,13 @@ export default function ActionVerifyEmail(props: {
 }) {
   const { status, error, isLoading } = useVerify(props.actionCode);
   if (isLoading) return <LoadingScreen />;
-  else if (status === "SUCCESS") return <span>success!</span>;
+  else if (status === "SUCCESS")
+    return <span>メールアドレスの確認が完了しました。</span>;
   else if (status === "FAILD") {
     if (error) {
       message.error(messageAuth(error));
     }
-    return <span>faild...</span>;
+    return <span>メールアドレスの確認に失敗しました</span>;
   }
   return <Result500 />;
 }
