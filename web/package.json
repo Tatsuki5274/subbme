@@ -7,8 +7,10 @@
     "@types/node": "^14.14.41",
     "@types/react": "17.0.3",
     "@types/react-dom": "17.0.3",
+    "eslint-loader": "^4.0.2",
     "gatsby": "^3.3.1",
     "gatsby-link": "^3.3.0",
+    "gatsby-plugin-eslint": "^3.0.0",
     "gatsby-plugin-react-helmet": "^4.3.0",
     "gatsby-plugin-typescript": "^3.3.0",
     "react": "^17.0.2",
@@ -26,10 +28,16 @@
     "build": "gatsby build",
     "start": "gatsby develop",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js,.ts,.tsx ."
   },
   "devDependencies": {
     "@types/react-helmet": "^6.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.2.1"
   },
   "contributors": [
