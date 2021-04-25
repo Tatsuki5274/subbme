@@ -37,14 +37,18 @@ export default function TopTemplate() {
         <TopLoadMap />
       </RoadmapStyle>
       <Divider style={DividerStyle}>CONTACT</Divider>
+      <ContactTextStyle>
+        連絡用フォームは現在準備中です。
+        <br />
+        ご連絡の方は
+        &quot;subbme@fastmail.jp&quot;までご連絡をお願いいたします。
+      </ContactTextStyle>
       <p>
         Haha, Welcome to your new{" "}
         {/* <strong>{this.props.data.site.siteMetadata.title}</strong> site. */}
       </p>
       <p>Now go build something great.</p>
       <Link to="/page-2/">Go to page 2</Link>
-      <Button type="primary">Primary</Button>
-      <Style>Styled Component!</Style>
       <Footer />
     </ContainerStyle>
   );
@@ -57,10 +61,6 @@ const DividerStyle: CSSProperties = {
   fontSize: "40px",
 };
 
-const Style = styled.div({
-  color: "red",
-});
-
 const RoadmapStyle = styled.div({
   display: "inline-block",
   margin: "0 auto",
@@ -72,3 +72,4 @@ const VisionTextStyle = styled.span({
 
 const ReleaseTextStyle = VisionTextStyle;
 const AboutTextStyle = VisionTextStyle;
+const ContactTextStyle = VisionTextStyle;
