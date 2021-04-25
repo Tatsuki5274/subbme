@@ -14,7 +14,7 @@ export default function TopMainVisual() {
         <MessageCenter>
           <MessageContainerStyle>
             <MessageStyle>
-              なんとなくで続けている固定費はありませんか？
+              なんとなくで続けているサブスクはありませんか？
               <br />
               まずは固定費の見直しからしてみませんか？
             </MessageStyle>
