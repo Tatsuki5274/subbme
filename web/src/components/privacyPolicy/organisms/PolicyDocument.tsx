@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export default function PolicyDocument(props: {
   title: string;
-  children: string;
+  children: JSX.Element | JSX.Element[];
 }) {
   return (
     <Row justify="center">
