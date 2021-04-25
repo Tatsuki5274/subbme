@@ -6,11 +6,11 @@ import styled, { CSSProperties } from "styled-components";
 export default function TopMainVisual() {
   return (
     <Row style={ContainerStyle}>
-      <Col span={10}>
+      <Col xs={24} sm={24} md={10} lg={10} xl={10}>
         <ImageStyle src="/assets/visual.svg" />
         {/* <img src="/assets/visual.svg" /> */}
       </Col>
-      <Col span={14}>
+      <Col xs={24} sm={24} md={14} lg={14} xl={14}>
         <MessageCenter>
           <MessageContainerStyle>
             <MessageStyle>
@@ -27,12 +27,12 @@ export default function TopMainVisual() {
 }
 
 const ContainerStyle: CSSProperties = {
-  height: "350px",
+  // height: "350px",
   backgroundColor: "#5794C3",
   color: "white",
 };
 
-const ImageStyle = styled.img({ height: "350px" });
+const ImageStyle = styled.img({ height: "350px", maxWidth: "100%" });
 
 const MessageCenter = styled.div({
   height: "100%",
