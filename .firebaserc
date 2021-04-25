@@ -14,6 +14,16 @@
           "subbme-dev-web"
         ]
       }
+    },
+    "subbme-prod": {
+      "hosting": {
+        "app": [
+          "subbme-prod"
+        ],
+        "web": [
+          "subbme-prod-web"
+        ]
+      }
     }
   }
 }
