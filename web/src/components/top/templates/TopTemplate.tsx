@@ -16,6 +16,11 @@ export default function TopTemplate() {
         フォーカスした新しい節約を広めることが目標です。
       </VisionTextStyle>
       <Divider style={DividerStyle}>RELEASE</Divider>
+      <ReleaseTextStyle>
+        2021年6月上旬、パブリックβ版WEBアプリ公開予定
+        <br />
+        ※リリースを保証する内容ではありません
+      </ReleaseTextStyle>
       <Divider style={DividerStyle}>ROADMAP</Divider>
       <RoadmapStyle>
         <TopLoadMap />
@@ -53,3 +58,5 @@ const RoadmapStyle = styled.div({
 const VisionTextStyle = styled.span({
   fontSize: "18px",
 });
+
+const ReleaseTextStyle = VisionTextStyle;
