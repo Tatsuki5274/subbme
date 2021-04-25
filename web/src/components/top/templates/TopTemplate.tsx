@@ -3,6 +3,7 @@ import Footer from "components/common/organisms/Footer";
 import { Link } from "gatsby";
 import React from "react";
 import styled, { CSSProperties } from "styled-components";
+import TopPlainText from "../atoms/TopPlainText";
 import TopLoadMap from "../organisms/TopLoadMap";
 import TopMainVisual from "../organisms/TopMainVisual";
 
@@ -12,9 +13,19 @@ export default function TopTemplate() {
       <TopMainVisual />
       <Divider style={DividerStyle}>VISION</Divider>
       <VisionTextStyle>
-        近頃は物価の上昇に伴い厳しい状況になりつつあります。節約する、という時に軽視されがちな固定費を削減するということに
-        フォーカスした新しい節約を広めることが目標です。
+        <TopPlainText>
+          近頃は物価の上昇に伴い厳しい状況になりつつあります。節約する、という時に軽視されがちな固定費を削減するということに
+          フォーカスした新しい節約を広めることが目標です。
+        </TopPlainText>
       </VisionTextStyle>
+      <Divider style={DividerStyle}>ABOUT SUBBME</Divider>
+      <AboutTextStyle>
+        <TopPlainText>
+          固定費を一緒に管理してユーザーの金銭的な負担を減らしたいという目的で誕生したアプリです。
+          “Let’s manage your subscription with me”のsubscription with
+          meから取ってSubbme（サブミー）と名付けました。
+        </TopPlainText>
+      </AboutTextStyle>
       <Divider style={DividerStyle}>RELEASE</Divider>
       <ReleaseTextStyle>
         2021年6月上旬、パブリックβ版WEBアプリ公開予定
@@ -60,3 +71,4 @@ const VisionTextStyle = styled.span({
 });
 
 const ReleaseTextStyle = VisionTextStyle;
+const AboutTextStyle = VisionTextStyle;
