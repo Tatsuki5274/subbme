@@ -5,12 +5,12 @@ import styled, { CSSProperties } from "styled-components";
 
 export default function TopMainVisual() {
   return (
-    <Row style={ContainerStyle}>
+    <Row justify="center" style={ContainerStyle}>
       <Col xs={24} sm={24} md={10} lg={10} xl={10}>
         <ImageStyle src="/assets/visual.svg" />
         {/* <img src="/assets/visual.svg" /> */}
       </Col>
-      <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+      <Col xs={20} sm={20} md={12} lg={14} xl={14}>
         <MessageCenter>
           <MessageContainerStyle>
             <MessageStyle>
