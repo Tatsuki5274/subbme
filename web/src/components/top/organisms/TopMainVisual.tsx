@@ -6,7 +6,9 @@ import { CSSProperties } from "styled-components";
 export default function TopMainVisual() {
   return (
     <Row style={ContainerStyle}>
-      <Col span={10}>{/* <MainVisual /> */}</Col>
+      <Col span={10}>
+        <img src="/assets/visual.svg" />
+      </Col>
       <Col span={14}>col-12</Col>
     </Row>
   );
