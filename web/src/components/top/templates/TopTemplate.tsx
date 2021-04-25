@@ -1,29 +1,26 @@
-import { Button } from "antd";
+import { Button, Divider } from "antd";
 import Footer from "components/common/organisms/Footer";
 import { Link } from "gatsby";
 import React from "react";
-import styled from "styled-components";
-import Section from "../atoms/Section";
+import styled, { CSSProperties } from "styled-components";
 import TopLoadMap from "../organisms/TopLoadMap";
+import TopMainVisual from "../organisms/TopMainVisual";
 
 export default function TopTemplate() {
   return (
-    <div>
-      <SectionStyle>
-        <Section>FEATURE</Section>
-      </SectionStyle>
-      <SectionStyle>
-        <Section>RELEASE</Section>
-      </SectionStyle>
-      <SectionStyle>
-        <Section>ROADMAP</Section>
-      </SectionStyle>
+    <ContainerStyle>
+      <TopMainVisual />
+      <Divider style={DividerStyle}>VISION</Divider>
+      <VisionTextStyle>
+        近頃は物価の上昇に伴い厳しい状況になりつつあります。節約する、という時に軽視されがちな固定費を削減するということに
+        フォーカスした新しい節約を広めることが目標です。
+      </VisionTextStyle>
+      <Divider style={DividerStyle}>RELEASE</Divider>
+      <Divider style={DividerStyle}>ROADMAP</Divider>
       <RoadmapStyle>
         <TopLoadMap />
       </RoadmapStyle>
-      <SectionStyle>
-        <Section>CONTACT</Section>
-      </SectionStyle>
+      <Divider style={DividerStyle}>CONTACT</Divider>
       <p>
         Haha, Welcome to your new{" "}
         {/* <strong>{this.props.data.site.siteMetadata.title}</strong> site. */}
@@ -33,19 +30,26 @@ export default function TopTemplate() {
       <Button type="primary">Primary</Button>
       <Style>Styled Component!</Style>
       <Footer />
-    </div>
+    </ContainerStyle>
   );
 }
+const ContainerStyle = styled.div({
+  textAlign: "center",
+});
+
+const DividerStyle: CSSProperties = {
+  fontSize: "40px",
+};
 
 const Style = styled.div({
   color: "red",
 });
 
-const SectionStyle = styled.div({
-  textAlign: "center",
+const RoadmapStyle = styled.div({
+  display: "inline-block",
+  margin: "0 auto",
 });
 
-const RoadmapStyle = styled.div({
-  width: "500px",
-  margin: "0 auto",
+const VisionTextStyle = styled.span({
+  fontSize: "18px",
 });
