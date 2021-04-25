@@ -45,12 +45,7 @@ export default function TopTemplate() {
         ご連絡の方は
         &quot;subbme@fastmail.jp&quot;までご連絡をお願いいたします。
       </ContactTextStyle>
-      <p>
-        Haha, Welcome to your new{" "}
-        {/* <strong>{this.props.data.site.siteMetadata.title}</strong> site. */}
-      </p>
-      <p>Now go build something great.</p>
-      <Link to="/page-2/">Go to page 2</Link>
+      {/* <Link to="/page-2/">Go to page 2</Link> */}
       <Footer />
     </ContainerStyle>
   );
