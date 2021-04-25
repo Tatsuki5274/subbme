@@ -1,5 +1,6 @@
 import { Button, Divider } from "antd";
 import Footer from "components/common/organisms/Footer";
+import SimpleHeader from "components/common/organisms/SimpleHeader";
 import { Link } from "gatsby";
 import React from "react";
 import styled, { CSSProperties } from "styled-components";
@@ -10,6 +11,7 @@ import TopMainVisual from "../organisms/TopMainVisual";
 export default function TopTemplate() {
   return (
     <ContainerStyle>
+      <SimpleHeader />
       <TopMainVisual />
       <Divider style={DividerStyle}>VISION</Divider>
       <VisionTextStyle>
