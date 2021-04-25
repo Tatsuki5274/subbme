@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import Footer from "components/common/organisms/Footer";
 import { Link } from "gatsby";
 import React from "react";
 import styled from "styled-components";
@@ -8,13 +9,21 @@ import TopLoadMap from "../organisms/TopLoadMap";
 export default function TopTemplate() {
   return (
     <div>
-      <h1>Hi people</h1>
+      <SectionStyle>
+        <Section>FEATURE</Section>
+      </SectionStyle>
+      <SectionStyle>
+        <Section>RELEASE</Section>
+      </SectionStyle>
       <SectionStyle>
         <Section>ROADMAP</Section>
       </SectionStyle>
       <RoadmapStyle>
         <TopLoadMap />
       </RoadmapStyle>
+      <SectionStyle>
+        <Section>CONTACT</Section>
+      </SectionStyle>
       <p>
         Haha, Welcome to your new{" "}
         {/* <strong>{this.props.data.site.siteMetadata.title}</strong> site. */}
@@ -23,6 +32,7 @@ export default function TopTemplate() {
       <Link to="/page-2/">Go to page 2</Link>
       <Button type="primary">Primary</Button>
       <Style>Styled Component!</Style>
+      <Footer />
     </div>
   );
 }
