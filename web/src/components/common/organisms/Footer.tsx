@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 // import Text from "../atoms/Text";
 
-export default function Footer() {
+export default function Footer(props: { children?: JSX.Element }) {
   return (
     <Style>
       <CopyRight>
@@ -10,11 +10,7 @@ export default function Footer() {
           <div>
             <TextStyle>2021 All rights rserved Tatsuki Watanabe</TextStyle>
           </div>
-          <div>
-            <StorysetStyle href="https://storyset.com/finance">
-              Illustration by Freepik Storyset
-            </StorysetStyle>
-          </div>
+          <div>{props.children}</div>
         </div>
       </CopyRight>
     </Style>
@@ -42,9 +38,4 @@ const CopyRight = styled.div({
 
 const TextStyle = styled.span({
   fontSize: "18px",
-});
-
-const StorysetStyle = styled.a({
-  color: "white",
-  fontSize: "12px",
 });

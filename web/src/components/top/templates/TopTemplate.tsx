@@ -52,10 +52,24 @@ export default function TopTemplate() {
         </TopPlainText>
       </AttentionStyle>
       {/* <Link to="/page-2/">Go to page 2</Link> */}
-      <Footer />
+      <Footer>{<StorysetLicense />}</Footer>
     </ContainerStyle>
   );
 }
+
+function StorysetLicense() {
+  const StorysetStyle = styled.a({
+    color: "white",
+    fontSize: "12px",
+  });
+
+  return (
+    <StorysetStyle href="https://storyset.com/finance">
+      Illustration by Freepik Storyset
+    </StorysetStyle>
+  );
+}
+
 const ContainerStyle = styled.div({
   textAlign: "center",
 });
