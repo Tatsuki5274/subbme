@@ -12,4 +12,8 @@ import "firebase/firestore";
 import "firebase/storage";
 import "firebase/functions";
 
+if (process.env.NODE_ENV === "development") {
+  firebase.functions().useEmulator("localhost", 5001);
+}
+
 export default firebase;

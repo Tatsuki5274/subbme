@@ -6,6 +6,7 @@ const funcs = {
   onDeleteUser: "./functions/onDeleteAuth",
   onCreateReport: "./functions/onCreateReport",
   onConfirmEmail: "./functions/onConfirmEmail",
+  createContact: "./functions/createContact",
   setSeeds: "./functions/setSeeds",
 };
 

@@ -1,3 +1,4 @@
+import ContactTemplate from "components/contact/templates/ContactTemplate";
 import React from "react";
 import { Helmet } from "react-helmet";
 
@@ -9,7 +10,7 @@ export default function Contact() {
         <title>Contact | Subbme</title>
         <meta name="description" content="Subbmeについての問い合わせ" />
       </Helmet>
-      <span>作成中</span>
+      <ContactTemplate />
     </>
   );
 }
