@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: ".env.${process.env.NODE_ENV}",
 });
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Typescript Starter`,
+    title: "Subbme",
+    siteUrl: "https://www.subbme.com",
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-typescript`,
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-typescript",
     "gatsby-plugin-eslint",
     "gatsby-plugin-styled-components",
+    "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-plugin-root-import",
       options: {
