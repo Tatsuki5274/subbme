@@ -1,29 +1,41 @@
+import { Link } from "gatsby";
 import React from "react";
 import styled from "styled-components";
 // import Text from "../atoms/Text";
 
 export default function Footer(props: { children?: JSX.Element }) {
   return (
-    <Style>
-      <CopyRight>
+    <Container>
+      <LinksStyle>
+        <Link to="/privacy-policy/" style={{ color: "white" }}>
+          プライバシーポリシ
+        </Link>
+      </LinksStyle>
+      <TextStyle>2021 All rights rserved Tatsuki Watanabe</TextStyle>
+      <div>{props.children}</div>
+
+      {/* <CopyRight>
         <div>
           <div>
-            <TextStyle>2021 All rights rserved Tatsuki Watanabe</TextStyle>
           </div>
-          <div>{props.children}</div>
         </div>
-      </CopyRight>
-    </Style>
+      </CopyRight> */}
+    </Container>
   );
 }
 
-const Style = styled.div({
+const Container = styled.div({
   backgroundColor: "#5794C3",
   // height: "80px",
+  padding: "15px 0",
   width: "100%",
   position: "relative",
   bottom: "0",
+  color: "white",
+  textAlign: "center",
 });
+
+const LinksStyle = styled.div({});
 
 const CopyRight = styled.div({
   display: "flex",
