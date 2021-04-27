@@ -4,16 +4,20 @@ import firebase from "gatsby-plugin-firebase";
 // import * as firebase from "firebase/app"
 
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
+// import "firebase/analytics";
 
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
-import "firebase/functions";
+// // Add the Firebase products that you want to use
+// import "firebase/auth";
+// import "firebase/firestore";
+// import "firebase/storage";
+// import "firebase/functions";
 
-if (process.env.NODE_ENV === "development") {
-  firebase.functions().useEmulator("localhost", 5001);
+if (typeof window !== "undefined") {
+  const isEmulating = process.env.GATSBY_FIREBASE_EMULATOR;
+
+  if (isEmulating) {
+    firebase.functions().useEmulator("localhost", 5001);
+  }
 }
 
 export default firebase;
