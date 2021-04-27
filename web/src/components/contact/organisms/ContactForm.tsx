@@ -67,7 +67,7 @@ function FormComponent() {
       if (!token) {
         throw new Error("Can't get token");
       }
-      const result = await ContactManager.create(
+      await ContactManager.create(
         {
           title: values.title,
           category: values.category,
@@ -77,7 +77,8 @@ function FormComponent() {
         token
       );
       form.resetFields();
-      console.log(result);
+      // console.log(result);
+      message.success("問い合わせを受け付けました");
     } catch (e) {
       message.error("送信に失敗しました");
     }
