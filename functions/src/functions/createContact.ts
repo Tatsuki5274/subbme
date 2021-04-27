@@ -20,8 +20,8 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
 
   const verifyResult = await axios.post("/recaptcha/api/siteverify", params);
   // console.log("ver", verifyResult.data);
-  const isSuccess = verifyResult.data.success;
-  const errorCodes: string[] | undefined = verifyResult.data["error-codes"];
+  const isSuccess: boolean = verifyResult.data.success;
+  // const errorCodes: string[] | undefined = verifyResult.data["error-codes"];
   // console.log("success", isSuccess);
   // console.log("error", errorCodes);
 
