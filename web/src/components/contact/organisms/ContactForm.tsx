@@ -26,10 +26,8 @@ function useChallenge() {
   // }
   useEffect(() => {
     const fn = async () => {
-      console.log("func", executeRecaptcha);
       if (executeRecaptcha) {
         const token = await executeRecaptcha("contact");
-        console.log("tokne", token);
         setToken(token);
       }
     };
@@ -62,7 +60,6 @@ function FormComponent() {
   const { token } = useChallenge();
 
   const onSubmit = async () => {
-    console.log("token", token);
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
