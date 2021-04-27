@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <Style>
       <CopyRight>
-        <Text>2021 All rights rserved Tatsuki Watanabe</Text>
+        <Text>©2021 Tatsuki Watanabe. All rights rserved.</Text>
       </CopyRight>
     </Style>
   );

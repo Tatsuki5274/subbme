@@ -16,7 +16,7 @@ export default function Footer(props: { children?: JSX.Element }) {
           お問い合わせ
         </Link>
       </LinksStyle>
-      <TextStyle>2021 All rights rserved Tatsuki Watanabe</TextStyle>
+      <TextStyle>©2021 Tatsuki Watanabe. All rights rserved. </TextStyle>
       <div>{props.children}</div>
 
       {/* <CopyRight>
