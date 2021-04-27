@@ -5,14 +5,14 @@ import { Contact } from "../entities/Contact";
 // TypeManagerに移行
 
 export const ContactManager = {
-  create: async (data: Contact): Promise<unknown> => {
+  create: async (data: Contact, token: string): Promise<unknown> => {
     // if (typeof window !== "undefined") {
     //   const a = firebase.functions();
     // }
     const CreateContact = firebase
       .functions()
       .httpsCallable("createContact-httpEvent");
-    const result = await CreateContact(data);
-    return result;
+    const result = await CreateContact({ data, token });
+    return result.data;
   },
 };
