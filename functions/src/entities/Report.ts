@@ -10,6 +10,10 @@ type ReportBase = {
   resultComment: string;
   score: number;
   totalCostPerDay: number;
+  advice: {
+    comment?: string;
+    actionLink?: string;
+  };
   createdAt: FirebaseFirestoreTimestampType;
   updatedAt: FirebaseFirestoreTimestampType;
 };

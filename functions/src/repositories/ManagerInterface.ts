@@ -16,6 +16,6 @@ export default interface ManagerInterface<T> {
   delete(id: string): Promise<boolean>;
   update(arg: T): Promise<boolean>;
   query(
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<NullablePartial<T>[] | null>;
 }

@@ -1,9 +1,4 @@
-import {
-  buildService,
-  Service,
-  ServiceUnitEnum,
-  ServiceUnitType,
-} from "../entities/Service";
+import { buildContact, Contact } from "../entities/Contact";
 import ManagerInterface from "./ManagerInterface";
 import {
   db,
@@ -11,12 +6,12 @@ import {
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 
-export class ServiceManager implements ManagerInterface<Service> {
+export class ContactManager implements ManagerInterface<Contact> {
   _ref: FirebaseCollectionReferenceType;
 
   constructor() {
-    const serviceRef = db.collection("Service");
-    this._ref = serviceRef;
+    const contactRef = db.collection("Contact");
+    this._ref = contactRef;
   }
 
   /**
@@ -26,11 +21,10 @@ export class ServiceManager implements ManagerInterface<Service> {
    */
   async _buildList(queryResult: FirebaseQueryType) {
     try {
-      // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
       const get = await queryResult?.get();
       const doc = get?.docs;
       const result = doc?.map((_doc) => {
-        return buildService(_doc.id, _doc.data());
+        return buildContact(_doc.id, _doc.data());
       });
       return result;
     } catch (e) {
@@ -52,7 +46,7 @@ export class ServiceManager implements ManagerInterface<Service> {
       if (!data) {
         throw new Error("Empty");
       }
-      const user = buildService(id, data);
+      const user = buildContact(id, data);
       return user;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -61,14 +55,14 @@ export class ServiceManager implements ManagerInterface<Service> {
     }
   }
 
-  async set(service: Service) {
+  async set(contact: Contact) {
     try {
-      if (!service.id) {
+      if (!contact.id) {
         throw new Error("id is undefined");
       }
-      const id = service.id;
-      delete service.id;
-      this._ref.doc(id).set(service, { merge: true });
+      const id = contact.id;
+      delete contact.id;
+      this._ref.doc(id).set(contact, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -79,13 +73,13 @@ export class ServiceManager implements ManagerInterface<Service> {
 
   /**
    *
-   * @param service 追加したいデータ
+   * @param contact 追加したいデータ
    * @returns 成功・失敗
    */
-  async add(service: Service) {
+  async add(contact: Contact) {
     try {
-      delete service.id;
-      const result = await this._ref.add(service);
+      delete contact.id;
+      const result = await this._ref.add(contact);
       return result;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -118,14 +112,14 @@ export class ServiceManager implements ManagerInterface<Service> {
     }
   }
 
-  async update(service: Service) {
+  async update(contact: Contact) {
     try {
-      const serviceID = service.id;
-      if (!serviceID) {
+      const contactID = contact.id;
+      if (!contactID) {
         throw new Error("ID is not defined");
       }
-      delete service.id;
-      await this._ref.doc(serviceID).update(service);
+      delete contact.id;
+      await this._ref.doc(contactID).update(contact);
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -134,43 +128,3 @@ export class ServiceManager implements ManagerInterface<Service> {
     }
   }
 }
-
-/**
- *
- * @param unit チェック対象の単位
- * @returns 型チェック結果
- */
-export const isServiceUnitType = (unit?: string): unit is ServiceUnitType => {
-  for (const value of Object.values(ServiceUnitEnum)) {
-    if (value === unit) {
-      return true;
-    }
-  }
-  return false;
-};
-
-export const getServiceUnitValue = (input: ServiceUnitType) => {
-  switch (input) {
-    case ServiceUnitEnum.Day:
-      return 1;
-    case ServiceUnitEnum.Month:
-      return 30;
-    case ServiceUnitEnum.Year:
-      return 365;
-    default:
-      throw new Error("Unit is never");
-  }
-};
-
-export const getServiceUnitString = (input: ServiceUnitType) => {
-  switch (input) {
-    case ServiceUnitEnum.Day:
-      return "日";
-    case ServiceUnitEnum.Month:
-      return "月";
-    case ServiceUnitEnum.Year:
-      return "年";
-    default:
-      throw new Error("Unit is never");
-  }
-};

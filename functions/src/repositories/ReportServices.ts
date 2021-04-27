@@ -66,7 +66,7 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
       }
       const id = reportService.id;
       delete reportService.id;
-      this._ref.doc(id).set(reportService);
+      this._ref.doc(id).set(reportService, { merge: true });
       return true;
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -98,11 +98,16 @@ export class ReportServiceManager implements ManagerInterface<ReportService> {
    * @returns クエリ結果
    */
   async query(
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ) {
-    const query = await where(this._ref);
-    const data = await this._buildList(query);
-    return data;
+    if (where) {
+      const query = await where(this._ref);
+      const data = await this._buildList(query);
+      return data;
+    } else {
+      const data = await this._buildList(this._ref);
+      return data;
+    }
   }
 
   async delete(id: string) {
