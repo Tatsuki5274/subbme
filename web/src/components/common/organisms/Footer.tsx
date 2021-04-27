@@ -4,11 +4,16 @@ import styled from "styled-components";
 // import Text from "../atoms/Text";
 
 export default function Footer(props: { children?: JSX.Element }) {
+  const linkStyle = { color: "white" };
   return (
     <Container>
       <LinksStyle>
-        <Link to="/privacy-policy/" style={{ color: "white" }}>
+        <Link to="/privacy-policy/" style={linkStyle}>
           プライバシーポリシ
+        </Link>
+        <span> | </span>
+        <Link to="/contact" style={linkStyle}>
+          お問い合わせ
         </Link>
       </LinksStyle>
       <TextStyle>2021 All rights rserved Tatsuki Watanabe</TextStyle>

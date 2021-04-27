@@ -18,7 +18,7 @@ export default function TopMainVisual() {
               <br />
               まずは固定費の見直しからしてみませんか？
             </MessageStyle>
-            <ReleaseStyle>6月上旬、WEB版アプリβ版リリース予定</ReleaseStyle>
+            <ReleaseStyle>6月上旬、WEBアプリβ版リリース予定</ReleaseStyle>
           </MessageContainerStyle>
         </MessageCenter>
       </Col>

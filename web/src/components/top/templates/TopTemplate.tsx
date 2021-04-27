@@ -1,6 +1,7 @@
 import { Divider } from "antd";
 import Footer from "components/common/organisms/Footer";
 import SimpleHeader from "components/common/organisms/SimpleHeader";
+import { Link } from "gatsby";
 import React from "react";
 import styled, { CSSProperties } from "styled-components";
 import TopPlainText from "../atoms/TopPlainText";
@@ -42,9 +43,11 @@ export default function TopTemplate() {
       </RoadmapStyle>
       <Divider style={DividerStyle}>CONTACT</Divider>
       <ContactTextStyle>
-        連絡用フォームは現在準備中です。
+        <Link to="/contact">こちらのフォーム(β版)</Link>
+        <span>から送信していただけます。</span>
         <br />
-        ご用の方は &quot;subbme@fastmail.jp&quot;までご連絡をお願いいたします。
+        直接こちらのメールアドレス
+        &quot;subbme@fastmail.jp&quot;までご連絡いただくことも可能です。
       </ContactTextStyle>
       <AttentionStyle>
         <TopPlainText>
