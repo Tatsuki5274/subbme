@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ContactManager } from "libs/Backend";
 import { useForm } from "antd/lib/form/Form";
 import { Form, Input, message, Select } from "antd";
@@ -6,6 +6,7 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import {
   GoogleReCaptcha,
   GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 
 type FormType = {
@@ -15,10 +16,53 @@ type FormType = {
   email: string;
 };
 
-export default function ContactForm() {
-  const [form] = useForm<FormType>();
+function useChallenge() {
   const [token, setToken] = useState<string | null>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  // if (executeRecaptcha) {
+  //   const token = await executeRecaptcha("contact");
+  //   console.log("token", token);
+  //   // setToken(token);
+  // }
+  useEffect(() => {
+    const fn = async () => {
+      console.log("func", executeRecaptcha);
+      if (executeRecaptcha) {
+        const token = await executeRecaptcha("contact");
+        console.log("tokne", token);
+        setToken(token);
+      }
+    };
+    fn();
+  }, [executeRecaptcha]);
+  return {
+    token,
+  };
+}
+
+export default function ContactForm() {
+  // const [token, setToken] = useState<string | null>(null);
+
+  const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY || "";
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+      {/* <GoogleReCaptcha
+        onVerify={(token) => {
+          setToken(token);
+          // console.log("token", token);
+        }}
+      /> */}
+      <FormComponent />
+    </GoogleReCaptchaProvider>
+  );
+}
+
+function FormComponent() {
+  const [form] = useForm<FormType>();
+  const { token } = useChallenge();
+
   const onSubmit = async () => {
+    console.log("token", token);
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
@@ -47,54 +91,45 @@ export default function ContactForm() {
     body: "",
     email: "",
   };
-  const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY || "";
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
-      <GoogleReCaptcha
-        onVerify={(token) => {
-          setToken(token);
-          // console.log("token", token);
-        }}
-      />
-      <Form<FormType> form={form} initialValues={initialValues}>
-        <Form.Item
-          label="件名"
-          name="title"
-          rules={[{ required: true, message: "入力してください" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="メールアドレス"
-          name="email"
-          rules={[
-            { required: true, message: "入力してください" },
-            { type: "email", message: "正しい形式で入力してください" },
-          ]}
-        >
-          <Input type="email" />
-        </Form.Item>
-        <Form.Item
-          label="カテゴリ"
-          name="category"
-          rules={[{ required: true, message: "入力してください" }]}
-        >
-          <Select disabled>
-            <Select.Option value="general">一般的な問い合わせ</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="本文"
-          name="body"
-          rules={[{ required: true, message: "入力してください" }]}
-        >
-          <Input.TextArea />
-        </Form.Item>
-        {/* <ReCAPTCHA sitekey={siteKey} onChange={(e) => console.log(e)} /> */}
-        <AsyncButton type="primary" onClick={onSubmit}>
-          送信
-        </AsyncButton>
-      </Form>
-    </GoogleReCaptchaProvider>
+    <Form<FormType> form={form} initialValues={initialValues}>
+      <Form.Item
+        label="件名"
+        name="title"
+        rules={[{ required: true, message: "入力してください" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="メールアドレス"
+        name="email"
+        rules={[
+          { required: true, message: "入力してください" },
+          { type: "email", message: "正しい形式で入力してください" },
+        ]}
+      >
+        <Input type="email" />
+      </Form.Item>
+      <Form.Item
+        label="カテゴリ"
+        name="category"
+        rules={[{ required: true, message: "入力してください" }]}
+      >
+        <Select disabled>
+          <Select.Option value="general">一般的な問い合わせ</Select.Option>
+        </Select>
+      </Form.Item>
+      <Form.Item
+        label="本文"
+        name="body"
+        rules={[{ required: true, message: "入力してください" }]}
+      >
+        <Input.TextArea />
+      </Form.Item>
+      {/* <ReCAPTCHA sitekey={siteKey} onChange={(e) => console.log(e)} /> */}
+      <AsyncButton type="primary" onClick={onSubmit}>
+        送信
+      </AsyncButton>
+    </Form>
   );
 }
