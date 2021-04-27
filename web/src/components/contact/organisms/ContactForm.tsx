@@ -4,7 +4,6 @@ import { useForm } from "antd/lib/form/Form";
 import { Form, Input, message, Select } from "antd";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import {
-  GoogleReCaptcha,
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";

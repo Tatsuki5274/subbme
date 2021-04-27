@@ -42,17 +42,6 @@ const Container = styled.div({
 
 const LinksStyle = styled.div({});
 
-const CopyRight = styled.div({
-  display: "flex",
-  // flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "80px",
-  color: "white",
-  textAlign: "center",
-  width: "100%",
-});
-
 const TextStyle = styled.span({
   fontSize: "18px",
 });
