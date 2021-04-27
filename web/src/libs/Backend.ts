@@ -6,6 +6,9 @@ import { Contact } from "../entities/Contact";
 
 export const ContactManager = {
   create: async (data: Contact): Promise<unknown> => {
+    // if (typeof window !== "undefined") {
+    //   const a = firebase.functions();
+    // }
     const CreateContact = firebase
       .functions()
       .httpsCallable("createContact-httpEvent");

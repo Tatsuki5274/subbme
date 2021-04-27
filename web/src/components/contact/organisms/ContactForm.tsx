@@ -3,6 +3,7 @@ import { ContactManager } from "libs/Backend";
 import { useForm } from "antd/lib/form/Form";
 import { Form, Input, message, Select } from "antd";
 import AsyncButton from "components/common/atoms/AsyncButton";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type FormType = {
   title: string;
@@ -36,6 +37,7 @@ export default function ContactForm() {
     body: "",
     email: "",
   };
+  const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY || "";
   return (
     <Form<FormType> form={form} initialValues={initialValues}>
       <Form.Item
@@ -71,6 +73,7 @@ export default function ContactForm() {
       >
         <Input.TextArea />
       </Form.Item>
+      <ReCAPTCHA sitekey={siteKey} onChange={(e) => console.log(e)} />
       <AsyncButton type="primary" onClick={onSubmit}>
         送信
       </AsyncButton>

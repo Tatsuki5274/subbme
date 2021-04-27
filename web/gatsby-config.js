@@ -1,4 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+require("firebase/auth");
+require("firebase/firestore");
+require("firebase/functions");
+
 const path = require("path");
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,

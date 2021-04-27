@@ -10,9 +10,11 @@ import firebase from "gatsby-plugin-firebase";
 // import "firebase/auth";
 // import "firebase/firestore";
 // import "firebase/storage";
+
 // import "firebase/functions";
 
 if (typeof window !== "undefined") {
+  require("firebase/functions");
   const isEmulating = process.env.GATSBY_FIREBASE_EMULATOR;
 
   if (isEmulating) {

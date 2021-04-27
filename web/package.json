@@ -27,6 +27,7 @@
     "less-loader": "^8.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-recaptcha": "^2.1.0",
     "react-helmet": "^6.1.0",
     "styled-components": "^5.2.3",
     "ts-node": "^9.1.1",
@@ -38,7 +39,9 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "build": "gatsby build",
+    "build:dev": "GATSBY_ACTIVE_ENV=development gatsby build",
+    "build:prod": "gatsby build",
+    "start:emu": "GATSBY_FIREBASE_EMULATOR=true gatsby develop",
     "start:dev": "gatsby develop",
     "start:prod": "gatsby serve",
     "format": "prettier --parser typescript --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.ts*\"",
@@ -46,6 +49,7 @@
     "lint": "eslint --ext .js,.ts,.tsx ."
   },
   "devDependencies": {
+    "@types/react-google-recaptcha": "^2.1.0",
     "@types/react-helmet": "^6.1.1",
     "@types/styled-components": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
