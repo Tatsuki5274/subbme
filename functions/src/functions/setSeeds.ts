@@ -17,6 +17,11 @@ export default functions
         text: "このメールはSubbmeから送信されています。",
         partial: true,
       },
+      {
+        id: "create-contact",
+        subject: "[Subbme] 問い合わせを受け付けました",
+        text: "問い合わせを受け付けました。",
+      }
     ];
     await Promise.all(
       template.map(async (tl) => {

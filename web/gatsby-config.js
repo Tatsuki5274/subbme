@@ -4,8 +4,11 @@ require("firebase/firestore");
 require("firebase/functions");
 
 const path = require("path");
+
+const activeEnv =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development";
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `.env.${activeEnv}`,
 });
 module.exports = {
   siteMetadata: {
