@@ -1,30 +1,10 @@
-import {
-  buildService,
-  Service,
-  ServiceUnitEnum,
-  ServiceUnitType,
-} from "../entities/Service";
+import { Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
-
-async function buildList(queryResult: FirebaseQueryType) {
-  try {
-    // const queryResult= await serviceRef.where("userID", "==", "tatsuki");
-    const get = await queryResult?.get();
-    const doc = get?.docs;
-    const result = doc?.map((_doc) => {
-      return buildService(_doc.id, _doc.data());
-    });
-    return result;
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn(e);
-    return null;
-  }
-}
+import { DaoBase } from "./_Common";
 
 export const ServiceDao = {
   /**
@@ -34,19 +14,8 @@ export const ServiceDao = {
    */
   async get(id: string): Promise<Service | null> {
     const ref = db.collection("Service");
-    try {
-      const snapshot = await ref.doc(id).get();
-      const data = snapshot.data();
-      if (!data) {
-        throw new Error("Empty");
-      }
-      const result = buildService(id, data);
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
+    const result = await DaoBase.get<Service>(ref, id);
+    return result;
   },
   /**
    * @param arg 登録内容
@@ -54,19 +23,8 @@ export const ServiceDao = {
    */
   async set(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
-    try {
-      if (!arg.id) {
-        throw new Error("id is undefined");
-      }
-      const id = arg.id;
-      delete arg.id;
-      ref.doc(id).set(arg, { merge: true });
-      return id;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
+    const result = await DaoBase.set(ref, arg);
+    return result;
   },
   /**
    *
@@ -75,50 +33,25 @@ export const ServiceDao = {
    */
   async add(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
-    try {
-      delete arg.id;
-      const result = await ref.add(arg);
-      return result.id;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
+    const result = await DaoBase.add(ref, arg);
+    return result;
   },
   async query(
     where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Service[] | null> {
     const ref = db.collection("Service");
-    const query = await where(ref);
-    const data = await buildList(query);
-    return data;
+    const result = await DaoBase.query<Service>(ref, where);
+    return result;
   },
   async delete(id: string): Promise<string | null> {
     const ref = db.collection("Service");
-    try {
-      await ref.doc(id).delete();
-      return id;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
+    const result = await DaoBase.delete(ref, id);
+    return result;
   },
   async update(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
-    try {
-      const id = arg.id;
-      if (!id) {
-        throw new Error("ID is not defined");
-      }
-      delete arg.id;
-      await ref.doc(id).update(arg);
-      return ref.id;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
+    const result = await DaoBase.update(ref, arg);
+    return result;
   },
 };
 
