@@ -1,12 +1,13 @@
+import firebase from "libs/Firebase";
 import { Contact } from "../entities/Contact";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
-import { DaoBase, DaoType } from "./_Common";
+import { DaoBase } from "./_Common";
 
-export const ContactDao: DaoType<Contact> = {
+export const ContactDao = {
   /**
    *
    * @param id 取得するドキュメントID
@@ -29,12 +30,20 @@ export const ContactDao: DaoType<Contact> = {
   /**
    *
    * @param arg 追加したいデータ
+   * @param token recaptchaのトークン
    * @returns 登録したドキュメントID
    */
-  async add(arg: Contact): Promise<string | null> {
-    const ref = db.collection("Contact");
-    const result = await DaoBase.add(ref, arg);
-    return result;
+  async add(arg: Contact, token: string): Promise<string | null> {
+    try {
+      const CreateContact = firebase
+        .functions()
+        .httpsCallable("createContact-httpEvent");
+      const result = await CreateContact({ arg, token });
+      const id: string | null = result.data?.id || null;
+      return id;
+    } catch (e) {
+      return null;
+    }
   },
   /**
    * @param where クエリ条件。指定しない場合は全てのデータを取得
