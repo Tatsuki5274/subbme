@@ -9,7 +9,7 @@ import { DaoBase, DaoType } from "./_Common";
 export const ServiceDao: DaoType<Service> = {
   /**
    *
-   * @param id ドキュメントI
+   * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
   async get(id: string): Promise<Service | null> {
@@ -28,7 +28,7 @@ export const ServiceDao: DaoType<Service> = {
   },
   /**
    *
-   * @param service 追加したいデータ
+   * @param arg 追加したいデータ
    * @returns 登録したドキュメントID
    */
   async add(arg: Service): Promise<string | null> {
@@ -36,6 +36,10 @@ export const ServiceDao: DaoType<Service> = {
     const result = await DaoBase.add(ref, arg);
     return result;
   },
+  /**
+   * @param where クエリ条件。指定しない場合は全てのデータを取得
+   * @returns クエリ結果
+   */
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Service[] | null> {
@@ -43,11 +47,19 @@ export const ServiceDao: DaoType<Service> = {
     const result = await DaoBase.query<Service>(ref, where);
     return result;
   },
+  /**
+   * @param id 削除するドキュメント
+   * @returns 削除したドキュメントID
+   */
   async delete(id: string): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.delete(ref, id);
     return result;
   },
+  /**
+   * @param arg 更新するオブジェクト
+   * @returns 更新したドキュメントID
+   */
   async update(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.update(ref, arg);
