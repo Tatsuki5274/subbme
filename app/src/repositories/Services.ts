@@ -4,9 +4,9 @@ import {
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
-import { DaoBase } from "./_Common";
+import { DaoBase, DaoType } from "./_Common";
 
-export const ServiceDao = {
+export const ServiceDao: DaoType<Service> = {
   /**
    *
    * @param id ドキュメントI
@@ -37,7 +37,7 @@ export const ServiceDao = {
     return result;
   },
   async query(
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Service[] | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.query<Service>(ref, where);
