@@ -3,8 +3,8 @@ import LoadingScreen from "components/common/organisms/LoadingScreen";
 import { Report } from "entities/Report";
 import { ReportService } from "entities/ReportService";
 import { useEffect, useState } from "react";
-import { ReportManager } from "repositories/Reports";
-import { ReportServiceManager } from "repositories/ReportServices";
+import { ReportDao } from "repositories/Reports";
+import { ReportServiceDao } from "repositories/ReportServices";
 import ReportDetailTemplate from "../templates/ReportDetailTemplate";
 
 function useReportServiceList(reportID: string) {
@@ -18,8 +18,7 @@ function useReportServiceList(reportID: string) {
   // 各サービスの結果データを取得
   useEffect(() => {
     (async () => {
-      const manager = new ReportServiceManager(reportID);
-      const result = await manager.query();
+      const result = await ReportServiceDao.query(reportID);
       setReportServiceList(result || []);
       setIsLoadingList(false);
     })();
@@ -28,8 +27,7 @@ function useReportServiceList(reportID: string) {
   // レポートを取得
   useEffect(() => {
     (async () => {
-      const manager = new ReportManager();
-      const result = await manager.get(reportID);
+      const result = await ReportDao.get(reportID);
       setReport(result);
       setIsLoadingGet(false);
     })();

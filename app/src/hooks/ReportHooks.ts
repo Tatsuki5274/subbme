@@ -1,7 +1,7 @@
 import { Report } from "entities/Report";
 import { NullablePartial } from "libs/Util";
 import { useEffect, useState } from "react";
-import { ReportManager } from "repositories/Reports";
+import { ReportDao } from "repositories/Reports";
 
 type ReturnType = {
   reportList: NullablePartial<Report>[] | null;
@@ -28,8 +28,7 @@ export function useReportQuery(arg1: unknown): ReturnType {
       } else if (typeof arg1 === "string") {
         // 文字が入力された場合はユーザーIDとして解釈する
         const userID = arg1;
-        const manager = new ReportManager();
-        result = await manager.query((ref) => {
+        result = await ReportDao.query((ref) => {
           return ref.where("userID", "==", userID);
         });
         setIsLoading(false);

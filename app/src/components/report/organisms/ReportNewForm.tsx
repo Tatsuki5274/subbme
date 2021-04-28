@@ -1,9 +1,7 @@
 import { useFormik } from "formik";
 import { Service, ServiceUnitDaysEnum } from "entities/Service";
-import { ReportManager } from "repositories/Reports";
 import { Report } from "entities/Report";
 import { Button, Form, Input, message } from "antd";
-import { ReportServiceManager } from "repositories/ReportServices";
 import { useUser } from "hooks/UserHooks";
 import { convertRank, ReportServiceRankType } from "entities/ReportService";
 import { useHistory } from "react-router";
@@ -14,6 +12,8 @@ import ServiceCard from "../molecules/ServiceCard";
 import styled from "styled-components";
 import GrayText from "components/common/atoms/GrayText";
 import React from "react";
+import { ReportDao } from "repositories/Reports";
+import { ReportServiceDao } from "repositories/ReportServices";
 
 type PropsType = {
   services: Service[];
@@ -175,7 +175,6 @@ export default function ReportNewForm(props: PropsType) {
       });
 
       // レポートを作成
-      const reportManager = new ReportManager();
       const reportParam: Report = {
         userID: currentUser.uid,
         resultComment: values.comment,
@@ -184,11 +183,10 @@ export default function ReportNewForm(props: PropsType) {
         createdAt: firebase.firestore.Timestamp.now(),
         updatedAt: firebase.firestore.Timestamp.now(),
       };
-      const createdReport = await reportManager.add(reportParam);
+      const createdReport = await ReportDao.add(reportParam);
 
       if (createdReport) {
         // 作成したレポートのサービス情報を保存
-        const reportServiceManager = new ReportServiceManager(createdReport.id);
         await Promise.all(
           values.ranks.map(async (rank, rankIdx) => {
             let rankStr: ReportServiceRankType = "C";
@@ -208,7 +206,7 @@ export default function ReportNewForm(props: PropsType) {
 
             await Promise.all(
               rank.services.map(async (service) => {
-                await reportServiceManager.add({
+                await ReportServiceDao.add(createdReport, {
                   rank: rankStr,
                   rate: service.rate,
                   serviceName: service.serviceName,
@@ -220,7 +218,7 @@ export default function ReportNewForm(props: PropsType) {
           })
         );
         message.success("レポートの作成に成功しました");
-        history.push(routeBuilder.reportDetailPath(createdReport.id));
+        history.push(routeBuilder.reportDetailPath(createdReport));
       } else {
         message.error("レポートの作成に失敗しました");
       }
