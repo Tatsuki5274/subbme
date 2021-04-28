@@ -1,7 +1,7 @@
 import { Button, message, Popconfirm } from "antd";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { ServiceManager } from "repositories/Services";
+import { ServiceDao } from "repositories/Services";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 
@@ -14,8 +14,7 @@ export default function ServiceDetailBottom(props: PropsType) {
   const history = useHistory();
   const [isArchived, setIsArchived] = useState(props.isArchived);
   const onClickArchive = async () => {
-    const manager = new ServiceManager();
-    const result = await manager.update({
+    const result = await ServiceDao.update({
       id: props.serviceID,
       isArchived: true,
     });
@@ -27,8 +26,7 @@ export default function ServiceDetailBottom(props: PropsType) {
     }
   };
   const onClickUnarchive = async () => {
-    const manager = new ServiceManager();
-    const result = await manager.update({
+    const result = await ServiceDao.update({
       id: props.serviceID,
       isArchived: false,
     });
@@ -40,8 +38,7 @@ export default function ServiceDetailBottom(props: PropsType) {
     }
   };
   const onClickDelete = async () => {
-    const manager = new ServiceManager();
-    await manager.delete(props.serviceID);
+    await ServiceDao.delete(props.serviceID);
     message.success("削除しました");
     history.push(routeBuilder.serviceListPath());
   };

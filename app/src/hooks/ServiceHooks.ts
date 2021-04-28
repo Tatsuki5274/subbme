@@ -1,6 +1,6 @@
 import { Service } from "entities/Service";
 import { useEffect, useState } from "react";
-import { ServiceManager } from "repositories/Services";
+import { ServiceDao } from "repositories/Services";
 
 export function useListService(userID?: string) {
   const [serviceList, setServiceList] = useState<Service[] | null>(null);
@@ -10,8 +10,7 @@ export function useListService(userID?: string) {
     const fn = async () => {
       setIsLoading(true);
       if (userID) {
-        const serviceManager = new ServiceManager();
-        const data = await serviceManager.query((ref) => {
+        const data = await ServiceDao.query((ref) => {
           const queryRef = ref.where("userID", "==", userID);
           return queryRef;
         });
@@ -43,8 +42,7 @@ export function useGetService(serviceID: string) {
 
   useEffect(() => {
     (async () => {
-      const manager = new ServiceManager();
-      const data = await manager.get(serviceID);
+      const data = await ServiceDao.get(serviceID);
       if (data) {
         setService(data);
       }

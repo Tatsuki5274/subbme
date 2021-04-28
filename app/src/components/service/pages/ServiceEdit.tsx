@@ -4,7 +4,7 @@ import LoadingScreen from "components/common/organisms/LoadingScreen";
 import PrivateRoute from "components/wrapper/PrivateRoute";
 import { Service } from "entities/Service";
 import { useEffect, useState } from "react";
-import { ServiceManager } from "repositories/Services";
+import { ServiceDao } from "repositories/Services";
 import ServiceEditTemplate from "../templates/ServiceEditTemplate";
 
 type PropsType = {
@@ -49,8 +49,7 @@ function useService(serviceID: string) {
 
   useEffect(() => {
     (async () => {
-      const manager = new ServiceManager();
-      const result = await manager.get(serviceID);
+      const result = await ServiceDao.get(serviceID);
       if (result) {
         setService(result);
       }

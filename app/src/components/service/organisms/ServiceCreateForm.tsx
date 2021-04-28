@@ -15,7 +15,7 @@ import { useHistory } from "react-router";
 import {
   getServiceUnitValue,
   isServiceUnitType,
-  ServiceManager,
+  ServiceDao,
 } from "repositories/Services";
 import { routeBuilder } from "router";
 import firebase from "libs/Firebase";
@@ -83,8 +83,7 @@ export default function ServiceCreateForm() {
       createdAt: firebase.firestore.Timestamp.now(),
       updatedAt: firebase.firestore.Timestamp.now(),
     };
-    const serviceManager = new ServiceManager();
-    const result = await serviceManager.add(data);
+    const result = await ServiceDao.add(data);
     if (result) {
       message.success("保存に成功しました");
       history.push(routeBuilder.serviceListPath());
