@@ -28,6 +28,19 @@ const buildList = async (queryResult: FirebaseQueryType) => {
   }
 };
 
+type QueryFuncType = (
+  ref: FirebaseCollectionReferenceType
+) => FirebaseQueryType;
+
+export type DaoType<T> = {
+  get: (id: string) => Promise<T | null>;
+  set: (arg: T) => Promise<string | null>;
+  add: (arg: T) => Promise<string | null>;
+  query: (where?: QueryFuncType) => Promise<T[] | null>;
+  delete: (id: string) => Promise<string | null>;
+  update: (arg: T) => Promise<string | null>;
+};
+
 export const DaoBase = {
   async get<Type>(
     ref: FirebaseCollectionReferenceType,
@@ -89,11 +102,18 @@ export const DaoBase = {
   },
   async query<Type>(
     ref: FirebaseCollectionReferenceType,
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Type[] | null> {
-    const query = await where(ref);
-    const data = await buildList(query);
-    return data as Type[] | null; // unsafe
+    if (where) {
+      // クエリ条件が指定されていた場合はクエリを発行する
+      const query = await where(ref);
+      const data = await buildList(query);
+      return data as Type[] | null; // unsafe
+    } else {
+      // クエリ条件が指定されていなかった場合はコレクション全てのデータを取得する
+      const data = await buildList(ref);
+      return data as Type[] | null; // unsafe
+    }
   },
   async delete(
     ref: FirebaseCollectionReferenceType,
