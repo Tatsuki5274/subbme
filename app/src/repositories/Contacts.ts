@@ -1,130 +1,68 @@
-import { buildContact, Contact } from "../entities/Contact";
-import ManagerInterface from "./ManagerInterface";
+import { Contact } from "../entities/Contact";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
+import { DaoBase, DaoType } from "./_Common";
 
-export class ContactManager implements ManagerInterface<Contact> {
-  _ref: FirebaseCollectionReferenceType;
-
-  constructor() {
-    const contactRef = db.collection("Contact");
-    this._ref = contactRef;
-  }
-
+export const ContactDao: DaoType<Contact> = {
   /**
    *
-   * @param queryResult クエリ結果
-   * @returns 整形結果
-   */
-  async _buildList(queryResult: FirebaseQueryType) {
-    try {
-      const get = await queryResult?.get();
-      const doc = get?.docs;
-      const result = doc?.map((_doc) => {
-        return buildContact(_doc.id, _doc.data());
-      });
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  /**
-   *
-   * @param id ドキュメントI
+   * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
-  async get(id: string) {
-    try {
-      const snapshot = await this._ref.doc(id).get();
-      const data = snapshot.data();
-      if (!data) {
-        throw new Error("Empty");
-      }
-      const user = buildContact(id, data);
-      return user;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  async set(contact: Contact) {
-    try {
-      if (!contact.id) {
-        throw new Error("id is undefined");
-      }
-      const id = contact.id;
-      delete contact.id;
-      this._ref.doc(id).set(contact, { merge: true });
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
+  async get(id: string): Promise<Contact | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.get<Contact>(ref, id);
+    return result;
+  },
   /**
-   *
-   * @param contact 追加したいデータ
-   * @returns 成功・失敗
+   * @param arg 登録内容
+   * @returns 登録したドキュメントID
    */
-  async add(contact: Contact) {
-    try {
-      delete contact.id;
-      const result = await this._ref.add(contact);
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
+  async set(arg: Contact): Promise<string | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.set(ref, arg);
+    return result;
+  },
   /**
    *
-   * @param where クエリ条件
+   * @param arg 追加したいデータ
+   * @returns 登録したドキュメントID
+   */
+  async add(arg: Contact): Promise<string | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.add(ref, arg);
+    return result;
+  },
+  /**
+   * @param where クエリ条件。指定しない場合は全てのデータを取得
    * @returns クエリ結果
    */
   async query(
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
-  ) {
-    const query = await where(this._ref);
-    const data = await this._buildList(query);
-    return data;
-  }
-
-  async delete(id: string) {
-    try {
-      await this._ref.doc(id).delete();
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
-  async update(contact: Contact) {
-    try {
-      const contactID = contact.id;
-      if (!contactID) {
-        throw new Error("ID is not defined");
-      }
-      delete contact.id;
-      await this._ref.doc(contactID).update(contact);
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-}
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+  ): Promise<Contact[] | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.query<Contact>(ref, where);
+    return result;
+  },
+  /**
+   * @param id 削除するドキュメント
+   * @returns 削除したドキュメントID
+   */
+  async delete(id: string): Promise<string | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.delete(ref, id);
+    return result;
+  },
+  /**
+   * @param arg 更新するオブジェクト
+   * @returns 更新したドキュメントID
+   */
+  async update(arg: Contact): Promise<string | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.update(ref, arg);
+    return result;
+  },
+};

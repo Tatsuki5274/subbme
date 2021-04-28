@@ -1,130 +1,68 @@
-import { buildMailTemplate, MailTemplate } from "../entities/MailTemplate";
-import ManagerInterface from "./ManagerInterface";
+import { MailTemplate } from "../entities/MailTemplate";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
+import { DaoBase, DaoType } from "./_Common";
 
-export class MailTemplateManager implements ManagerInterface<MailTemplate> {
-  _ref: FirebaseCollectionReferenceType;
-
-  constructor() {
-    const mailTemplateRef = db.collection("MailTemplate");
-    this._ref = mailTemplateRef;
-  }
-
+export const MailTemplateDao: DaoType<MailTemplate> = {
   /**
    *
-   * @param queryResult クエリ結果
-   * @returns 整形結果
-   */
-  async _buildList(queryResult: FirebaseQueryType) {
-    try {
-      const get = await queryResult?.get();
-      const doc = get?.docs;
-      const result = doc?.map((_doc) => {
-        return buildMailTemplate(_doc.id, _doc.data());
-      });
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  /**
-   *
-   * @param id ドキュメントI
+   * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
-  async get(id: string) {
-    try {
-      const snapshot = await this._ref.doc(id).get();
-      const data = snapshot.data();
-      if (!data) {
-        throw new Error("Empty");
-      }
-      const user = buildMailTemplate(id, data);
-      return user;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  async set(mailTemplate: MailTemplate) {
-    try {
-      if (!mailTemplate.id) {
-        throw new Error("id is undefined");
-      }
-      const id = mailTemplate.id;
-      delete mailTemplate.id;
-      this._ref.doc(id).set(mailTemplate, { merge: true });
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
+  async get(id: string): Promise<MailTemplate | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.get<MailTemplate>(ref, id);
+    return result;
+  },
   /**
-   *
-   * @param mailTemplate 追加したいデータ
-   * @returns 成功・失敗
+   * @param arg 登録内容
+   * @returns 登録したドキュメントID
    */
-  async add(mailTemplate: MailTemplate) {
-    try {
-      delete mailTemplate.id;
-      const result = await this._ref.add(mailTemplate);
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
+  async set(arg: MailTemplate): Promise<string | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.set(ref, arg);
+    return result;
+  },
   /**
    *
-   * @param where クエリ条件
+   * @param arg 追加したいデータ
+   * @returns 登録したドキュメントID
+   */
+  async add(arg: MailTemplate): Promise<string | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.add(ref, arg);
+    return result;
+  },
+  /**
+   * @param where クエリ条件。指定しない場合は全てのデータを取得
    * @returns クエリ結果
    */
   async query(
-    where: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
-  ) {
-    const query = await where(this._ref);
-    const data = await this._buildList(query);
-    return data;
-  }
-
-  async delete(id: string) {
-    try {
-      await this._ref.doc(id).delete();
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
-  async update(mailTemplate: MailTemplate) {
-    try {
-      const mailTemplateID = mailTemplate.id;
-      if (!mailTemplateID) {
-        throw new Error("ID is not defined");
-      }
-      delete mailTemplate.id;
-      await this._ref.doc(mailTemplateID).update(mailTemplate);
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-}
+    where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
+  ): Promise<MailTemplate[] | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.query<MailTemplate>(ref, where);
+    return result;
+  },
+  /**
+   * @param id 削除するドキュメント
+   * @returns 削除したドキュメントID
+   */
+  async delete(id: string): Promise<string | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.delete(ref, id);
+    return result;
+  },
+  /**
+   * @param arg 更新するオブジェクト
+   * @returns 更新したドキュメントID
+   */
+  async update(arg: MailTemplate): Promise<string | null> {
+    const ref = db.collection("MailTemplate");
+    const result = await DaoBase.update(ref, arg);
+    return result;
+  },
+};
