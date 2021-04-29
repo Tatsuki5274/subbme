@@ -50,7 +50,13 @@ export default function SignUpForm() {
       <Form.Item
         label={
           <>
-            <a href={routeBuilder.privacyPolicyPath()}>プライバシーポリシ</a>
+            <a
+              target="_blank"
+              href={routeBuilder.privacyPolicyPath()}
+              rel="noreferrer"
+            >
+              プライバシーポリシ
+            </a>
             に同意する
           </>
         }
