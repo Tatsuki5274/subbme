@@ -1,7 +1,4 @@
-import {
-  FirebaseDocumentDataType,
-  FirebaseFirestoreTimestampType,
-} from "../libs/Types";
+import { FirebaseFirestoreTimestampType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 type ReportBase = {

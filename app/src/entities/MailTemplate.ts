@@ -1,4 +1,3 @@
-import { FirebaseDocumentDataType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 type MailTemplateBase = {
