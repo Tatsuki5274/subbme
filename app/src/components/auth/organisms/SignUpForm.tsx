@@ -11,6 +11,7 @@ type FormType = {
   password: string;
   passwordConfirm: string;
   isAgreePrivacyPolicy: boolean;
+  isAdMail: boolean;
 };
 
 export default function SignUpForm() {
@@ -27,12 +28,20 @@ export default function SignUpForm() {
     }
   };
   const minLengthPassword = 7;
+  const initialValues: FormType = {
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    isAgreePrivacyPolicy: false,
+    isAdMail: true,
+  };
 
   return (
     <Form
       {...formLayout}
       name="signup"
       onFinish={onFinish}
+      initialValues={initialValues}
       // onFinishFailed={onFinishFailed}
     >
       <Form.Item
@@ -78,6 +87,13 @@ export default function SignUpForm() {
         ]}
       >
         <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label="サービスに関するお得な情報を受け取る"
+        name="isAdMail"
+        valuePropName="checked"
+      >
+        <Checkbox />
       </Form.Item>
       <Form.Item
         label={
