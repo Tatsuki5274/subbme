@@ -8,6 +8,7 @@ import React from "react";
 type FormType = {
   email: string;
   password: string;
+  passwordConfirm: string;
   isAgreePrivacyPolicy: boolean;
 };
 
@@ -25,6 +26,7 @@ export default function SignUpForm() {
         console.error(reason);
       });
   };
+  const minLengthPassword = 7;
 
   return (
     <Form
@@ -36,14 +38,44 @@ export default function SignUpForm() {
       <Form.Item
         label="メールアドレス"
         name="email"
-        rules={[{ required: true, message: "入力が必須です" }]}
+        rules={[
+          { required: true, message: "入力が必須です" },
+          { type: "email", message: "メールアドレスの形式が異なります" },
+        ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         label="パスワード"
         name="password"
-        rules={[{ required: true, message: "入力が必須です" }]}
+        rules={[
+          { required: true, message: "入力が必須です" },
+          {
+            min: minLengthPassword,
+            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+          },
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label="パスワード確認"
+        name="passwordConfirm"
+        rules={[
+          { required: true, message: "入力が必須です" },
+          {
+            min: minLengthPassword,
+            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (value === getFieldValue("password")) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error("パスワードが異なります"));
+            },
+          }),
+        ]}
       >
         <Input.Password />
       </Form.Item>
@@ -62,8 +94,6 @@ export default function SignUpForm() {
         }
         name="isAgreePrivacyPolicy"
         valuePropName="checked"
-        // validateStatus={isAgree ? "success" : "error"}
-        // help="プライバシーポリシへの同意が必要です"
         rules={[
           () => ({
             validator(_, value) {
