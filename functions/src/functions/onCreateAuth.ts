@@ -9,11 +9,18 @@ export default functions
 .auth
 .user()
 .onCreate(async (user) => {
+  const privacyPolicyVersion = "20210601";
   try {
     // firestoreへユーザー情報を追加
     await UserDao.set({
       id: user.uid,
-      createdAt: admin.firestore.Timestamp.now()
+      createdAt: admin.firestore.Timestamp.now(),
+      agreements: {
+        privacy: [{
+          version: privacyPolicyVersion,
+          agreedAt: admin.firestore.Timestamp.now(),
+        }]
+      }
     });
 
     await admin.auth().setCustomUserClaims(user.uid, {
