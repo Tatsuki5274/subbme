@@ -1,11 +1,17 @@
 import firebase from "libs/Firebase";
 import { Contact } from "../entities/Contact";
 import {
-  db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { DaoBase } from "./_Common";
+
+let db: firebase.firestore.Firestore | null = null;
+
+if (typeof window !== "undefined") {
+  // gatsby buildでない場合のみ実行
+  db = firebase.firestore();
+}
 
 export const ContactDao = {
   /**
@@ -14,6 +20,7 @@ export const ContactDao = {
    * @returns 取得結果のデータ
    */
   async get(id: string): Promise<Contact | null> {
+    if (!db) return null;
     const ref = db.collection("Contact");
     const result = await DaoBase.get<Contact>(ref, id);
     return result;
@@ -23,6 +30,7 @@ export const ContactDao = {
    * @returns 登録したドキュメントID
    */
   async set(arg: Contact): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Contact");
     const result = await DaoBase.set(ref, arg);
     return result;
@@ -52,6 +60,7 @@ export const ContactDao = {
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Contact[] | null> {
+    if (!db) return null;
     const ref = db.collection("Contact");
     const result = await DaoBase.query<Contact>(ref, where);
     return result;
@@ -61,6 +70,7 @@ export const ContactDao = {
    * @returns 削除したドキュメントID
    */
   async delete(id: string): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Contact");
     const result = await DaoBase.delete(ref, id);
     return result;
@@ -70,6 +80,7 @@ export const ContactDao = {
    * @returns 更新したドキュメントID
    */
   async update(arg: Contact): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Contact");
     const result = await DaoBase.update(ref, arg);
     return result;

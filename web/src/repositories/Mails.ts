@@ -1,10 +1,17 @@
 import { Mail } from "../entities/Mail";
+import firebase from "libs/Firebase";
 import {
-  db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { DaoBase, DaoType } from "./_Common";
+
+let db: firebase.firestore.Firestore | null = null;
+
+if (typeof window !== "undefined") {
+  // gatsby buildでない場合のみ実行
+  db = firebase.firestore();
+}
 
 export const MailDao: DaoType<Mail> = {
   /**
@@ -13,6 +20,7 @@ export const MailDao: DaoType<Mail> = {
    * @returns 取得結果のデータ
    */
   async get(id: string): Promise<Mail | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.get<Mail>(ref, id);
     return result;
@@ -22,6 +30,7 @@ export const MailDao: DaoType<Mail> = {
    * @returns 登録したドキュメントID
    */
   async set(arg: Mail): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.set(ref, arg);
     return result;
@@ -32,6 +41,7 @@ export const MailDao: DaoType<Mail> = {
    * @returns 登録したドキュメントID
    */
   async add(arg: Mail): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.add(ref, arg);
     return result;
@@ -43,6 +53,7 @@ export const MailDao: DaoType<Mail> = {
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Mail[] | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.query<Mail>(ref, where);
     return result;
@@ -52,6 +63,7 @@ export const MailDao: DaoType<Mail> = {
    * @returns 削除したドキュメントID
    */
   async delete(id: string): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.delete(ref, id);
     return result;
@@ -61,6 +73,7 @@ export const MailDao: DaoType<Mail> = {
    * @returns 更新したドキュメントID
    */
   async update(arg: Mail): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Mail");
     const result = await DaoBase.update(ref, arg);
     return result;
