@@ -1,17 +1,10 @@
 import { Mail } from "../entities/Mail";
-import firebase from "libs/Firebase";
+import firebase, { db } from "libs/Firebase";
 import {
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { DaoBase, DaoType } from "./_Common";
-
-let db: firebase.firestore.Firestore | null = null;
-
-if (typeof window !== "undefined") {
-  // gatsby buildでない場合のみ実行
-  db = firebase.firestore();
-}
 
 export const MailDao: DaoType<Mail> = {
   /**

@@ -1,10 +1,10 @@
 import {
-  db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { ReportService } from "entities/ReportService";
 import { DaoBase } from "./_Common";
+import { db } from "libs/Firebase";
 
 export const ReportServiceDao = {
   /**
@@ -13,6 +13,7 @@ export const ReportServiceDao = {
    * @returns 取得結果のデータ
    */
   async get(reportID: string, id: string): Promise<ReportService | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.get<ReportService>(ref, id);
     return result;
@@ -22,6 +23,7 @@ export const ReportServiceDao = {
    * @returns 登録したドキュメントID
    */
   async set(reportID: string, arg: ReportService): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.set(ref, arg);
     return result;
@@ -32,6 +34,7 @@ export const ReportServiceDao = {
    * @returns 登録したドキュメントID
    */
   async add(reportID: string, arg: ReportService): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.add(ref, arg);
     return result;
@@ -44,6 +47,7 @@ export const ReportServiceDao = {
     reportID: string,
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<ReportService[] | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.query<ReportService>(ref, where);
     return result;
@@ -53,6 +57,7 @@ export const ReportServiceDao = {
    * @returns 削除したドキュメントID
    */
   async delete(reportID: string, id: string): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.delete(ref, id);
     return result;
@@ -62,6 +67,7 @@ export const ReportServiceDao = {
    * @returns 更新したドキュメントID
    */
   async update(reportID: string, arg: ReportService): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.update(ref, arg);
     return result;

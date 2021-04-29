@@ -1,6 +1,6 @@
+import { db } from "libs/Firebase";
 import { User } from "../entities/User";
 import {
-  db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
@@ -14,6 +14,7 @@ export const UserDao: DaoType<User> = {
    * @returns 取得結果のデータ
    */
   async get(id: string): Promise<User | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.get<User>(ref, id);
     return result;
@@ -23,6 +24,7 @@ export const UserDao: DaoType<User> = {
    * @returns 登録したドキュメントID
    */
   async set(arg: User): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.set(ref, arg);
     return result;
@@ -33,6 +35,7 @@ export const UserDao: DaoType<User> = {
    * @returns 登録したドキュメントID
    */
   async add(arg: User): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.add(ref, arg);
     return result;
@@ -44,6 +47,7 @@ export const UserDao: DaoType<User> = {
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<User[] | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.query<User>(ref, where);
     return result;
@@ -53,6 +57,7 @@ export const UserDao: DaoType<User> = {
    * @returns 削除したドキュメントID
    */
   async delete(id: string): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.delete(ref, id);
     return result;
@@ -62,6 +67,7 @@ export const UserDao: DaoType<User> = {
    * @returns 更新したドキュメントID
    */
   async update(arg: User): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("User");
     const result = await DaoBase.update(ref, arg);
     return result;

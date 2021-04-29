@@ -1,17 +1,10 @@
-import firebase from "libs/Firebase";
+import firebase, { db } from "libs/Firebase";
 import { Contact } from "../entities/Contact";
 import {
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { DaoBase } from "./_Common";
-
-let db: firebase.firestore.Firestore | null = null;
-
-if (typeof window !== "undefined") {
-  // gatsby buildでない場合のみ実行
-  db = firebase.firestore();
-}
 
 export const ContactDao = {
   /**

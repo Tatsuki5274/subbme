@@ -1,6 +1,6 @@
+import { db } from "libs/Firebase";
 import { Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
 import {
-  db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
@@ -13,6 +13,7 @@ export const ServiceDao: DaoType<Service> = {
    * @returns 取得結果のデータ
    */
   async get(id: string): Promise<Service | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.get<Service>(ref, id);
     return result;
@@ -22,6 +23,7 @@ export const ServiceDao: DaoType<Service> = {
    * @returns 登録したドキュメントID
    */
   async set(arg: Service): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.set(ref, arg);
     return result;
@@ -32,6 +34,7 @@ export const ServiceDao: DaoType<Service> = {
    * @returns 登録したドキュメントID
    */
   async add(arg: Service): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.add(ref, arg);
     return result;
@@ -43,6 +46,7 @@ export const ServiceDao: DaoType<Service> = {
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
   ): Promise<Service[] | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.query<Service>(ref, where);
     return result;
@@ -52,6 +56,7 @@ export const ServiceDao: DaoType<Service> = {
    * @returns 削除したドキュメントID
    */
   async delete(id: string): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.delete(ref, id);
     return result;
@@ -61,6 +66,7 @@ export const ServiceDao: DaoType<Service> = {
    * @returns 更新したドキュメントID
    */
   async update(arg: Service): Promise<string | null> {
+    if (!db) return null;
     const ref = db.collection("Service");
     const result = await DaoBase.update(ref, arg);
     return result;

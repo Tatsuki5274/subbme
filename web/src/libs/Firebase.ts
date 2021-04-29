@@ -7,17 +7,19 @@ import firebase from "gatsby-plugin-firebase";
 // import "firebase/analytics";
 
 // // Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
-import "firebase/functions";
-
+// import "firebase/auth";
+// import "firebase/firestore";
+// import "firebase/storage";
 // import "firebase/functions";
 
+let db: firebase.firestore.Firestore | null = null;
+
 if (typeof window !== "undefined") {
-  // require("firebase/functions");
-  // require("firebase/auth");
-  // require("firebase/firestore");
+  require("firebase/functions");
+  require("firebase/auth");
+  require("firebase/storage");
+  require("firebase/firestore");
+  db = firebase.firestore();
   const isEmulating = process.env.GATSBY_FIREBASE_EMULATOR;
 
   if (isEmulating) {
@@ -25,4 +27,5 @@ if (typeof window !== "undefined") {
   }
 }
 
+export { db };
 export default firebase;
