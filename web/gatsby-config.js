@@ -12,8 +12,8 @@ require("dotenv").config({
 });
 module.exports = {
   siteMetadata: {
-    title: "Subbme",
-    siteUrl: "https://www.subbme.com",
+    title: "Subbny",
+    siteUrl: "https://www.subbny.com",
   },
   plugins: [
     "gatsby-plugin-react-helmet",

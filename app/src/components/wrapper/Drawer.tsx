@@ -175,7 +175,7 @@ function DrawerContainer(props: PropsType) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap style={{ color: "white" }}>
-            Subbme
+            Subbny
           </Typography>
         </Toolbar>
       </AppBar>

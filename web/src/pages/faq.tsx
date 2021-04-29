@@ -6,8 +6,8 @@ export default function Faq() {
     <>
       <Helmet>
         <html lang="ja" />
-        <title>FAQ | Subbme</title>
-        <meta name="description" content="Subbmeのよくある質問" />
+        <title>FAQ | Subbny</title>
+        <meta name="description" content="Subbnyのよくある質問" />
       </Helmet>
       <span>作成中</span>
     </>

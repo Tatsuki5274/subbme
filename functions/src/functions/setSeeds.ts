@@ -9,17 +9,17 @@ export default functions
     const template: MailTemplate[] = [
       {
         id: "welcome",
-        subject: "Subbmeへようこそ！",
-        text: ["subbmeへようこそ", "{{> footer}}"].join("\n"),
+        subject: "Subbnyへようこそ！",
+        text: ["Subbnyへようこそ", "{{> footer}}"].join("\n"),
       },
       {
         id: "footer",
-        text: "このメールはSubbmeから送信されています。",
+        text: "このメールはSubbnyから送信されています。",
         partial: true,
       },
       {
         id: "create-contact",
-        subject: "[Subbme] 問い合わせを受け付けました",
+        subject: "[Subbny] 問い合わせを受け付けました",
         text: "問い合わせを受け付けました。",
       }
     ];

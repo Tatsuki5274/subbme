@@ -7,10 +7,10 @@ export default function Main() {
     <>
       <Helmet>
         <html lang="ja" />
-        <title>Top | Subbme</title>
+        <title>Top | Subbny</title>
         <meta
           name="description"
-          content="固定費を狙い撃ちするアプリ、Subbmeです"
+          content="固定費を狙い撃ちするアプリ、Subbnyです"
         />
       </Helmet>
       <TopTemplate />

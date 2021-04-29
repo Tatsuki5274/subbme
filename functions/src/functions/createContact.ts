@@ -49,7 +49,7 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
       }
     });
     const AdminMail = await emanager.add({
-      to: "subbme@fastmail.jp", // 通知先のメールアドレス(仮)
+      to: "subbny@fastmail.jp", // 通知先のメールアドレス(仮)
       message: {
         subject: "問い合わせがありました",
         text: `問い合わせID:${createdMail?.id}`,

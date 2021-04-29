@@ -6,8 +6,8 @@ export default function About() {
     <>
       <Helmet>
         <html lang="ja" />
-        <title>About | Subbme</title>
-        <meta name="description" content="Subbmeについて" />
+        <title>About | Subbny</title>
+        <meta name="description" content="Subbnyについて" />
       </Helmet>
       <span>作成中</span>
     </>

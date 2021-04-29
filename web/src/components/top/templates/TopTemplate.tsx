@@ -20,12 +20,11 @@ export default function TopTemplate() {
           そこで、固定費を削減することにフォーカスした新しい倹約術を広めることがサービスの最大の目標です。
         </TopPlainText>
       </VisionTextStyle>
-      <Divider style={DividerStyle}>ABOUT SUBBME</Divider>
+      <Divider style={DividerStyle}>ABOUT SUBBNY</Divider>
       <AboutTextStyle>
         <TopPlainText>
           固定費を一緒に管理してユーザーの金銭的な負担を減らしたいという目的で誕生したアプリです。
-          “Let’s manage your subscription with me”のsubscription with
-          meから取ってSubbme（サブミー）と名付けました。
+          Subbny（サブニー）と呼びます。
         </TopPlainText>
         <TopPlainText>
           お金について勉強している中で感じた問題に向き合うことができるように試行錯誤をして作成しています。
@@ -47,7 +46,7 @@ export default function TopTemplate() {
         <span>から送信していただけます。</span>
         <br />
         直接こちらのメールアドレス
-        &quot;subbme@fastmail.jp&quot;までご連絡いただくことも可能です。
+        &quot;subbny@fastmail.jp&quot;までご連絡いただくことも可能です。
       </ContactTextStyle>
       <AttentionStyle>
         <TopPlainText>
