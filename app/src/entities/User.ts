@@ -16,12 +16,3 @@ type UserBase = {
 };
 
 export type User = NullablePartial<UserBase>;
-
-export const buildUser = (uid: string, data: FirebaseDocumentDataType) => {
-  const user: User = {
-    uid,
-    ...data,
-  };
-
-  return user;
-};

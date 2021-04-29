@@ -19,12 +19,3 @@ type ReportBase = {
 };
 
 export type Report = NullablePartial<ReportBase>;
-
-export const buildReport = (id: string, data: FirebaseDocumentDataType) => {
-  const user: Report = {
-    id,
-    ...data,
-  };
-
-  return user;
-};

@@ -16,15 +16,3 @@ type MailTemplateBase = {
 };
 
 export type MailTemplate = NullablePartial<MailTemplateBase>;
-
-export const buildMailTemplate = (
-  id: string,
-  data: FirebaseDocumentDataType
-) => {
-  const mail: MailTemplate = {
-    id,
-    ...data,
-  };
-
-  return mail;
-};

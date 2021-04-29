@@ -10,12 +10,3 @@ type ContactBase = {
 };
 
 export type Contact = NullablePartial<ContactBase>;
-
-export const buildContact = (id: string, data: FirebaseDocumentDataType) => {
-  const mail: Contact = {
-    id,
-    ...data,
-  };
-
-  return mail;
-};
