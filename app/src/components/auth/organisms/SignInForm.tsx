@@ -3,6 +3,8 @@ import { Form, Input, Button, message, Checkbox } from "antd";
 import { routeBuilder } from "router";
 import { useHistory } from "react-router";
 import { useForm } from "antd/lib/form/Form";
+import React from "react";
+import { Link } from "react-router-dom";
 
 type FormType = {
   email: string;
@@ -53,7 +55,12 @@ export default function SingInForm() {
         <Input.Password />
       </Form.Item>
       <Form.Item
-        label="プライバシーポリシに同意する"
+        label={
+          <>
+            <a href={routeBuilder.privacyPolicyPath()}>プライバシーポリシ</a>
+            に同意する
+          </>
+        }
         name="isAgreePrivacyPolicy"
         valuePropName="checked"
         // validateStatus={isAgree ? "success" : "error"}

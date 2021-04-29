@@ -153,6 +153,10 @@ export const routeBuilder = {
   settingsPasswordPath: (host = "") => {
     return `${host}/settings/password`;
   },
+  privacyPolicyPath: () => {
+    const host = process.env.REACT_APP_WEB_HOST;
+    return `${host}/privacy-policy`;
+  },
 };
 
 export default Router;
