@@ -1,5 +1,5 @@
 import { Mail } from "../entities/Mail";
-import firebase, { db } from "libs/Firebase";
+import { db } from "libs/Firebase";
 import {
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
