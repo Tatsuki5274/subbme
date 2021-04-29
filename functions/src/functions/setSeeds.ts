@@ -1,11 +1,10 @@
 import { MailTemplate } from "../entities/MailTemplate";
 import * as functions from "firebase-functions";
-import { MailTemplateManager } from "../repositories/MailTemplates";
+import { MailTemplateDao } from "../repositories/MailTemplates";
 
 export default functions
   .region("asia-northeast1")
   .https.onRequest(async (req, res) => {
-    const templateManager = new MailTemplateManager();
     const template: MailTemplate[] = [
       {
         id: "welcome",
@@ -25,7 +24,7 @@ export default functions
     ];
     await Promise.all(
       template.map(async (tl) => {
-        await templateManager.set(tl);
+        await MailTemplateDao.set(tl);
       })
     );
 

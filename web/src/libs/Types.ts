@@ -1,4 +1,4 @@
-import firebase from "libs/Firebase";
+import firebase from "./Firebase";
 
 // フロントエンド用型定義
 export type FirebaseCollectionReferenceType = firebase.firestore.CollectionReference<firebase.firestore.DocumentData>;

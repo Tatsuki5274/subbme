@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ContactManager } from "libs/Backend";
 import { useForm } from "antd/lib/form/Form";
 import { Form, Input, message, Select } from "antd";
 import AsyncButton from "components/common/atoms/AsyncButton";
@@ -7,6 +6,7 @@ import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
+import { ContactDao } from "repositories/Contacts";
 
 type FormType = {
   title: string;
@@ -66,7 +66,7 @@ function FormComponent() {
       if (!token) {
         throw new Error("Can't get token");
       }
-      await ContactManager.create(
+      await ContactDao.add(
         {
           title: values.title,
           category: values.category,

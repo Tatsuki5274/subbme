@@ -1,7 +1,4 @@
-import {
-  FirebaseDocumentDataType,
-  FirebaseFirestoreTimestampType,
-} from "../libs/Types";
+import { FirebaseFirestoreTimestampType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 type ReportBase = {
@@ -19,12 +16,3 @@ type ReportBase = {
 };
 
 export type Report = NullablePartial<ReportBase>;
-
-export const buildReport = (id: string, data: FirebaseDocumentDataType) => {
-  const user: Report = {
-    id,
-    ...data,
-  };
-
-  return user;
-};

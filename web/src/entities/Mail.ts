@@ -1,4 +1,3 @@
-import { FirebaseDocumentDataType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 type MailBase = {
@@ -33,12 +32,3 @@ type MailBase = {
 };
 
 export type Mail = NullablePartial<MailBase>;
-
-export const buildMail = (id: string, data: FirebaseDocumentDataType) => {
-  const mail: Mail = {
-    id,
-    ...data,
-  };
-
-  return mail;
-};

@@ -1,139 +1,69 @@
-import { buildReportService, ReportService } from "../entities/ReportService";
-import ManagerInterface from "./ManagerInterface";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
+import { ReportService } from "../entities/ReportService";
+import { DaoBase } from "./_Common";
 
-export class ReportServiceManager implements ManagerInterface<ReportService> {
-  _ref: FirebaseCollectionReferenceType;
-
-  constructor(reportID: string) {
-    const reportServiceRef = db
-      .collection("Report")
-      .doc(reportID)
-      .collection("Service");
-    this._ref = reportServiceRef;
-  }
-
+export const ReportServiceDao = {
   /**
    *
-   * @param queryResult クエリ結果
-   * @returns 整形結果
-   */
-  async _buildList(queryResult: FirebaseQueryType) {
-    try {
-      // const queryResult= await reportServiceRef.where("userID", "==", "tatsuki");
-      const get = await queryResult?.get();
-      const doc = get?.docs;
-      const result = doc?.map((_doc) => {
-        return buildReportService(_doc.id, _doc.data());
-      });
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  /**
-   *
-   * @param id ドキュメントI
+   * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
-  async get(id: string) {
-    try {
-      const snapshot = await this._ref.doc(id).get();
-      const data = snapshot.data();
-      if (!data) {
-        throw new Error("Empty");
-      }
-      const user = buildReportService(id, data);
-      return user;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
-  async set(reportService: ReportService) {
-    try {
-      if (!reportService.id) {
-        throw new Error("id is undefined");
-      }
-      const id = reportService.id;
-      delete reportService.id;
-      this._ref.doc(id).set(reportService, { merge: true });
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
+  async get(reportID: string, id: string): Promise<ReportService | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.get<ReportService>(ref, id);
+    return result;
+  },
   /**
-   *
-   * @param reportService 追加したいデータ
-   * @returns 成功・失敗
+   * @param arg 登録内容
+   * @returns 登録したドキュメントID
    */
-  async add(reportService: ReportService) {
-    try {
-      delete reportService.id;
-      const result = await this._ref.add(reportService);
-      return result;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return null;
-    }
-  }
-
+  async set(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.set(ref, arg);
+    return result;
+  },
   /**
    *
-   * @param where クエリ条件
+   * @param arg 追加したいデータ
+   * @returns 登録したドキュメントID
+   */
+  async add(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.add(ref, arg);
+    return result;
+  },
+  /**
+   * @param where クエリ条件。指定しない場合は全てのデータを取得
    * @returns クエリ結果
    */
   async query(
+    reportID: string,
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
-  ) {
-    if (where) {
-      const query = await where(this._ref);
-      const data = await this._buildList(query);
-      return data;
-    } else {
-      const data = await this._buildList(this._ref);
-      return data;
-    }
-  }
-
-  async delete(id: string) {
-    try {
-      await this._ref.doc(id).delete();
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-
-  async update(service: ReportService) {
-    try {
-      const serviceID = service.id;
-      if (!serviceID) {
-        throw new Error("ID is not defined");
-      }
-      delete service.id;
-      await this._ref.doc(serviceID).update(service);
-      return true;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn(e);
-      return false;
-    }
-  }
-}
+  ): Promise<ReportService[] | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.query<ReportService>(ref, where);
+    return result;
+  },
+  /**
+   * @param id 削除するドキュメント
+   * @returns 削除したドキュメントID
+   */
+  async delete(reportID: string, id: string): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.delete(ref, id);
+    return result;
+  },
+  /**
+   * @param arg 更新するオブジェクト
+   * @returns 更新したドキュメントID
+   */
+  async update(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.update(ref, arg);
+    return result;
+  },
+};

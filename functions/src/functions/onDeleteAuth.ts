@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 
 import * as functions from "firebase-functions";
-import { UserManager } from "../repositories/Users";
+import { UserDao } from "../repositories/Users";
 // import * as admin from 'firebase-admin';
 
 export default functions
@@ -10,8 +10,7 @@ export default functions
 .user()
 .onDelete(async (user) => {
   try {
-    const manager = new UserManager();
-    await manager.delete(user.uid);
+    await UserDao.delete(user.uid);
 
     // pay.jpの顧客を削除
     const sk = functions.config().payjp.sk;

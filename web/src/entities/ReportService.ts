@@ -1,4 +1,3 @@
-import { FirebaseDocumentDataType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 export const ReportServiceRankEnum = {
@@ -31,18 +30,6 @@ type ReportServiceBase = {
 };
 
 export type ReportService = NullablePartial<ReportServiceBase>;
-
-export const buildReportService = (
-  id: string,
-  data: FirebaseDocumentDataType
-) => {
-  const user: ReportService = {
-    id,
-    ...data,
-  };
-
-  return user;
-};
 
 export function convertRank(num: number): string | null {
   let resutl: string | null = null;

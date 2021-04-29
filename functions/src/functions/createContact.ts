@@ -1,9 +1,9 @@
 import { Contact } from "../entities/Contact";
 import * as functions from "firebase-functions";
-import { ContactManager } from "../repositories/Contacts";
 import axiosBase from "axios";
 import admin from "../libs/Firebase";
-import { MailManager } from "../repositories/Mails";
+import { ContactDao } from "../repositories/Contacts";
+import { MailDao } from "../repositories/Mails";
 
 const httpEvent = functions.region("us-central1").https.onCall(async (arg: { data: Contact, token: string}, context) => {
   const contact = arg.data;
@@ -32,8 +32,7 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
     throw new Error("Faild challenge.");
   }
 
-  const manager = new ContactManager();
-  const result = await manager.add(contact);
+  const result = await ContactDao.add(contact);
   
   let isSentEmail = false;
   try {
@@ -41,18 +40,17 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
     if (!email) {
       throw new Error("email not provided");
     }
-    const emanager = new MailManager();
-    const createdMail = await emanager.add({
+    const createdMail = await MailDao.add({
       to: email,
       template: {
         name: "create-contact"
       }
     });
-    const AdminMail = await emanager.add({
+    const AdminMail = await MailDao.add({
       to: "subbny@fastmail.jp", // 通知先のメールアドレス(仮)
       message: {
         subject: "問い合わせがありました",
-        text: `問い合わせID:${createdMail?.id}`,
+        text: `問い合わせID:${createdMail}`,
       }
     })
 
@@ -62,7 +60,7 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
   }
 
   return {
-    id: result?.id,
+    id: result,
     email: isSentEmail,
   };
   // return result?.id;

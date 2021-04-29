@@ -1,28 +1,28 @@
-import { MailTemplate } from "../entities/MailTemplate";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
-import { DaoBase, DaoType } from "./_Common";
+import { ReportService } from "entities/ReportService";
+import { DaoBase } from "./_Common";
 
-export const MailTemplateDao: DaoType<MailTemplate> = {
+export const ReportServiceDao = {
   /**
    *
    * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
-  async get(id: string): Promise<MailTemplate | null> {
-    const ref = db.collection("MailTemplate");
-    const result = await DaoBase.get<MailTemplate>(ref, id);
+  async get(reportID: string, id: string): Promise<ReportService | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.get<ReportService>(ref, id);
     return result;
   },
   /**
    * @param arg 登録内容
    * @returns 登録したドキュメントID
    */
-  async set(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async set(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.set(ref, arg);
     return result;
   },
@@ -31,8 +31,8 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    * @param arg 追加したいデータ
    * @returns 登録したドキュメントID
    */
-  async add(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async add(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.add(ref, arg);
     return result;
   },
@@ -41,18 +41,19 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    * @returns クエリ結果
    */
   async query(
+    reportID: string,
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
-  ): Promise<MailTemplate[] | null> {
-    const ref = db.collection("MailTemplate");
-    const result = await DaoBase.query<MailTemplate>(ref, where);
+  ): Promise<ReportService[] | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
+    const result = await DaoBase.query<ReportService>(ref, where);
     return result;
   },
   /**
    * @param id 削除するドキュメント
    * @returns 削除したドキュメントID
    */
-  async delete(id: string): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async delete(reportID: string, id: string): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.delete(ref, id);
     return result;
   },
@@ -60,8 +61,8 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    * @param arg 更新するオブジェクト
    * @returns 更新したドキュメントID
    */
-  async update(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async update(reportID: string, arg: ReportService): Promise<string | null> {
+    const ref = db.collection("Report").doc(reportID).collection("Service");
     const result = await DaoBase.update(ref, arg);
     return result;
   },

@@ -1,40 +1,49 @@
-import { MailTemplate } from "../entities/MailTemplate";
+import firebase from "libs/Firebase";
+import { Contact } from "../entities/Contact";
 import {
   db,
   FirebaseQueryType,
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
-import { DaoBase, DaoType } from "./_Common";
+import { DaoBase } from "./_Common";
 
-export const MailTemplateDao: DaoType<MailTemplate> = {
+export const ContactDao = {
   /**
    *
    * @param id 取得するドキュメントID
    * @returns 取得結果のデータ
    */
-  async get(id: string): Promise<MailTemplate | null> {
-    const ref = db.collection("MailTemplate");
-    const result = await DaoBase.get<MailTemplate>(ref, id);
+  async get(id: string): Promise<Contact | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.get<Contact>(ref, id);
     return result;
   },
   /**
    * @param arg 登録内容
    * @returns 登録したドキュメントID
    */
-  async set(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async set(arg: Contact): Promise<string | null> {
+    const ref = db.collection("Contact");
     const result = await DaoBase.set(ref, arg);
     return result;
   },
   /**
    *
    * @param arg 追加したいデータ
+   * @param token recaptchaのトークン
    * @returns 登録したドキュメントID
    */
-  async add(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
-    const result = await DaoBase.add(ref, arg);
-    return result;
+  async add(arg: Contact, token: string): Promise<string | null> {
+    try {
+      const CreateContact = firebase
+        .functions()
+        .httpsCallable("createContact-httpEvent");
+      const result = await CreateContact({ arg, token });
+      const id: string | null = result.data?.id || null;
+      return id;
+    } catch (e) {
+      return null;
+    }
   },
   /**
    * @param where クエリ条件。指定しない場合は全てのデータを取得
@@ -42,9 +51,9 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    */
   async query(
     where?: (ref: FirebaseCollectionReferenceType) => FirebaseQueryType
-  ): Promise<MailTemplate[] | null> {
-    const ref = db.collection("MailTemplate");
-    const result = await DaoBase.query<MailTemplate>(ref, where);
+  ): Promise<Contact[] | null> {
+    const ref = db.collection("Contact");
+    const result = await DaoBase.query<Contact>(ref, where);
     return result;
   },
   /**
@@ -52,7 +61,7 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    * @returns 削除したドキュメントID
    */
   async delete(id: string): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+    const ref = db.collection("Contact");
     const result = await DaoBase.delete(ref, id);
     return result;
   },
@@ -60,8 +69,8 @@ export const MailTemplateDao: DaoType<MailTemplate> = {
    * @param arg 更新するオブジェクト
    * @returns 更新したドキュメントID
    */
-  async update(arg: MailTemplate): Promise<string | null> {
-    const ref = db.collection("MailTemplate");
+  async update(arg: Contact): Promise<string | null> {
+    const ref = db.collection("Contact");
     const result = await DaoBase.update(ref, arg);
     return result;
   },

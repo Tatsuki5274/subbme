@@ -26,6 +26,7 @@ module.exports = {
       options: {
         components: path.join(__dirname, "src", "components"),
         libs: path.join(__dirname, "src", "libs"),
+        repositories: path.join(__dirname, "src", "repositories"),
       },
     },
     {

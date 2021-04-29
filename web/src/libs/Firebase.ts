@@ -15,6 +15,8 @@ import firebase from "gatsby-plugin-firebase";
 
 if (typeof window !== "undefined") {
   require("firebase/functions");
+  require("firebase/auth");
+  require("firebase/firestore");
   const isEmulating = process.env.GATSBY_FIREBASE_EMULATOR;
 
   if (isEmulating) {

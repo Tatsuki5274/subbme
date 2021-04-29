@@ -1,8 +1,8 @@
 // import * as admin from 'firebase-admin';
 import * as functions from "firebase-functions";
-import {UserManager} from "../repositories/Users";
 import * as admin from "firebase-admin";
-import { MailManager } from "../repositories/Mails";
+import { UserDao } from "../repositories/Users";
+import { MailDao } from "../repositories/Mails";
 
 export default functions
 .region("asia-northeast1")
@@ -18,8 +18,7 @@ export default functions
     }
 
     // firestoreへユーザー情報を追加
-    const userManager = new UserManager();
-    await userManager.set({
+    await UserDao.set({
       uid: user.uid,
       // email: user.email,  // 認証済みのメールアドレスとして扱う(仮実装)
       createdAt: admin.firestore.Timestamp.now()
@@ -30,8 +29,7 @@ export default functions
     });
 
     // welcomeメールを送信
-    const mailManager = new MailManager();
-    const result = await mailManager.add({
+    const result = await MailDao.add({
       toUids: [
         user.uid
       ],

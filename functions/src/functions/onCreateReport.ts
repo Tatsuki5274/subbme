@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
-import { ReportManager } from "../repositories/Reports";
+import { ReportDao } from "../repositories/Reports";
 import admin from "../libs/Firebase";
-import { UserManager } from "../repositories/Users";
+import { UserDao } from "../repositories/Users";
 
 export default functions.firestore.document("Report/{reportID}").onCreate(async (snap, context) => {
   try {
@@ -12,8 +12,7 @@ export default functions.firestore.document("Report/{reportID}").onCreate(async 
       throw new Error("reportID is not string. maybe undefined");
     }
 
-    const reportManager = new ReportManager();
-    const createdReport = await reportManager.get(reportID);
+    const createdReport = await ReportDao.get(reportID);
 
     if(!createdReport) {
       throw new Error("Report is not found");
@@ -23,8 +22,7 @@ export default functions.firestore.document("Report/{reportID}").onCreate(async 
     
 
     // レポートの最終作成日を記録
-    const userManager = new UserManager();
-    await userManager.update({
+    await UserDao.update({
       uid: createdReport.userID,
       LastReportCreatedAt: admin.firestore.Timestamp.now()
     })
