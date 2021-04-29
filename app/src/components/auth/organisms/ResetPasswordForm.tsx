@@ -42,8 +42,8 @@ export default function ResetPasswordForm(props: {
       visible={props.visible}
       title="パスワードリセット"
       cancelText="キャンセル"
-      // onOk={onClickOK}
-      // onCancel={onClickCancel}
+      onOk={onClickOK}
+      onCancel={onClickCancel}
       footer={[
         <Button key="cancel" onClick={onClickCancel}>
           キャンセル
