@@ -15,7 +15,7 @@ export default functions
     await UserDao.set({
       id: user.uid,
       createdAt: admin.firestore.Timestamp.now(),
-      agreements: {
+      agreementPolicies: {
         privacy: [{
           version: privacyPolicyVersion,
           agreedAt: admin.firestore.Timestamp.now(),

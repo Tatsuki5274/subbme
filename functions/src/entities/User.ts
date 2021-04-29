@@ -1,7 +1,7 @@
 import { FirebaseFirestoreTimestampType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
-type AgreementType = {
+type AgreementPoliciesType = {
   version: string; // 規約のバージョン
   agreedAt: FirebaseFirestoreTimestampType; // 同意日付
 }[];
@@ -13,8 +13,12 @@ type UserBase = {
   LastReportCreatedAt: FirebaseFirestoreTimestampType;
   email: string;
   // isSendReportEmail
-  agreements: {
-    privacy: AgreementType; // プライバシーポリシへの同意状況
+  agreementPolicies: {
+    privacy: AgreementPoliciesType; // プライバシーポリシへの同意状況
+  };
+  agreementMails: {
+    serviceMail: boolean; // サービスの通知などの機能メール
+    promotionMail: boolean; // 広告メール
   };
   createdAt: FirebaseFirestoreTimestampType;
   updatedAt: FirebaseFirestoreTimestampType;
