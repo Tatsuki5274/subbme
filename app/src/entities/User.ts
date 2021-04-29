@@ -2,7 +2,7 @@ import { FirebaseFirestoreTimestampType } from "../libs/Types";
 import { NullablePartial } from "../libs/Util";
 
 type UserBase = {
-  uid: string;
+  id: string;
   lastLoginDate: FirebaseFirestoreTimestampType;
   currency: "JPY";
   LastReportCreatedAt: FirebaseFirestoreTimestampType;

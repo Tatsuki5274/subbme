@@ -23,7 +23,7 @@ export default functions.firestore.document("Report/{reportID}").onCreate(async 
 
     // レポートの最終作成日を記録
     await UserDao.update({
-      uid: createdReport.userID,
+      id: createdReport.userID,
       LastReportCreatedAt: admin.firestore.Timestamp.now()
     })
   } catch (e) {

@@ -15,7 +15,7 @@ exports.httpEvent = functions.region("us-central1").https.onCall(async (data, co
   }
   if (user.emailVerified) {
     const result = await UserDao.set({
-      uid: user.uid,
+      id: user.uid,
       email: user.email,
     })
     console.log(JSON.stringify(result));

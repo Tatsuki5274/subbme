@@ -10,17 +10,9 @@ export default functions
 .user()
 .onCreate(async (user) => {
   try {
-    // pay.jpの顧客を作成
-    const sk = functions.config().payjp.sk;
-    if (!(typeof sk === "string")) {
-      // 秘密鍵がfunctions configに設定されていない場合
-      throw new Error("SecretKey is not set");
-    }
-
     // firestoreへユーザー情報を追加
     await UserDao.set({
-      uid: user.uid,
-      // email: user.email,  // 認証済みのメールアドレスとして扱う(仮実装)
+      id: user.uid,
       createdAt: admin.firestore.Timestamp.now()
     });
 
