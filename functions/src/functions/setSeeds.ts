@@ -20,6 +20,11 @@ export default functions
         id: "create-contact",
         subject: "[Subbny] 問い合わせを受け付けました",
         text: "問い合わせを受け付けました。",
+      },
+      {
+        id: "email-confirm",
+        subject: "[Subbny] メールアドレスを確認しました",
+        text: "お客様のメールアドレスを確認しました。",
       }
     ];
     await Promise.all(
