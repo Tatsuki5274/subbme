@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { signUpUser } from "libs/User";
 import { routeBuilder } from "router";
 import React from "react";
+import { messageAuth } from "common/lang";
 
 type FormType = {
   email: string;
@@ -15,16 +16,15 @@ type FormType = {
 export default function SignUpForm() {
   const history = useHistory();
   const onFinish = async (values: FormType) => {
-    signUpUser(values.email, values.password)
-      .then(() => {
-        message.success("ログインに成功しました");
-        history.push(routeBuilder.topPath());
-      })
-      .catch((reason) => {
-        message.error("ログインに失敗しました");
-        // eslint-disable-next-line no-console
-        console.error(reason);
-      });
+    try {
+      await signUpUser(values.email, values.password);
+      message.success("ログインに成功しました");
+      history.push(routeBuilder.topPath());
+    } catch (e) {
+      message.error(messageAuth(e));
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
   };
   const minLengthPassword = 7;
 

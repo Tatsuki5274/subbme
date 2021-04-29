@@ -6,12 +6,8 @@ export function messageAuth(error: MessageAuthType): string {
     // case "auth/popup-closed-by-user":
     //   return null;
 
-    // case "auth/email-already-in-use":
-    //   if (method.indexOf("signup") !== -1) {
-    //     return "このメールアドレスは使用されています";
-    //   } else {
-    //     return "メールアドレスまたはパスワードが違います";
-    //   }
+    case "auth/email-already-in-use":
+      return "このメールアドレスは使用されています";
     case "auth/invalid-email":
       return "メールアドレスの形式が正しくありません";
     case "auth/user-disabled":
