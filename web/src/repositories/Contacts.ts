@@ -38,7 +38,7 @@ export const ContactDao = {
       const CreateContact = firebase
         .functions()
         .httpsCallable("createContact-httpEvent");
-      const result = await CreateContact({ arg, token });
+      const result = await CreateContact({ data: arg, token });
       const id: string | null = result.data?.id || null;
       return id;
     } catch (e) {

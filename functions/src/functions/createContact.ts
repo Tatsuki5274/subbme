@@ -8,7 +8,6 @@ import { MailDao } from "../repositories/Mails";
 const httpEvent = functions.region("us-central1").https.onCall(async (arg: { data: Contact, token: string}, context) => {
   const contact = arg.data;
   const secret = functions.config().recaptcha.secret;
-  console.log("decret", secret);
 
   const axios = axiosBase.create({
     baseURL: "https://www.google.com",
