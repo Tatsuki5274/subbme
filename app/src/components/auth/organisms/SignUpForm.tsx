@@ -1,12 +1,14 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Checkbox } from "antd";
 import { formLayout } from "common/styles";
 import { useHistory } from "react-router";
 import { signUpUser } from "libs/User";
 import { routeBuilder } from "router";
+import React from "react";
 
 type FormType = {
   email: string;
   password: string;
+  isAgreePrivacyPolicy: boolean;
 };
 
 export default function SignUpForm() {
@@ -44,6 +46,32 @@ export default function SignUpForm() {
         rules={[{ required: true, message: "入力が必須です" }]}
       >
         <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label={
+          <>
+            <a href={routeBuilder.privacyPolicyPath()}>プライバシーポリシ</a>
+            に同意する
+          </>
+        }
+        name="isAgreePrivacyPolicy"
+        valuePropName="checked"
+        // validateStatus={isAgree ? "success" : "error"}
+        // help="プライバシーポリシへの同意が必要です"
+        rules={[
+          () => ({
+            validator(_, value) {
+              if (value === true) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error("プライバシーポリシへの同意が必要です")
+              );
+            },
+          }),
+        ]}
+      >
+        <Checkbox />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
