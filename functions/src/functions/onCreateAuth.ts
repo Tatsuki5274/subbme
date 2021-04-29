@@ -18,13 +18,12 @@ export default functions
 
     await admin.auth().setCustomUserClaims(user.uid, {
       plan: "free",
+      type: "customer",
     });
 
     // welcomeメールを送信
     const result = await MailDao.add({
-      toUids: [
-        user.uid
-      ],
+      to: user.email,
       template: {
         name: "welcome",
       },
