@@ -88,13 +88,13 @@ export default function SignUpForm() {
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         label="サービスに関するお得な情報を受け取る"
         name="isAdMail"
         valuePropName="checked"
       >
         <Checkbox />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         label={
           <>

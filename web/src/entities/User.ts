@@ -17,8 +17,8 @@ type UserBase = {
     privacy: AgreementPoliciesType; // プライバシーポリシへの同意状況
   };
   agreementMails: {
-    serviceMail: boolean; // サービスの通知などの機能メール
-    promotionMail: boolean; // 広告メール
+    serviceMail: FirebaseFirestoreTimestampType | null; // サービスの通知などの機能メール
+    promotionMail: FirebaseFirestoreTimestampType | null; // 広告メール
   };
   createdAt: FirebaseFirestoreTimestampType;
   updatedAt: FirebaseFirestoreTimestampType;
