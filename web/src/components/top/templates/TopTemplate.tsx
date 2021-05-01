@@ -24,7 +24,7 @@ export default function TopTemplate() {
       <AboutTextStyle>
         <TopPlainText>
           固定費を一緒に管理してユーザーの金銭的な負担を減らしたいという目的で誕生したアプリです。
-          Subbny（サブニー）と呼びます。
+          Subblish（サブニー）と呼びます。
         </TopPlainText>
         <TopPlainText>
           お金について勉強している中で感じた問題に向き合うことができるように試行錯誤をして作成しています。
@@ -46,7 +46,7 @@ export default function TopTemplate() {
         <span>から送信していただけます。</span>
         <br />
         直接こちらのメールアドレス
-        &quot;subbny@fastmail.jp&quot;までご連絡いただくことも可能です。
+        &quot;subblish@fastmail.jp&quot;までご連絡いただくことも可能です。
       </ContactTextStyle>
       <AttentionStyle>
         <TopPlainText>

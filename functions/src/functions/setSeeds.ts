@@ -8,22 +8,22 @@ export default functions
     const template: MailTemplate[] = [
       {
         id: "welcome",
-        subject: "Subbnyへようこそ！",
-        text: ["Subbnyへようこそ", "{{> footer}}"].join("\n"),
+        subject: "Subblishへようこそ！",
+        text: ["Subblishへようこそ", "{{> footer}}"].join("\n"),
       },
       {
         id: "footer",
-        text: "このメールはSubbnyから送信されています。",
+        text: "このメールはSubblishから送信されています。",
         partial: true,
       },
       {
         id: "create-contact",
-        subject: "[Subbny] 問い合わせを受け付けました",
+        subject: "[Subblish] 問い合わせを受け付けました",
         text: "問い合わせを受け付けました。",
       },
       {
         id: "email-confirm",
-        subject: "[Subbny] メールアドレスを確認しました",
+        subject: "[Subblish] メールアドレスを確認しました",
         text: "お客様のメールアドレスを確認しました。",
       }
     ];

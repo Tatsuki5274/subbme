@@ -5,7 +5,7 @@ export default function SimpleHeader() {
   return (
     <Style>
       <TextPosition>
-        <Title>Subbny</Title>
+        <Title>Subblish</Title>
       </TextPosition>
     </Style>
   );

@@ -46,7 +46,7 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
       }
     });
     const AdminMail = await MailDao.add({
-      to: "subbny@fastmail.jp", // 通知先のメールアドレス(仮)
+      to: "subblish@fastmail.jp", // 通知先のメールアドレス(仮)
       message: {
         subject: "問い合わせがありました",
         text: `問い合わせID:${createdMail}`,

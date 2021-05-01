@@ -5,7 +5,7 @@ export default function SimpleHeader() {
   return (
     <Style>
       <Title>
-        <Text>Subbny</Text>
+        <Text>Subblish</Text>
       </Title>
     </Style>
   );

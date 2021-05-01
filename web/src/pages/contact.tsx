@@ -7,8 +7,8 @@ export default function Contact() {
     <>
       <Helmet>
         <html lang="ja" />
-        <title>Contact | Subbny</title>
-        <meta name="description" content="Subbnyについての問い合わせ" />
+        <title>Contact | Subblish</title>
+        <meta name="description" content="Subblishについての問い合わせ" />
       </Helmet>
       <ContactTemplate />
     </>
