@@ -20,7 +20,7 @@ export default function TopTemplate() {
           そこで、固定費を削減することにフォーカスした新しい倹約術を広めることがサービスの最大の目標です。
         </TopPlainText>
       </VisionTextStyle>
-      <Divider style={DividerStyle}>ABOUT SUBBNY</Divider>
+      <Divider style={DividerStyle}>ABOUT SUBBLISH</Divider>
       <AboutTextStyle>
         <TopPlainText>
           固定費を一緒に管理してユーザーの金銭的な負担を減らしたいという目的で誕生したアプリです。
