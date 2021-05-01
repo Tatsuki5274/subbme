@@ -24,7 +24,7 @@ export default function TopTemplate() {
       <AboutTextStyle>
         <TopPlainText>
           固定費を一緒に管理してユーザーの金銭的な負担を減らしたいという目的で誕生したアプリです。
-          Subblish（サブニー）と呼びます。
+          Subblish（サブリッシュ）と呼びます。
         </TopPlainText>
         <TopPlainText>
           お金について勉強している中で感じた問題に向き合うことができるように試行錯誤をして作成しています。
