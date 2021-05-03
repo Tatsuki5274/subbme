@@ -2,13 +2,13 @@ import SubTitle from "components/common/atoms/SubTitle";
 import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
-import SettingsRow from "../molecules/SettingsRow";
 import React from "react";
 import { useUser } from "hooks/UserHooks";
 import SettingsUpdateEmail from "./SettingsUpdateEmail";
 import SettingsUpdatePassword from "./SettingsUpdatePassword";
 import SettingsHomeLink from "./SettingsHomeLink";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
+import { Button } from "antd";
 
 export default function SettingsHome() {
   const { currentUser, isLoading } = useUser();
@@ -19,24 +19,47 @@ export default function SettingsHome() {
   else if (!currentUser) {
     throw new Error("User not signedin");
   }
-
+  const passwordProvider =
+    currentUser.providerData.find((provider) => {
+      return provider?.providerId === "password";
+    }) || null;
   return (
     <>
       <Title>設定</Title>
       <SubTitle>認証情報</SubTitle>
       <SeparatedTableStyle>
-        <SettingsRow
-          label="メールアドレス"
-          value={`${currentUser?.email || ""}(${
+        <tr>
+          <td>
+            {passwordProvider ? (
+              <Button type="primary" onClick={modalEmail.handleOpen}>
+                変更
+              </Button>
+            ) : (
+              <Button type="primary" disabled>
+                変更
+              </Button>
+            )}
+          </td>
+          <td>メールアドレス</td>
+          <td>{`${currentUser?.email || ""}(${
             currentUser?.emailVerified ? "確認済み" : "未確認"
-          })`}
-          onClick={modalEmail.handleOpen}
-        />
-        <SettingsRow
-          onClick={modalPassword.handleOpen}
-          label="パスワード"
-          value="********"
-        />
+          })`}</td>
+        </tr>
+        <tr>
+          <td>
+            {passwordProvider ? (
+              <Button type="primary" onClick={modalPassword.handleOpen}>
+                変更
+              </Button>
+            ) : (
+              <Button type="primary" disabled>
+                変更
+              </Button>
+            )}
+          </td>
+          <td>パスワード</td>
+          <td>********</td>
+        </tr>
       </SeparatedTableStyle>
       <div>
         <SettingsUpdatePassword
