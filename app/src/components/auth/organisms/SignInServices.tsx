@@ -8,7 +8,6 @@ export default function SignInServices() {
   const history = useHistory();
   const google = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
     firebase.auth().useDeviceLanguage();
 
     firebase
