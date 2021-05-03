@@ -1,4 +1,4 @@
-import { Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
 import React from "react";
 import styled from "styled-components";
 
@@ -16,7 +16,10 @@ export default function SettingsRow(props: {
         </Tooltip>
       ) : (
         <LinkStyle>
-          <span onClick={props.onClick}>変更</span>
+          <Button type="primary" onClick={props.onClick}>
+            変更
+          </Button>
+          {/* <span onClick={props.onClick}>変更</span> */}
           {/* <Link to={props.link}>変更</Link> */}
         </LinkStyle>
       )}

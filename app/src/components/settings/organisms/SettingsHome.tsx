@@ -24,7 +24,7 @@ export default function SettingsHome() {
     <>
       <Title>設定</Title>
       <SubTitle>認証情報</SubTitle>
-      <RowsWrapperStyle>
+      <SeparatedTableStyle>
         <SettingsRow
           label="メールアドレス"
           value={`${currentUser?.email || ""}(${
@@ -37,7 +37,7 @@ export default function SettingsHome() {
           label="パスワード"
           value="********"
         />
-      </RowsWrapperStyle>
+      </SeparatedTableStyle>
       <div>
         <SettingsUpdatePassword
           visible={modalPassword.isVisible}
@@ -53,7 +53,7 @@ export default function SettingsHome() {
   );
 }
 
-const RowsWrapperStyle = styled.table({
+const SeparatedTableStyle = styled.table({
   borderCollapse: "separate",
   borderSpacing: "15px 0",
   // border-collapse:separate;

@@ -6,6 +6,7 @@ import { Button, Form, Input, message, Modal } from "antd";
 import { messageAuth } from "common/lang";
 import { useModal } from "hooks/CommonHooks";
 import { useForm } from "antd/lib/form/Form";
+import styled from "styled-components";
 
 export default function SettingsHomeLink(props: { user: firebase.User }) {
   const user = props.user;
@@ -13,13 +14,23 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
   if (!user) {
     return null;
   }
-  const passwordProvider = props.user?.providerData.find((provider) => {
-    return provider?.providerId === "password";
-  });
+  const passwordProvider =
+    user.providerData.find((provider) => {
+      return provider?.providerId === "password";
+    }) || null;
   // google 認証に関する情報
-  const googleProvider = props.user?.providerData.find((provider) => {
-    return provider?.providerId === "google.com";
-  });
+  const googleProvider =
+    user.providerData.find((provider) => {
+      return provider?.providerId === "google.com";
+    }) || null;
+  const onClickUnlink = async (providerId: string) => {
+    try {
+      await user.unlink(providerId);
+      message.success("解除に成功しました");
+    } catch (e) {
+      message.error(messageAuth(e));
+    }
+  };
 
   const onClickGoogle = async () => {
     try {
@@ -33,11 +44,13 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
   return (
     <>
       <SubTitle>アカウント連携</SubTitle>
-      <table>
+      <SeparatedTableStyle>
         <tr>
           <td>
             {passwordProvider ? (
-              "連携済み"
+              <AsyncButton danger disabled>
+                連携解除
+              </AsyncButton>
             ) : (
               <AsyncButton
                 type="primary"
@@ -52,7 +65,12 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
         <tr>
           <td>
             {googleProvider ? (
-              "連携済み"
+              <AsyncButton
+                danger
+                onClick={() => onClickUnlink(googleProvider.providerId)}
+              >
+                連携解除
+              </AsyncButton>
             ) : (
               <AsyncButton type="primary" onClick={onClickGoogle}>
                 連携
@@ -61,7 +79,7 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
           </td>
           <td>Googleアカウント</td>
         </tr>
-      </table>
+      </SeparatedTableStyle>
       <PasswordProviderForm
         user={props.user}
         handleClose={passwordProviderModal.handleClose}
@@ -169,3 +187,8 @@ const PasswordProviderForm = (props: {
     </Modal>
   );
 };
+
+const SeparatedTableStyle = styled.table({
+  borderCollapse: "separate",
+  borderSpacing: "15px 0",
+});
