@@ -16,6 +16,9 @@ export default function SettingsHome() {
   const modalEmail = useModal();
 
   if (isLoading) return <LoadingScreen />;
+  else if (!currentUser) {
+    throw new Error("User not signedin");
+  }
 
   return (
     <>
