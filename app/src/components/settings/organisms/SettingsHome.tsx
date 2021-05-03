@@ -8,7 +8,7 @@ import SettingsUpdateEmail from "./SettingsUpdateEmail";
 import SettingsUpdatePassword from "./SettingsUpdatePassword";
 import SettingsHomeLink from "./SettingsHomeLink";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
-import { Button } from "antd";
+import { Alert, Button } from "antd";
 
 export default function SettingsHome() {
   const { currentUser, isLoading } = useUser();
@@ -27,6 +27,14 @@ export default function SettingsHome() {
     <>
       <Title>設定</Title>
       <SubTitle>認証情報</SubTitle>
+      {!passwordProvider ? (
+        <Alert
+          message="情報の変更について"
+          description="Emailアカウントを設定していない場合はメールアドレスとパスワードを変更することができません。通知先の変更などでメールアドレスを変更する必要がある場合はEmailアカウントの設定を行ってください。"
+          type="info"
+          showIcon
+        />
+      ) : null}
       <SeparatedTableStyle>
         <tr>
           <td>

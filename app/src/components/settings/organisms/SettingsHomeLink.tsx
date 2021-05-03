@@ -8,6 +8,8 @@ import { useModal } from "hooks/CommonHooks";
 import { useForm } from "antd/lib/form/Form";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Tooltip } from "@material-ui/core";
 
 export default function SettingsHomeLink(props: { user: firebase.User }) {
   const user = props.user;
@@ -27,6 +29,10 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
     }) || null;
   const onClickUnlink = async (providerId: string) => {
     try {
+      if (user.providerData.length <= 1) {
+        // providerが1で削除した場合、アカウントを識別する情報がなくなってしまうため
+        throw new Error("他の認証情報が存在しません");
+      }
       await user.unlink(providerId);
       message.success("解除に成功しました");
       history.go(0);
@@ -64,7 +70,12 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
               </AsyncButton>
             )}
           </td>
-          <td>メールアドレス/パスワード認証</td>
+          <td>
+            Emailアカウント
+            <Tooltip title="メールアドレスとパスワードの組み合わせで認証を行う仕組みを指しています">
+              <QuestionCircleOutlined />
+            </Tooltip>
+          </td>
         </tr>
         <tr>
           <td>
