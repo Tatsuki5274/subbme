@@ -1,7 +1,6 @@
 import SubTitle from "components/common/atoms/SubTitle";
 import React from "react";
 import firebase from "libs/Firebase";
-import styled from "styled-components";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import { message } from "antd";
 import { messageAuth } from "common/lang";

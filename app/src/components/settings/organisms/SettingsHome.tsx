@@ -3,7 +3,6 @@ import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
 import SettingsRow from "../molecules/SettingsRow";
-import { Button } from "antd";
 import React from "react";
 import { useUser } from "hooks/UserHooks";
 import SettingsUpdateEmail from "./SettingsUpdateEmail";
