@@ -37,6 +37,8 @@ export function messageAuth(error: MessageAuthType): string {
       return "ログインの再試行回数が制限を超えたため、ログインできません。しばらくしてからもう一度お試しください";
     case "auth/invalid-action-code":
       return "コードが無効です。有効期限が切れているか既に使われている可能性があります";
+    case "auth/credential-already-in-use":
+      return "このアカウントは既に別のアカウントに紐づけられています";
     // default:
     //   if (method.indexOf("signin") !== -1) {
     //     return "認証に失敗しました。しばらく時間をおいて再度お試しください";
