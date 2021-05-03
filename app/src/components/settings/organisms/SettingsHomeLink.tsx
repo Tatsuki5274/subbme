@@ -90,6 +90,8 @@ const PasswordProviderForm = (props: {
       );
       await props.user.linkWithCredential(credential);
       message.success("連携に成功しました");
+      form.resetFields();
+      props.handleClose();
     } catch (e) {
       message.error(messageAuth(e));
     }
@@ -99,6 +101,7 @@ const PasswordProviderForm = (props: {
     props.handleClose();
   };
   const onOK = async () => {
+    await form.validateFields();
     await onSubmit(form.getFieldsValue());
   };
   const minLengthPassword = 7;
