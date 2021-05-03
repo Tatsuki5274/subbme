@@ -5,7 +5,6 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
-  withGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 import { ContactDao } from "repositories/Contacts";
 
@@ -50,12 +49,10 @@ export default function ContactForm() {
           // console.log("token", token);
         }}
       /> */}
-      <FormReCaptchaComponent />
+      <FormComponent />
     </GoogleReCaptchaProvider>
   );
 }
-
-const FormReCaptchaComponent = withGoogleReCaptcha(FormComponent);
 
 function FormComponent() {
   const [form] = useForm<FormType>();
