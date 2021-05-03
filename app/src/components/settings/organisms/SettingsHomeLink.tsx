@@ -7,9 +7,11 @@ import { messageAuth } from "common/lang";
 import { useModal } from "hooks/CommonHooks";
 import { useForm } from "antd/lib/form/Form";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 export default function SettingsHomeLink(props: { user: firebase.User }) {
   const user = props.user;
+  const history = useHistory();
   const passwordProviderModal = useModal();
   if (!user) {
     return null;
@@ -27,6 +29,7 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
     try {
       await user.unlink(providerId);
       message.success("解除に成功しました");
+      history.go(0);
     } catch (e) {
       message.error(messageAuth(e));
     }
@@ -37,6 +40,7 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
       const provider = new firebase.auth.GoogleAuthProvider();
       await user.linkWithPopup(provider);
       message.success("連携に成功しました");
+      history.go(0);
     } catch (e) {
       message.error(messageAuth(e));
     }
