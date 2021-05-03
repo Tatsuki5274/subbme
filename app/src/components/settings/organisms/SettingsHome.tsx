@@ -8,19 +8,16 @@ import React from "react";
 import { useUser } from "hooks/UserHooks";
 import SettingsUpdateEmail from "./SettingsUpdateEmail";
 import SettingsUpdatePassword from "./SettingsUpdatePassword";
+import SettingsHomeLink from "./SettingsHomeLink";
+import LoadingScreen from "components/common/organisms/LoadingScreen";
 
 export default function SettingsHome() {
-  const { currentUser } = useUser();
+  const { currentUser, isLoading } = useUser();
   const modalPassword = useModal();
   const modalEmail = useModal();
-  // email / password の認証に関する情報
-  const passwordProvider = currentUser?.providerData.find((provider) => {
-    return provider?.providerId === "password";
-  });
-  // google 認証に関する情報
-  const googleProvider = currentUser?.providerData.find((provider) => {
-    return provider?.providerId === "google.com";
-  });
+
+  if (isLoading) return <LoadingScreen />;
+
   return (
     <>
       <Title>設定</Title>
@@ -49,11 +46,7 @@ export default function SettingsHome() {
           handleClose={modalEmail.handleClose}
         />
       </div>
-      <SubTitle>アカウント連携</SubTitle>
-      <div>
-        {passwordProvider ? "連携済み" : <Button type="primary">連携</Button>}{" "}
-        メールアドレス/パスワード認証{" "}
-      </div>
+      <SettingsHomeLink user={currentUser} />
     </>
   );
 }
