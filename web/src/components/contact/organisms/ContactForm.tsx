@@ -5,6 +5,7 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
+  withGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 import { ContactDao } from "repositories/Contacts";
 
@@ -49,10 +50,12 @@ export default function ContactForm() {
           // console.log("token", token);
         }}
       /> */}
-      <FormComponent />
+      <FormReCaptchaComponent />
     </GoogleReCaptchaProvider>
   );
 }
+
+const FormReCaptchaComponent = withGoogleReCaptcha(FormComponent);
 
 function FormComponent() {
   const [form] = useForm<FormType>();
@@ -66,7 +69,7 @@ function FormComponent() {
       if (!token) {
         throw new Error("Can't get token");
       }
-      await ContactDao.add(
+      const result = await ContactDao.add(
         {
           title: values.title,
           category: values.category,
@@ -75,8 +78,10 @@ function FormComponent() {
         },
         token
       );
+      if (!result) {
+        throw new Error("Request faild");
+      }
       form.resetFields();
-      // console.log(result);
       message.success("問い合わせを受け付けました");
     } catch (e) {
       message.error("送信に失敗しました");

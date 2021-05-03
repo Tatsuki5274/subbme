@@ -1,7 +1,6 @@
 import { Contact } from "../entities/Contact";
 import * as functions from "firebase-functions";
 import axiosBase from "axios";
-import admin from "../libs/Firebase";
 import { ContactDao } from "../repositories/Contacts";
 import { MailDao } from "../repositories/Mails";
 
@@ -19,11 +18,8 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
   params.append("response", arg.token);
 
   const verifyResult = await axios.post("/recaptcha/api/siteverify", params);
-  // console.log("ver", verifyResult.data);
   const isSuccess: boolean = verifyResult.data.success;
-  // const errorCodes: string[] | undefined = verifyResult.data["error-codes"];
-  // console.log("success", isSuccess);
-  // console.log("error", errorCodes);
+  const action: string | undefined = verifyResult.data.action;
 
   if (!isSuccess) {
     // recaptchaの検証に失敗
@@ -52,7 +48,7 @@ const httpEvent = functions.region("us-central1").https.onCall(async (arg: { dat
         text: `問い合わせID:${createdMail}`,
       }
     })
-
+    console.log(`action: ${action} customer: ${createdMail} admin: ${AdminMail}`);
     isSentEmail = true;
   } catch(e) {
     console.error(e);
