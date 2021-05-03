@@ -16,6 +16,14 @@ export default function SettingsHome() {
   const { currentUser } = useUser();
   const modalPassword = useModal();
   const modalEmail = useModal();
+  // email / password の認証に関する情報
+  const passwordProvider = currentUser?.providerData.find((provider) => {
+    return provider?.providerId === "password";
+  });
+  // google 認証に関する情報
+  const googleProvider = currentUser?.providerData.find((provider) => {
+    return provider?.providerId === "google.com";
+  });
   return (
     <>
       <Title>設定</Title>
@@ -43,6 +51,11 @@ export default function SettingsHome() {
           visible={modalEmail.isVisible}
           handleClose={modalEmail.handleClose}
         />
+      </div>
+      <SubTitle>アカウント連携</SubTitle>
+      <div>
+        {passwordProvider ? "連携済み" : <Button type="primary">連携</Button>}{" "}
+        メールアドレス/パスワード認証{" "}
       </div>
     </>
   );
