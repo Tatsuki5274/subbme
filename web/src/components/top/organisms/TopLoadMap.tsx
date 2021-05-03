@@ -4,7 +4,7 @@ const { Step } = Steps;
 
 export default function TopLoadMap() {
   return (
-    <Steps direction="vertical" current={5}>
+    <Steps direction="vertical" current={6}>
       <Step
         title="2020年9月 企画段階"
         description="コンテンツやアプリの構想、アイデア段階"
