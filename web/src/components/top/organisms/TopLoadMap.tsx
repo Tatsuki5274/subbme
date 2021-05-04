@@ -4,7 +4,7 @@ const { Step } = Steps;
 
 export default function TopLoadMap() {
   return (
-    <Steps direction="vertical" current={6}>
+    <Steps direction="vertical" current={7}>
       <Step
         title="2020年9月 企画段階"
         description="コンテンツやアプリの構想、アイデア段階"
@@ -34,12 +34,20 @@ export default function TopLoadMap() {
         description="プライバシーポリシや事業に関する情報の作成"
       />
       <Step
+        title="5月 認証周りの作成"
+        description="各種ユーザー認証機能の作成とセキュリティ対策の実施"
+      />
+      <Step
         title="6月予定 パブリックβリリース"
-        description="簡易的な機能で公開"
+        description="基本機能である固定費洗い出し機能のみで公開"
       />
       <Step
         title="秋予定 コンテンツ機能の実装"
         description="学習用の教材などのコンテンツ機能の実装"
+      />
+      <Step
+        title="秋予定 コンテンツ提供の仕組み作成"
+        description="人によるコンテンツ及びフィードバック機能の実装"
       />
       <Step
         title="秋予定 製品版リリース"
