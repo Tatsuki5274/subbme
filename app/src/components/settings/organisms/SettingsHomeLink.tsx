@@ -124,6 +124,7 @@ const PasswordProviderForm = (props: {
         values.password
       );
       await props.user.linkWithCredential(credential);
+      await props.user.sendEmailVerification();
       message.success("連携に成功しました");
       form.resetFields();
       props.handleClose();
