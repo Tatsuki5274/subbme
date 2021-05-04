@@ -73,6 +73,7 @@ export default function SettingsHome() {
       </SeparatedTableStyle>
 
       <SettingsHomeLink user={currentUser} />
+      <SubTitle>アカウント削除</SubTitle>
       <Button type="primary" danger onClick={modalRemove.handleOpen}>
         退会
       </Button>

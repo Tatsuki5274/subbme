@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
 import { ProvidersEnum } from "libs/User";
+import { useHistory } from "react-router";
+import { routeBuilder } from "router";
 
 /**
  * @description 退会モーダル
@@ -29,6 +31,7 @@ export default function SettingsHomeRemove(props: {
     password: string;
   };
   const [form] = useForm<FormType>();
+  const history = useHistory();
   const [isEmailProvider, setIsEmailProvider] = useState(true);
   const initialValues: FormType = {
     providerId: ProvidersEnum.Email,
@@ -58,6 +61,7 @@ export default function SettingsHomeRemove(props: {
       props.handleClose();
       form.resetFields();
       setIsEmailProvider(true);
+      history.push(routeBuilder.signInPath());
       message.success("退会処理が完了しました");
     } catch (e) {
       message.error(messageAuth(e));

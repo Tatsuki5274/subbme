@@ -14,12 +14,13 @@ export function messageAuth(error: MessageAuthType): string {
       return "サービスの利用が停止されています";
     case "auth/user-not-found":
       return "メールアドレスまたはパスワードが違います";
-    // case "auth/user-mismatch":
-    //   if (method === "signin/popup") {
-    //     return "認証されているユーザーと異なるアカウントが選択されました";
-    //   } else {
-    //     return "メールアドレスまたはパスワードが違います";
-    //   }
+    case "auth/user-mismatch":
+      // if (method === "signin/popup") {
+      //   return "認証されているユーザーと異なるアカウントが選択されました";
+      // } else {
+      //   return "メールアドレスまたはパスワードが違います";
+      // }
+      return "認証されているユーザーと異なるアカウントが選択されました";
     case "auth/weak-password":
       return "パスワードは6文字以上にしてください";
     case "auth/wrong-password":
