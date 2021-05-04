@@ -43,18 +43,21 @@ export default function SettingsHomeRemove(props: {
         props.user.email,
         values.password
       );
-      // if (values.providerId === ProvidersEnum.Email)
-      switch (values.providerId) {
-        case ProvidersEnum.Email:
-          break;
-        case ProvidersEnum.Google:
-          break;
-        default:
-          throw new Error("不明な認証プロバイダーが選択されています");
+      if (values.providerId === ProvidersEnum.Email) {
+        // Emailアカウント認証の場合
+        await props.user.reauthenticateWithCredential(credential);
+      } else if (values.providerId === ProvidersEnum.Google) {
+        // Googleアカウント認証の場合
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await props.user.reauthenticateWithPopup(provider);
+      } else {
+        // 存在しないProviderの場合
+        throw new Error("不明な認証プロバイダーが選択されています");
       }
-      await props.user.reauthenticateWithCredential(credential);
+      await props.user.delete();
       props.handleClose();
       form.resetFields();
+      setIsEmailProvider(true);
       message.success("退会処理が完了しました");
     } catch (e) {
       message.error(messageAuth(e));
