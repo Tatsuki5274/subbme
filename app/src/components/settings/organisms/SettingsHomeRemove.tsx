@@ -16,6 +16,9 @@ import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
 import { ProvidersEnum } from "libs/User";
 
+/**
+ * @description 退会モーダル
+ */
 export default function SettingsHomeRemove(props: {
   user: firebase.User;
   visible: boolean;
@@ -40,7 +43,15 @@ export default function SettingsHomeRemove(props: {
         props.user.email,
         values.password
       );
-      // if (values.providerId === )
+      // if (values.providerId === ProvidersEnum.Email)
+      switch (values.providerId) {
+        case ProvidersEnum.Email:
+          break;
+        case ProvidersEnum.Google:
+          break;
+        default:
+          throw new Error("不明な認証プロバイダーが選択されています");
+      }
       await props.user.reauthenticateWithCredential(credential);
       props.handleClose();
       form.resetFields();
@@ -57,6 +68,9 @@ export default function SettingsHomeRemove(props: {
     props.handleClose();
     form.resetFields();
   };
+  /**
+   * @description 退会に使う認証プロバイダーを変更した場合の処理
+   */
   const onChangeProvider = (event: RadioChangeEvent) => {
     const value = event.target.value;
     const isEmail = value === ProvidersEnum.Email;
