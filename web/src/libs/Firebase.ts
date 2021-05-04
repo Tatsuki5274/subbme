@@ -15,6 +15,7 @@ import firebase from "gatsby-plugin-firebase";
 let db: firebase.firestore.Firestore | null = null;
 
 if (typeof window !== "undefined") {
+  require("firebase/analytics");
   require("firebase/functions");
   require("firebase/auth");
   require("firebase/storage");
