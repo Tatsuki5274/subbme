@@ -2,7 +2,7 @@ import SubTitle from "components/common/atoms/SubTitle";
 import React from "react";
 import firebase from "libs/Firebase";
 import AsyncButton from "components/common/atoms/AsyncButton";
-import { Button, Form, Input, message, Modal } from "antd";
+import { Button, Form, Input, message, Modal, Popconfirm } from "antd";
 import { messageAuth } from "common/lang";
 import { useModal } from "hooks/CommonHooks";
 import { useForm } from "antd/lib/form/Form";
@@ -80,12 +80,14 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
         <tr>
           <td>
             {googleProvider ? (
-              <AsyncButton
-                danger
-                onClick={() => onClickUnlink(googleProvider.providerId)}
+              <Popconfirm
+                title="アカウントの連携を解除しますか？解除するとこのサービスのアカウントを用いてログインすることができなくなります。"
+                onConfirm={() => onClickUnlink(googleProvider.providerId)}
+                okText="Yes"
+                cancelText="No"
               >
-                連携解除
-              </AsyncButton>
+                <AsyncButton danger>連携解除</AsyncButton>{" "}
+              </Popconfirm>
             ) : (
               <AsyncButton type="primary" onClick={onClickGoogle}>
                 連携
@@ -155,7 +157,7 @@ const PasswordProviderForm = (props: {
     >
       <Form form={form}>
         <Form.Item
-          label="メールアドレス"
+          label="新しいメールアドレス"
           name="email"
           rules={[
             { required: true, message: "入力が必須です" },
@@ -165,7 +167,7 @@ const PasswordProviderForm = (props: {
           <Input type="email" />
         </Form.Item>
         <Form.Item
-          label="パスワード"
+          label="新しいパスワード"
           name="password"
           rules={[
             { required: true, message: "入力が必須です" },
@@ -178,7 +180,7 @@ const PasswordProviderForm = (props: {
           <Input.Password />
         </Form.Item>
         <Form.Item
-          label="パスワード確認"
+          label="新しいパスワード確認"
           name="passwordConfirm"
           rules={[
             { required: true, message: "入力が必須です" },

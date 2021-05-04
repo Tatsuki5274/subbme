@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
+    zIndex: "auto", // 打ち消し用
     width: drawerWidth,
   },
   content: {
