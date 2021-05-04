@@ -40,3 +40,9 @@ export async function confirmEmail(args: { email?: string }) {
   const result = await confirmEmail(args);
   return result;
 }
+
+export const ProvidersEnum = {
+  Email: "password",
+  Google: "google.com",
+} as const;
+export type ProvidersType = typeof ProvidersEnum[keyof typeof ProvidersEnum];

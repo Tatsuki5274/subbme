@@ -14,6 +14,7 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import React, { useState } from "react";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
+import { ProvidersEnum } from "libs/User";
 
 export default function SettingsHomeRemove(props: {
   user: firebase.User;
@@ -27,7 +28,7 @@ export default function SettingsHomeRemove(props: {
   const [form] = useForm<FormType>();
   const [isEmailProvider, setIsEmailProvider] = useState(true);
   const initialValues: FormType = {
-    providerId: "password",
+    providerId: ProvidersEnum.Email,
     password: "",
   };
   const onClickRemove = async (values: FormType) => {
@@ -58,7 +59,7 @@ export default function SettingsHomeRemove(props: {
   };
   const onChangeProvider = (event: RadioChangeEvent) => {
     const value = event.target.value;
-    const isEmail = value === "password";
+    const isEmail = value === ProvidersEnum.Email;
     if (!isEmail) {
       // Emailアカウント以外を設定した場合はフォームを削除する
       form.setFieldsValue({ password: "" });
@@ -90,8 +91,8 @@ export default function SettingsHomeRemove(props: {
       <Form initialValues={initialValues} form={form}>
         <Form.Item name="providerId" label="認証プロバイダー">
           <Radio.Group onChange={onChangeProvider}>
-            <Radio value="password">Emailアカウント</Radio>
-            <Radio value="google.com">Google</Radio>
+            <Radio value={ProvidersEnum.Email}>Emailアカウント</Radio>
+            <Radio value={ProvidersEnum.Google}>Google</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="現在のパスワード" name="password">
