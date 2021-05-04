@@ -4,6 +4,7 @@ import { routeBuilder } from "router";
 import { useHistory } from "react-router";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
+import { logEvents } from "libs/Analytics";
 
 type FormType = {
   email: string;
@@ -21,6 +22,7 @@ export default function SingInForm() {
     signInUser(values.email, values.password)
       .then(() => {
         message.success("ログインに成功しました");
+        logEvents.signIn("email");
         history.push(routeBuilder.topPath());
       })
       .catch((reason) => {
