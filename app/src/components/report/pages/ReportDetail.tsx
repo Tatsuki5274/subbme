@@ -1,5 +1,6 @@
 import Result404 from "components/common/organisms/404";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
+import PrivateRoute from "components/wrapper/PrivateRoute";
 import { Report } from "entities/Report";
 import { ReportService } from "entities/ReportService";
 import { useEffect, useState } from "react";
@@ -75,5 +76,9 @@ export default function ReportDetail(props: {
       return sv.rank === "C";
     }),
   };
-  return <ReportDetailTemplate {...data} />;
+  return (
+    <PrivateRoute>
+      <ReportDetailTemplate {...data} />
+    </PrivateRoute>
+  );
 }
