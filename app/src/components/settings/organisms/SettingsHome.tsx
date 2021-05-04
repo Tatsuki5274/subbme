@@ -9,11 +9,13 @@ import SettingsUpdatePassword from "./SettingsUpdatePassword";
 import SettingsHomeLink from "./SettingsHomeLink";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import { Alert, Button } from "antd";
+import SettingsHomeRemove from "./SettingsHomeRemove";
 
 export default function SettingsHome() {
   const { currentUser, isLoading } = useUser();
   const modalPassword = useModal();
   const modalEmail = useModal();
+  const modalRemove = useModal();
 
   if (isLoading) return <LoadingScreen />;
   else if (!currentUser) {
@@ -69,7 +71,13 @@ export default function SettingsHome() {
           <td>********</td>
         </tr>
       </SeparatedTableStyle>
+
+      <SettingsHomeLink user={currentUser} />
+      <Button type="primary" danger onClick={modalRemove.handleOpen}>
+        退会
+      </Button>
       <div>
+        {/* モーダルコンテンツ */}
         <SettingsUpdatePassword
           visible={modalPassword.isVisible}
           handleClose={modalPassword.handleClose}
@@ -78,8 +86,12 @@ export default function SettingsHome() {
           visible={modalEmail.isVisible}
           handleClose={modalEmail.handleClose}
         />
+        <SettingsHomeRemove
+          user={currentUser}
+          visible={modalRemove.isVisible}
+          handleClose={modalRemove.handleClose}
+        />
       </div>
-      <SettingsHomeLink user={currentUser} />
     </>
   );
 }
