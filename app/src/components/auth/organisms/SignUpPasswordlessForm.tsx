@@ -1,39 +1,52 @@
 import { Form, Input, Button, message, Checkbox } from "antd";
 import { formLayout } from "common/styles";
-import { useHistory } from "react-router";
-import { signUpUser } from "libs/User";
 import { routeBuilder } from "router";
 import React from "react";
 import { messageAuth } from "common/lang";
 import { useForm } from "antd/lib/form/Form";
+import firebase from "libs/Firebase";
 
 type FormType = {
   email: string;
-  password: string;
-  passwordConfirm: string;
   isAgreePrivacyPolicy: boolean;
   isAdMail: boolean;
 };
 
-export default function SignUpForm() {
-  const history = useHistory();
+export default function SignUpPasswordlessForm() {
   const [form] = useForm<FormType>();
   const onFinish = async (values: FormType) => {
     try {
-      await signUpUser(values.email, values.password);
-      message.success("ログインに成功しました");
-      history.push(routeBuilder.topPath());
+      const uri = new URL(window.location.href);
+      const origin = uri.origin;
+      const actionCodeSettings = {
+        // URL you want to redirect back to. The domain (www.example.com) for this
+        // URL must be in the authorized domains list in the Firebase Console.
+        url: origin,
+        // This must be true.
+        handleCodeInApp: true,
+        // iOS: {
+        //   bundleId: "com.example.ios",
+        // },
+        // android: {
+        //   packageName: "com.example.android",
+        //   installApp: true,
+        //   minimumVersion: "12",
+        // },
+        // dynamicLinkDomain: "example.page.link",
+      };
+      const email: string = values.email;
+      await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
+      window.localStorage.setItem("emailForSignIn", email);
+      message.success("認証メールを送信しました");
+      form.resetFields();
     } catch (e) {
       message.error(messageAuth(e));
       // eslint-disable-next-line no-console
       console.error(e);
     }
   };
-  const minLengthPassword = 7;
   const initialValues: FormType = {
     email: "",
-    password: "",
-    passwordConfirm: "",
     isAgreePrivacyPolicy: false,
     isAdMail: true,
   };
@@ -56,40 +69,6 @@ export default function SignUpForm() {
         ]}
       >
         <Input />
-      </Form.Item>
-      <Form.Item
-        label="パスワード"
-        name="password"
-        rules={[
-          { required: true, message: "入力が必須です" },
-          {
-            min: minLengthPassword,
-            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-      <Form.Item
-        label="パスワード確認"
-        name="passwordConfirm"
-        rules={[
-          { required: true, message: "入力が必須です" },
-          {
-            min: minLengthPassword,
-            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (value === getFieldValue("password")) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("パスワードが異なります"));
-            },
-          }),
-        ]}
-      >
-        <Input.Password />
       </Form.Item>
       {/* <Form.Item
         label="サービスに関するお得な情報を受け取る"
@@ -130,7 +109,7 @@ export default function SignUpForm() {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          新規登録
+          登録送信
         </Button>
       </Form.Item>
     </Form>

@@ -1,6 +1,7 @@
 import Result404 from "components/common/organisms/404";
 import { useQuery } from "hooks/CommonHooks";
 import React from "react";
+import ActionSignin from "../organisms/ActionSignin";
 import ActionRecoverEmailTemplate from "../templates/ActionRecoverEmailTemplate";
 import ActionResetPasswordTemplate from "../templates/ActionResetPasswordTemplate";
 import ActionVerifyEmailTemplate from "../templates/ActionVerifyEmailTemplate";
@@ -32,6 +33,14 @@ export default function MailActions() {
       // Display email verification handler and UI.
       return (
         <ActionVerifyEmailTemplate
+          actionCode={actionCode}
+          continueUrl={continueUrl}
+          lang={lang}
+        />
+      );
+    case "signIn":
+      return (
+        <ActionSignin
           actionCode={actionCode}
           continueUrl={continueUrl}
           lang={lang}
