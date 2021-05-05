@@ -7,13 +7,16 @@ import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import { useForm } from "antd/lib/form/Form";
-import { useModal } from "hooks/CommonHooks";
+import { useModal, useQuery } from "hooks/CommonHooks";
 import { routeBuilder } from "router";
 
 export default function SettingsHomeAuthPasswordless(props: {
   user: firebase.User;
 }) {
-  const modalEmail = useModal();
+  const query = useQuery();
+  const modal = query.get("modal");
+  const modalEmail = useModal(modal !== null);
+
   return (
     <>
       <Title>設定</Title>

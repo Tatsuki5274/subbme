@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "react-router";
 
-export function useModal() {
-  const [isVisible, SetIsVisible] = useState(false);
+export function useModal(defaultState = false) {
+  const [isVisible, SetIsVisible] = useState(defaultState);
   const handleOpen = () => {
     SetIsVisible(true);
   };
