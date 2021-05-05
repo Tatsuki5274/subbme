@@ -14,6 +14,7 @@ import firebase from "libs/Firebase";
 import SettingsHomeAuthPassword from "./SettingsHomeAuthPassword";
 import SettingsHomeAuthPasswordless from "./SettingsHomeAuthPasswordless";
 import SettingsHomeAuthOauth from "./SettingsHomeAuthOauth";
+import SettingsHomeDelete from "./SettingsHomeDelete";
 
 const useUserSetting = () => {
   const user = useUser();
@@ -111,25 +112,7 @@ export default function SettingsHome() {
       <AuthInfo />
       <SettingsHomeLink user={currentUser} />
       <SubTitle>アカウント削除</SubTitle>
-      <Button type="primary" danger onClick={modalRemove.handleOpen}>
-        退会
-      </Button>
-      <div>
-        {/* モーダルコンテンツ */}
-        {/* <SettingsUpdatePassword
-          visible={modalPassword.isVisible}
-          handleClose={modalPassword.handleClose}
-        />
-        <SettingsUpdateEmail
-          visible={modalEmail.isVisible}
-          handleClose={modalEmail.handleClose}
-        /> */}
-        <SettingsHomeRemove
-          user={currentUser}
-          visible={modalRemove.isVisible}
-          handleClose={modalRemove.handleClose}
-        />
-      </div>
+      <SettingsHomeDelete user={currentUser} />
     </>
   );
 }
