@@ -34,7 +34,7 @@ export default function SettingsHomeRemove(props: {
   const history = useHistory();
   const [isEmailProvider, setIsEmailProvider] = useState(true);
   const initialValues: FormType = {
-    providerId: ProvidersEnum.Email,
+    providerId: "",
     password: "",
   };
   const onClickRemove = async (values: FormType) => {
@@ -46,9 +46,11 @@ export default function SettingsHomeRemove(props: {
         props.user.email,
         values.password
       );
-      if (values.providerId === ProvidersEnum.Email) {
+      if (values.providerId === `${ProvidersEnum.Email}-password`) {
         // Emailアカウント認証の場合
         await props.user.reauthenticateWithCredential(credential);
+      } else if (values.providerId === `${ProvidersEnum.Email}-passwordless`) {
+        // Todo パスワードレスの退会確認メール送信処理
       } else if (values.providerId === ProvidersEnum.Google) {
         // Googleアカウント認証の場合
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -80,7 +82,7 @@ export default function SettingsHomeRemove(props: {
    */
   const onChangeProvider = (event: RadioChangeEvent) => {
     const value = event.target.value;
-    const isEmail = value === ProvidersEnum.Email;
+    const isEmail = value === `${ProvidersEnum.Email}-password`;
     if (!isEmail) {
       // Emailアカウント以外を設定した場合はフォームを削除する
       form.setFieldsValue({ password: "" });
@@ -112,13 +114,20 @@ export default function SettingsHomeRemove(props: {
       <Form initialValues={initialValues} form={form}>
         <Form.Item name="providerId" label="認証プロバイダー">
           <Radio.Group onChange={onChangeProvider}>
-            <Radio value={ProvidersEnum.Email}>Emailアカウント</Radio>
+            <Radio value={`${ProvidersEnum.Email}-password`}>
+              Emailアカウント(パスワード)
+            </Radio>
+            <Radio value={`${ProvidersEnum.Email}-passwordless`}>
+              Emailアカウント(パスワードレス)
+            </Radio>
             <Radio value={ProvidersEnum.Google}>Google</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="現在のパスワード" name="password">
-          <Input type="password" disabled={!isEmailProvider} />
-        </Form.Item>
+        {isEmailProvider ? (
+          <Form.Item label="現在のパスワード" name="password">
+            <Input type="password" disabled={!isEmailProvider} />
+          </Form.Item>
+        ) : null}
       </Form>
     </Modal>
   );
