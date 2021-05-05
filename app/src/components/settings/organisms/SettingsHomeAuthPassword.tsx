@@ -1,6 +1,4 @@
-import { Alert, Button, Form, Input, message, Modal } from "antd";
-import SubTitle from "components/common/atoms/SubTitle";
-import Title from "components/common/atoms/Title";
+import { Button, Form, Input, message, Modal } from "antd";
 import React from "react";
 import firebase from "libs/Firebase";
 import styled from "styled-components";
@@ -16,8 +14,6 @@ export default function SettingsHomeAuthPassword(props: {
   const modalEmail = useModal();
   return (
     <>
-      <Title>設定</Title>
-      <SubTitle>認証情報</SubTitle>
       <SeparatedTableStyle>
         <tr>
           <td>

@@ -8,6 +8,7 @@ import SettingsHomeAuthPassword from "./SettingsHomeAuthPassword";
 import SettingsHomeAuthPasswordless from "./SettingsHomeAuthPasswordless";
 import SettingsHomeAuthOauth from "./SettingsHomeAuthOauth";
 import SettingsHomeDelete from "./SettingsHomeDelete";
+import Title from "components/common/atoms/Title";
 
 const useUserSetting = () => {
   const user = useUser();
@@ -99,8 +100,16 @@ export default function SettingsHome() {
 
   return (
     <>
+      <Title>設定</Title>
+      <SubTitle>認証情報</SubTitle>
       <AuthInfo />
-      <SettingsHomeLink user={currentUser} />
+      <SubTitle>アカウント連携</SubTitle>
+      <SettingsHomeLink
+        user={currentUser}
+        isProviderEmailLink={isProviderEmailLink}
+        isProviderGoogle={isProviderGoogle}
+        isProviderPassword={isProviderPassword}
+      />
       <SubTitle>アカウント削除</SubTitle>
       <SettingsHomeDelete user={currentUser} />
     </>

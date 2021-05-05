@@ -1,6 +1,4 @@
 import { Alert, Button } from "antd";
-import SubTitle from "components/common/atoms/SubTitle";
-import Title from "components/common/atoms/Title";
 import React from "react";
 import styled from "styled-components";
 import firebase from "libs/Firebase";
@@ -8,8 +6,6 @@ import firebase from "libs/Firebase";
 export default function SettingsHomeAuthOauth(props: { user: firebase.User }) {
   return (
     <>
-      <Title>設定</Title>
-      <SubTitle>認証情報</SubTitle>
       <Alert
         message="情報の変更について"
         description="Emailアカウントを設定していない場合はメールアドレスとパスワードを変更することができません。通知先の変更などでメールアドレスを変更する必要がある場合はEmailアカウントの設定を行ってください。"

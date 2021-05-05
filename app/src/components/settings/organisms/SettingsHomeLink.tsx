@@ -1,4 +1,3 @@
-import SubTitle from "components/common/atoms/SubTitle";
 import React from "react";
 import firebase from "libs/Firebase";
 import AsyncButton from "components/common/atoms/AsyncButton";
@@ -10,23 +9,17 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Tooltip } from "@material-ui/core";
+import { ProvidersEnum } from "libs/User";
 
-export default function SettingsHomeLink(props: { user: firebase.User }) {
+export default function SettingsHomeLink(props: {
+  user: firebase.User;
+  isProviderEmailLink: boolean;
+  isProviderPassword: boolean;
+  isProviderGoogle: boolean;
+}) {
   const user = props.user;
   const history = useHistory();
   const passwordProviderModal = useModal();
-  if (!user) {
-    return null;
-  }
-  const passwordProvider =
-    user.providerData.find((provider) => {
-      return provider?.providerId === "password";
-    }) || null;
-  // google 認証に関する情報
-  const googleProvider =
-    user.providerData.find((provider) => {
-      return provider?.providerId === "google.com";
-    }) || null;
   const onClickUnlink = async (providerId: string) => {
     try {
       if (user.providerData.length <= 1) {
@@ -53,11 +46,10 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
   };
   return (
     <>
-      <SubTitle>アカウント連携</SubTitle>
       <SeparatedTableStyle>
         <tr>
           <td>
-            {passwordProvider ? (
+            {props.isProviderEmailLink || props.isProviderPassword ? (
               <AsyncButton danger disabled>
                 連携解除
               </AsyncButton>
@@ -72,17 +64,17 @@ export default function SettingsHomeLink(props: { user: firebase.User }) {
           </td>
           <td>
             Emailアカウント
-            <Tooltip title="メールアドレスとパスワードの組み合わせで認証を行う仕組みを指しています">
+            <Tooltip title="メールアドレスで認証を行う仕組みを指しています。パスワードレス認証とパスワード認証から選択することができます。">
               <QuestionCircleOutlined />
             </Tooltip>
           </td>
         </tr>
         <tr>
           <td>
-            {googleProvider ? (
+            {props.isProviderGoogle ? (
               <Popconfirm
                 title="アカウントの連携を解除しますか？解除するとこのサービスのアカウントを用いてログインすることができなくなります。"
-                onConfirm={() => onClickUnlink(googleProvider.providerId)}
+                onConfirm={() => onClickUnlink(ProvidersEnum.Google)}
                 okText="Yes"
                 cancelText="No"
               >

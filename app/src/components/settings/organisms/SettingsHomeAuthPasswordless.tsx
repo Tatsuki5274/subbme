@@ -1,7 +1,5 @@
-import { Alert, Button, Form, Input, message, Modal, Popconfirm } from "antd";
-import SubTitle from "components/common/atoms/SubTitle";
-import Title from "components/common/atoms/Title";
-import React, { useEffect, useState } from "react";
+import { Button, Form, Input, message, Modal, Popconfirm } from "antd";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
@@ -9,7 +7,6 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import { useForm } from "antd/lib/form/Form";
 import { useModal, useQuery } from "hooks/CommonHooks";
 import { routeBuilder } from "router";
-import { Tooltip } from "@material-ui/core";
 
 export default function SettingsHomeAuthPasswordless(props: {
   user: firebase.User;
@@ -54,8 +51,6 @@ export default function SettingsHomeAuthPasswordless(props: {
 
   return (
     <>
-      <Title>設定</Title>
-      <SubTitle>認証情報</SubTitle>
       <SeparatedTableStyle>
         <tr>
           <td>
