@@ -1,10 +1,6 @@
-import { signInUser } from "libs/User";
 import { Form, Input, Button, message } from "antd";
-import { routeBuilder } from "router";
-import { useHistory } from "react-router";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
-import { logEvents } from "libs/Analytics";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
 
@@ -13,7 +9,6 @@ type FormType = {
 };
 
 export default function SignInPasswordlessForm() {
-  const history = useHistory();
   const [form] = useForm<FormType>();
   const initialValues: FormType = {
     email: "",
