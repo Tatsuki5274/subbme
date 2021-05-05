@@ -87,7 +87,7 @@ function SettingsUpdateEmail(props: {
   const handleSubmit = async (values: FormFieldType) => {
     try {
       await props.user.updateEmail(values.newEmail);
-      // await props.user.sendEmailVerification();
+      await props.user.sendEmailVerification();
       message.success("メールアドレスの変更が成功しました");
       form.resetFields();
       props.handleClose();
