@@ -1,15 +1,8 @@
 import SubTitle from "components/common/atoms/SubTitle";
-import Title from "components/common/atoms/Title";
-import { useModal } from "hooks/CommonHooks";
-import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import { useUser } from "hooks/UserHooks";
-import SettingsUpdateEmail from "./SettingsUpdateEmail";
-import SettingsUpdatePassword from "./SettingsUpdatePassword";
 import SettingsHomeLink from "./SettingsHomeLink";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
-import { Alert, Button } from "antd";
-import SettingsHomeRemove from "./SettingsHomeRemove";
 import firebase from "libs/Firebase";
 import SettingsHomeAuthPassword from "./SettingsHomeAuthPassword";
 import SettingsHomeAuthPasswordless from "./SettingsHomeAuthPasswordless";
@@ -88,9 +81,6 @@ export default function SettingsHome() {
     isProviderPassword,
     isProviderGoogle,
   } = useUserSetting();
-  const modalPassword = useModal();
-  const modalEmail = useModal();
-  const modalRemove = useModal();
 
   if (isLoading) return <LoadingScreen />;
   else if (!currentUser) {
