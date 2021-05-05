@@ -21,6 +21,15 @@ export default function SettingsHomeAuthPasswordless(props: {
       <SeparatedTableStyle>
         <tr>
           <td>
+            <Button type="primary" disabled>
+              変更
+            </Button>
+          </td>
+          <td>パスワードタイプ</td>
+          <td>パスワードレス</td>
+        </tr>
+        <tr>
+          <td>
             <Button type="primary" onClick={modalEmail.handleOpen}>
               変更
             </Button>
