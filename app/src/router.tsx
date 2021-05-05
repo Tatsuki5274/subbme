@@ -150,9 +150,6 @@ export const routeBuilder = {
   settingMailPath: (host = "") => {
     return `${host}/settings/mail`;
   },
-  settingsPasswordPath: (host = "") => {
-    return `${host}/settings/password`;
-  },
   privacyPolicyPath: () => {
     const host = process.env.REACT_APP_WEB_HOST;
     return `${host}/privacy-policy`;

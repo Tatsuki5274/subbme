@@ -95,19 +95,20 @@ export default function SettingsHome() {
   else if (!currentUser) {
     throw new Error("User not signedin");
   }
-  const passwordProvider =
-    currentUser.providerData.find((provider) => {
-      return provider?.providerId === "password";
-    }) || null;
+  const AuthInfo = () => {
+    // 認証プロバイダーによってアカウントの認証情報表示を分ける
+    if (isProviderPassword) {
+      return <SettingsHomeAuthPassword user={currentUser} />;
+    } else if (isProviderEmailLink) {
+      return <SettingsHomeAuthPasswordless user={currentUser} />;
+    } else if (isProviderGoogle) {
+      return <SettingsHomeAuthOauth user={currentUser} />;
+    } else throw new Error("Provider is not match.");
+  };
+
   return (
     <>
-      {isProviderPassword ? (
-        <SettingsHomeAuthPassword user={currentUser} />
-      ) : null}
-      {isProviderEmailLink ? (
-        <SettingsHomeAuthPasswordless user={currentUser} />
-      ) : null}
-      {isProviderGoogle ? <SettingsHomeAuthOauth user={currentUser} /> : null}
+      <AuthInfo />
       <SettingsHomeLink user={currentUser} />
       <SubTitle>アカウント削除</SubTitle>
       <Button type="primary" danger onClick={modalRemove.handleOpen}>
@@ -115,14 +116,14 @@ export default function SettingsHome() {
       </Button>
       <div>
         {/* モーダルコンテンツ */}
-        <SettingsUpdatePassword
+        {/* <SettingsUpdatePassword
           visible={modalPassword.isVisible}
           handleClose={modalPassword.handleClose}
         />
         <SettingsUpdateEmail
           visible={modalEmail.isVisible}
           handleClose={modalEmail.handleClose}
-        />
+        /> */}
         <SettingsHomeRemove
           user={currentUser}
           visible={modalRemove.isVisible}

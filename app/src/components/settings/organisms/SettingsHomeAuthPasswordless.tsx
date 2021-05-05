@@ -1,7 +1,7 @@
 import { Alert, Button, Form, Input, message, Modal, Popconfirm } from "antd";
 import SubTitle from "components/common/atoms/SubTitle";
 import Title from "components/common/atoms/Title";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
@@ -9,13 +9,23 @@ import AsyncButton from "components/common/atoms/AsyncButton";
 import { useForm } from "antd/lib/form/Form";
 import { useModal, useQuery } from "hooks/CommonHooks";
 import { routeBuilder } from "router";
+import { Tooltip } from "@material-ui/core";
 
 export default function SettingsHomeAuthPasswordless(props: {
   user: firebase.User;
 }) {
   const query = useQuery();
-  const modal = query.get("modal");
-  const modalEmail = useModal(modal !== null);
+
+  const modalEmail = useModal();
+  const modalRemove = useModal();
+
+  useEffect(() => {
+    // デフォルトモーダルを選択
+    const modal = query.get("modal");
+    if (modal === "mail") {
+      modalEmail.handleOpen();
+    }
+  }, []);
 
   return (
     <>
@@ -47,6 +57,11 @@ export default function SettingsHomeAuthPasswordless(props: {
         user={props.user}
         visible={modalEmail.isVisible}
         handleClose={modalEmail.handleClose}
+      />
+      <SettingsRemove
+        user={props.user}
+        visible={modalRemove.isVisible}
+        handleClose={modalRemove.handleClose}
       />
     </>
   );
@@ -90,6 +105,9 @@ function SettingsUpdateEmail(props: {
       .auth()
       .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
     window.localStorage.setItem("emailForSignIn", props.user.email);
+    message.info(
+      "認証メールを送信しました。リンク先からメールアドレスを変更してください"
+    );
     // const credential = firebase.auth.EmailAuthProvider.credentialWithLink(
     //   props.user.email,
     //   window.location.href
@@ -126,6 +144,17 @@ function SettingsUpdateEmail(props: {
       ]}
     >
       <Form<FormFieldType> form={form}>
+        <Popconfirm
+          title="再認証用メールを送信します。よろしいでしょうか。"
+          onConfirm={handleReauth}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="link">再認証メールの送信</Button>
+        </Popconfirm>
+        <Tooltip title="メールアドレスを変更することはアカウントの攻撃を可能にします。アカウントを安全に保つために変更前に再確認をおこないます。">
+          <span>再認証をする理由</span>
+        </Tooltip>
         <Form.Item
           label="変更後のメールアドレス"
           name="newEmail"
@@ -139,15 +168,19 @@ function SettingsUpdateEmail(props: {
         >
           <Input type="email" />
         </Form.Item>
-        <Popconfirm
-          title="再認証用メールを送信します。よろしいでしょうか。"
-          onConfirm={handleReauth}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button type="link">再認証メールの送信</Button>
-        </Popconfirm>
       </Form>
+    </Modal>
+  );
+}
+
+function SettingsRemove(props: {
+  user: firebase.User;
+  visible: boolean;
+  handleClose: () => void;
+}) {
+  return (
+    <Modal visible={props.visible} onCancel={props.handleClose}>
+      test
     </Modal>
   );
 }
