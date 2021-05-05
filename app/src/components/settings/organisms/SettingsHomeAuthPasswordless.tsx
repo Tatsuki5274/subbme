@@ -27,6 +27,31 @@ export default function SettingsHomeAuthPasswordless(props: {
     }
   }, []);
 
+  const handleReauth = async () => {
+    if (!props.user.email) {
+      // ユーザーのemailが取得できない場合
+      throw new Error("User is not signedin.");
+    }
+    const uri = new URL(window.location.href);
+    const origin = uri.origin;
+    const actionCodeSettings = {
+      url: routeBuilder.settingsPath(origin) + "?modal=mail",
+      handleCodeInApp: true,
+    };
+    await firebase
+      .auth()
+      .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
+    window.localStorage.setItem("emailForSignIn", props.user.email);
+    message.info(
+      "認証メールを送信しました。リンク先からメールアドレスを変更してください"
+    );
+    // const credential = firebase.auth.EmailAuthProvider.credentialWithLink(
+    //   props.user.email,
+    //   window.location.href
+    // );
+    // await props.user.reauthenticateWithCredential(credential);
+  };
+
   return (
     <>
       <Title>設定</Title>
@@ -43,9 +68,17 @@ export default function SettingsHomeAuthPasswordless(props: {
         </tr>
         <tr>
           <td>
-            <Button type="primary" onClick={modalEmail.handleOpen}>
+            <Popconfirm
+              title="再認証用メールを送信します。よろしいでしょうか。"
+              onConfirm={handleReauth}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary">変更</Button>
+            </Popconfirm>
+            {/* <Button type="primary" onClick={modalEmail.handleOpen}>
               変更
-            </Button>
+            </Button> */}
           </td>
           <td>メールアドレス</td>
           <td>{`${props.user.email || ""}(${
@@ -90,30 +123,7 @@ function SettingsUpdateEmail(props: {
     form.resetFields();
     props.handleClose();
   };
-  const handleReauth = async () => {
-    if (!props.user.email) {
-      // ユーザーのemailが取得できない場合
-      throw new Error("User is not signedin.");
-    }
-    const uri = new URL(window.location.href);
-    const origin = uri.origin;
-    const actionCodeSettings = {
-      url: routeBuilder.settingsPath(origin) + "?modal=mail",
-      handleCodeInApp: true,
-    };
-    await firebase
-      .auth()
-      .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
-    window.localStorage.setItem("emailForSignIn", props.user.email);
-    message.info(
-      "認証メールを送信しました。リンク先からメールアドレスを変更してください"
-    );
-    // const credential = firebase.auth.EmailAuthProvider.credentialWithLink(
-    //   props.user.email,
-    //   window.location.href
-    // );
-    // await props.user.reauthenticateWithCredential(credential);
-  };
+
   const handleSubmit = async (values: FormFieldType) => {
     try {
       await props.user.updateEmail(values.newEmail);
@@ -144,17 +154,14 @@ function SettingsUpdateEmail(props: {
       ]}
     >
       <Form<FormFieldType> form={form}>
-        <Popconfirm
+        {/* <Popconfirm
           title="再認証用メールを送信します。よろしいでしょうか。"
           onConfirm={handleReauth}
           okText="Yes"
           cancelText="No"
         >
           <Button type="link">再認証メールの送信</Button>
-        </Popconfirm>
-        <Tooltip title="メールアドレスを変更することはアカウントの攻撃を可能にします。アカウントを安全に保つために変更前に再確認をおこないます。">
-          <span>再認証をする理由</span>
-        </Tooltip>
+        </Popconfirm> */}
         <Form.Item
           label="変更後のメールアドレス"
           name="newEmail"
