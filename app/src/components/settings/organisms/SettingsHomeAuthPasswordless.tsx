@@ -1,4 +1,4 @@
-import { Alert, Button, Form, Input, message, Modal } from "antd";
+import { Alert, Button, Form, Input, message, Modal, Popconfirm } from "antd";
 import SubTitle from "components/common/atoms/SubTitle";
 import Title from "components/common/atoms/Title";
 import React from "react";
@@ -8,6 +8,7 @@ import { messageAuth } from "common/lang";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import { useForm } from "antd/lib/form/Form";
 import { useModal } from "hooks/CommonHooks";
+import { routeBuilder } from "router";
 
 export default function SettingsHomeAuthPasswordless(props: {
   user: firebase.User;
@@ -42,7 +43,6 @@ export default function SettingsHomeAuthPasswordless(props: {
 const SeparatedTableStyle = styled.table({
   borderCollapse: "separate",
   borderSpacing: "15px 0",
-  // border-collapse:separate;
 });
 
 function SettingsUpdateEmail(props: {
@@ -63,20 +63,32 @@ function SettingsUpdateEmail(props: {
     form.resetFields();
     props.handleClose();
   };
-  const handleSubmit = async (values: FormFieldType) => {
+  const handleReauth = async () => {
     if (!props.user.email) {
       // ユーザーのemailが取得できない場合
       throw new Error("User is not signedin.");
     }
-    const credential = firebase.auth.EmailAuthProvider.credentialWithLink(
-      props.user.email,
-      window.location.href
-    );
+    const uri = new URL(window.location.href);
+    const origin = uri.origin;
+    const actionCodeSettings = {
+      url: routeBuilder.settingsPath(origin) + "?modal=mail",
+      handleCodeInApp: true,
+    };
+    await firebase
+      .auth()
+      .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
+    window.localStorage.setItem("emailForSignIn", props.user.email);
+    // const credential = firebase.auth.EmailAuthProvider.credentialWithLink(
+    //   props.user.email,
+    //   window.location.href
+    // );
+    // await props.user.reauthenticateWithCredential(credential);
+  };
+  const handleSubmit = async (values: FormFieldType) => {
     try {
-      await props.user.reauthenticateWithCredential(credential);
       await props.user.updateEmail(values.newEmail);
-      await props.user.sendEmailVerification();
-      message.success("パスワードの変更が成功しました");
+      // await props.user.sendEmailVerification();
+      message.success("メールアドレスの変更が成功しました");
       form.resetFields();
       props.handleClose();
     } catch (e) {
@@ -115,6 +127,14 @@ function SettingsUpdateEmail(props: {
         >
           <Input type="email" />
         </Form.Item>
+        <Popconfirm
+          title="再認証用メールを送信します。よろしいでしょうか。"
+          onConfirm={handleReauth}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="link">再認証メールの送信</Button>
+        </Popconfirm>
       </Form>
     </Modal>
   );

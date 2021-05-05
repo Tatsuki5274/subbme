@@ -12,11 +12,6 @@ function useVerify(code: string) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await auth.checkActionCode(code);
-        if (res.operation !== "EMAIL_SIGNIN") {
-          // 操作が異なる場合。通常発生することはない
-          throw new Error("Operation is not sigin");
-        }
         const email = window.localStorage.getItem("emailForSignIn");
         if (!email) {
           // ログインリクエストを送信した環境と別環境の場合。
@@ -25,6 +20,12 @@ function useVerify(code: string) {
             "Email is not stored in the localStorage. Check your browser is same sent."
           );
         }
+        const res = await auth.checkActionCode(code);
+        if (res.operation !== "EMAIL_SIGNIN") {
+          // 操作が異なる場合。通常発生することはない
+          throw new Error("Operation is not sigin");
+        }
+
         await auth.signInWithEmailLink(email, window.location.href);
         window.localStorage.removeItem("emailForSignIn");
       } catch (e) {
@@ -51,7 +52,12 @@ export default function ActionSignin(props: {
     return <LoadingScreen />;
   } else if (!error) {
     message.success("ログインに成功しました");
-    history.push(routeBuilder.topPath());
+    if (props.continueUrl) {
+      const uri = new URL(props.continueUrl);
+      history.push(uri.pathname);
+    } else {
+      history.push(routeBuilder.topPath());
+    }
   } else {
     return (
       <>
