@@ -54,7 +54,7 @@ export default function ActionSignin(props: {
     message.success("ログインに成功しました");
     if (props.continueUrl) {
       const uri = new URL(props.continueUrl);
-      history.push(uri.pathname);
+      history.push(uri.pathname + uri.search);
     } else {
       history.push(routeBuilder.topPath());
     }
