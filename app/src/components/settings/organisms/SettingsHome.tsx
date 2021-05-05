@@ -2,7 +2,7 @@ import SubTitle from "components/common/atoms/SubTitle";
 import Title from "components/common/atoms/Title";
 import { useModal } from "hooks/CommonHooks";
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "hooks/UserHooks";
 import SettingsUpdateEmail from "./SettingsUpdateEmail";
 import SettingsUpdatePassword from "./SettingsUpdatePassword";
@@ -10,9 +10,83 @@ import SettingsHomeLink from "./SettingsHomeLink";
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import { Alert, Button } from "antd";
 import SettingsHomeRemove from "./SettingsHomeRemove";
+import firebase from "libs/Firebase";
+import SettingsHomeAuthPassword from "./SettingsHomeAuthPassword";
+import SettingsHomeAuthPasswordless from "./SettingsHomeAuthPasswordless";
+import SettingsHomeAuthOauth from "./SettingsHomeAuthOauth";
+
+const useUserSetting = () => {
+  const user = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isProviderEmailLink, setIsProviderEmailLink] = useState(false);
+  const [isProviderPassword, setIsProviderPassword] = useState(false);
+  const [isProviderGoogle, setIsProviderGoogle] = useState(false);
+  const [isLoadingPasswordProvider, setIsLoadingPasswordProvider] = useState(
+    true
+  );
+  const [isLoadingOauthProvider, setIsLoadingOauthProvider] = useState(true);
+  useEffect(() => {
+    // アカウントがemail linkかemail passwordか判断
+    if (user.currentUser?.email) {
+      firebase
+        .auth()
+        .fetchSignInMethodsForEmail(user.currentUser.email)
+        .then((signInMethods) => {
+          if (
+            signInMethods.indexOf(
+              firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD
+            ) != -1
+          ) {
+            setIsProviderPassword(true);
+          }
+          if (
+            signInMethods.indexOf(
+              firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
+            ) != -1
+          ) {
+            setIsProviderEmailLink(true);
+          }
+        })
+        .then(() => {
+          // passwordプロバイダーのロードが完了
+          setIsLoadingPasswordProvider(false);
+        });
+    }
+  }, [user.currentUser]);
+  useEffect(() => {
+    // Googleプロバイダーを使っているか確認
+    if (!user.isLoading) {
+      const googleProvider =
+        user.currentUser?.providerData.find((provider) => {
+          return provider?.providerId === "google.com";
+        }) || null;
+      setIsProviderGoogle(googleProvider !== null);
+      setIsLoadingOauthProvider(false);
+    }
+  }, [user]);
+  useEffect(() => {
+    // 両方のロードが完了した場合、ロード完了(false)を返す。
+    setIsLoading(
+      !(isLoadingPasswordProvider === false && isLoadingOauthProvider === false)
+    );
+  }, [isLoadingOauthProvider, isLoadingPasswordProvider]);
+  return {
+    currentUser: user.currentUser,
+    isLoading,
+    isProviderEmailLink,
+    isProviderPassword,
+    isProviderGoogle,
+  };
+};
 
 export default function SettingsHome() {
-  const { currentUser, isLoading } = useUser();
+  const {
+    currentUser,
+    isLoading,
+    isProviderEmailLink,
+    isProviderPassword,
+    isProviderGoogle,
+  } = useUserSetting();
   const modalPassword = useModal();
   const modalEmail = useModal();
   const modalRemove = useModal();
@@ -27,51 +101,13 @@ export default function SettingsHome() {
     }) || null;
   return (
     <>
-      <Title>設定</Title>
-      <SubTitle>認証情報</SubTitle>
-      {!passwordProvider ? (
-        <Alert
-          message="情報の変更について"
-          description="Emailアカウントを設定していない場合はメールアドレスとパスワードを変更することができません。通知先の変更などでメールアドレスを変更する必要がある場合はEmailアカウントの設定を行ってください。"
-          type="info"
-          showIcon
-        />
+      {isProviderPassword ? (
+        <SettingsHomeAuthPassword user={currentUser} />
       ) : null}
-      <SeparatedTableStyle>
-        <tr>
-          <td>
-            {passwordProvider ? (
-              <Button type="primary" onClick={modalEmail.handleOpen}>
-                変更
-              </Button>
-            ) : (
-              <Button type="primary" disabled>
-                変更
-              </Button>
-            )}
-          </td>
-          <td>メールアドレス</td>
-          <td>{`${currentUser?.email || ""}(${
-            currentUser?.emailVerified ? "確認済み" : "未確認"
-          })`}</td>
-        </tr>
-        <tr>
-          <td>
-            {passwordProvider ? (
-              <Button type="primary" onClick={modalPassword.handleOpen}>
-                変更
-              </Button>
-            ) : (
-              <Button type="primary" disabled>
-                変更
-              </Button>
-            )}
-          </td>
-          <td>パスワード</td>
-          <td>********</td>
-        </tr>
-      </SeparatedTableStyle>
-
+      {isProviderEmailLink ? (
+        <SettingsHomeAuthPasswordless user={currentUser} />
+      ) : null}
+      {isProviderGoogle ? <SettingsHomeAuthOauth user={currentUser} /> : null}
       <SettingsHomeLink user={currentUser} />
       <SubTitle>アカウント削除</SubTitle>
       <Button type="primary" danger onClick={modalRemove.handleOpen}>
@@ -96,9 +132,3 @@ export default function SettingsHome() {
     </>
   );
 }
-
-const SeparatedTableStyle = styled.table({
-  borderCollapse: "separate",
-  borderSpacing: "15px 0",
-  // border-collapse:separate;
-});
