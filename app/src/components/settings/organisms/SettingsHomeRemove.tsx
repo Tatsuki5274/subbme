@@ -49,13 +49,11 @@ export default function SettingsHomeRemove(props: {
 
 function PasswordForm(props: { user: firebase.User; handleClose: () => void }) {
   type FormType = {
-    providerId: string;
     password: string;
   };
   const history = useHistory();
   const [form] = useForm<FormType>();
   const initialValues: FormType = {
-    providerId: "",
     password: "",
   };
   const onClickRemove = async (values: FormType) => {
@@ -96,17 +94,6 @@ function PasswordForm(props: { user: firebase.User; handleClose: () => void }) {
         type="error"
         showIcon
       />
-      <Form.Item name="providerId" label="認証プロバイダー">
-        <Radio.Group>
-          <Radio value={`${ProvidersEnum.Email}-password`}>
-            Emailアカウント(パスワード)
-          </Radio>
-          <Radio value={`${ProvidersEnum.Email}-passwordless`}>
-            Emailアカウント(パスワードレス)
-          </Radio>
-          <Radio value={ProvidersEnum.Google}>Google</Radio>
-        </Radio.Group>
-      </Form.Item>
       <Form.Item label="現在のパスワード" name="password">
         <Input type="password" />
       </Form.Item>
