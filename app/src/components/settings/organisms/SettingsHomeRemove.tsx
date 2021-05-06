@@ -1,17 +1,8 @@
 import { FrownOutlined } from "@ant-design/icons";
-import {
-  Alert,
-  Button,
-  Form,
-  Input,
-  message,
-  Modal,
-  Radio,
-  RadioChangeEvent,
-} from "antd";
+import { Alert, Button, Form, Input, message, Modal, Radio, Tabs } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import AsyncButton from "components/common/atoms/AsyncButton";
-import React, { useState } from "react";
+import React from "react";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
 import { ProvidersEnum } from "libs/User";
@@ -26,13 +17,43 @@ export default function SettingsHomeRemove(props: {
   visible: boolean;
   handleClose: () => void;
 }) {
+  return (
+    <Modal
+      title="アカウントの削除"
+      visible={props.visible}
+      onCancel={props.handleClose}
+      // onOk={onClickOK}
+      // footer={[
+      //   <Button key="cancel">キャンセル</Button>,
+      //   <AsyncButton key="ok" type="primary" danger>
+      //     退会
+      //   </AsyncButton>,
+      // ]}
+      footer={null}
+    >
+      <p>設定済みの認証方法から選択してください</p>
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane tab="パスワードレス" key="1">
+          <PasswordlessForm user={props.user} handleClose={props.handleClose} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="パスワード" key="2">
+          <PasswordForm user={props.user} handleClose={props.handleClose} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Google" key="3">
+          <GoogleForm user={props.user} handleClose={props.handleClose} />
+        </Tabs.TabPane>
+      </Tabs>
+    </Modal>
+  );
+}
+
+function PasswordForm(props: { user: firebase.User; handleClose: () => void }) {
   type FormType = {
     providerId: string;
     password: string;
   };
-  const [form] = useForm<FormType>();
   const history = useHistory();
-  const [isEmailProvider, setIsEmailProvider] = useState(true);
+  const [form] = useForm<FormType>();
   const initialValues: FormType = {
     providerId: "",
     password: "",
@@ -62,7 +83,6 @@ export default function SettingsHomeRemove(props: {
       await props.user.delete();
       props.handleClose();
       form.resetFields();
-      setIsEmailProvider(true);
       history.push(routeBuilder.signInPath());
       message.success("退会処理が完了しました");
     } catch (e) {
@@ -77,33 +97,9 @@ export default function SettingsHomeRemove(props: {
     props.handleClose();
     form.resetFields();
   };
-  /**
-   * @description 退会に使う認証プロバイダーを変更した場合の処理
-   */
-  const onChangeProvider = (event: RadioChangeEvent) => {
-    const value = event.target.value;
-    const isEmail = value === `${ProvidersEnum.Email}-password`;
-    if (!isEmail) {
-      // Emailアカウント以外を設定した場合はフォームを削除する
-      form.setFieldsValue({ password: "" });
-    }
-    setIsEmailProvider(isEmail);
-  };
+
   return (
-    <Modal
-      title="アカウントの削除"
-      visible={props.visible}
-      onCancel={props.handleClose}
-      onOk={onClickOK}
-      footer={[
-        <Button key="cancel" onClick={onClickCancel}>
-          キャンセル
-        </Button>,
-        <AsyncButton key="ok" type="primary" danger onClick={onClickOK}>
-          退会
-        </AsyncButton>,
-      ]}
-    >
+    <Form initialValues={initialValues} form={form}>
       <Alert
         icon={<FrownOutlined />}
         message="警告"
@@ -111,24 +107,81 @@ export default function SettingsHomeRemove(props: {
         type="error"
         showIcon
       />
-      <Form initialValues={initialValues} form={form}>
-        <Form.Item name="providerId" label="認証プロバイダー">
-          <Radio.Group onChange={onChangeProvider}>
-            <Radio value={`${ProvidersEnum.Email}-password`}>
-              Emailアカウント(パスワード)
-            </Radio>
-            <Radio value={`${ProvidersEnum.Email}-passwordless`}>
-              Emailアカウント(パスワードレス)
-            </Radio>
-            <Radio value={ProvidersEnum.Google}>Google</Radio>
-          </Radio.Group>
-        </Form.Item>
-        {isEmailProvider ? (
-          <Form.Item label="現在のパスワード" name="password">
-            <Input type="password" disabled={!isEmailProvider} />
-          </Form.Item>
-        ) : null}
-      </Form>
-    </Modal>
+      <Form.Item name="providerId" label="認証プロバイダー">
+        <Radio.Group>
+          <Radio value={`${ProvidersEnum.Email}-password`}>
+            Emailアカウント(パスワード)
+          </Radio>
+          <Radio value={`${ProvidersEnum.Email}-passwordless`}>
+            Emailアカウント(パスワードレス)
+          </Radio>
+          <Radio value={ProvidersEnum.Google}>Google</Radio>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item label="現在のパスワード" name="password">
+        <Input type="password" />
+      </Form.Item>
+      <Button key="cancel" onClick={onClickCancel}>
+        キャンセル
+      </Button>
+      <AsyncButton key="ok" type="primary" danger onClick={onClickOK}>
+        退会
+      </AsyncButton>
+    </Form>
+  );
+}
+
+function PasswordlessForm(props: {
+  user: firebase.User;
+  handleClose: () => void;
+}) {
+  const onClickCancel = () => {
+    props.handleClose();
+  };
+  const onClickOK = () => {
+    console.log("OK");
+  };
+  return (
+    <>
+      <Alert
+        icon={<FrownOutlined />}
+        message="注意"
+        description="アカウントの削除をするために確認メールを送信します。この操作ではアカウントは削除されません。"
+        type="warning"
+        showIcon
+      />
+      <Button key="cancel" onClick={onClickCancel}>
+        キャンセル
+      </Button>
+      <AsyncButton key="ok" type="default" danger onClick={onClickOK}>
+        退会確認メール送信
+      </AsyncButton>
+    </>
+  );
+}
+
+function GoogleForm(props: { user: firebase.User; handleClose: () => void }) {
+  const onClickCancel = () => {
+    props.handleClose();
+  };
+  const onClickOK = () => {
+    console.log("OK");
+  };
+  return (
+    <>
+      <Alert
+        icon={<FrownOutlined />}
+        message="警告"
+        description="Googleアカウントの認証を行います。認証完了後は確認無しでアカウントが削除されます。"
+        type="error"
+        showIcon
+      />
+      <Button key="cancel" onClick={onClickCancel}>
+        キャンセル
+      </Button>
+      <AsyncButton key="ok" type="primary" danger onClick={onClickOK}>
+        退会
+      </AsyncButton>
+    </>
   );
 }

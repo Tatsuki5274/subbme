@@ -21,6 +21,8 @@ export default function SettingsHomeAuthPasswordless(props: {
     const modal = query.get("modal");
     if (modal === "mail") {
       modalEmail.handleOpen();
+    } else if (modal === "remove") {
+      modalRemove.handleOpen();
     }
   }, []);
 
@@ -81,12 +83,12 @@ export default function SettingsHomeAuthPasswordless(props: {
           })`}</td>
         </tr>
       </SeparatedTableStyle>
-      <SettingsUpdateEmail
+      <UpdateEmailModal
         user={props.user}
         visible={modalEmail.isVisible}
         handleClose={modalEmail.handleClose}
       />
-      <SettingsRemove
+      <RemoveModal
         user={props.user}
         visible={modalRemove.isVisible}
         handleClose={modalRemove.handleClose}
@@ -100,7 +102,7 @@ const SeparatedTableStyle = styled.table({
   borderSpacing: "15px 0",
 });
 
-function SettingsUpdateEmail(props: {
+function UpdateEmailModal(props: {
   user: firebase.User;
   visible: boolean;
   handleClose: () => void;
@@ -175,14 +177,45 @@ function SettingsUpdateEmail(props: {
   );
 }
 
-function SettingsRemove(props: {
+function RemoveModal(props: {
   user: firebase.User;
   visible: boolean;
   handleClose: () => void;
 }) {
+  const onClickCancel = () => {
+    props.handleClose();
+  };
+  const onClickOK = async () => {
+    try {
+      await props.user.delete();
+    } catch (e) {
+      message.error(messageAuth(e));
+    }
+  };
+  // 再認証後の退会モーダル
   return (
-    <Modal visible={props.visible} onCancel={props.handleClose}>
-      test
+    <Modal
+      title="アカウントの削除"
+      visible={props.visible}
+      onCancel={props.handleClose}
+      footer={[
+        <Button key="cancel" type="primary" onClick={onClickCancel}>
+          キャンセル
+        </Button>,
+        <Popconfirm
+          key="ok"
+          title="アカウントを削除します。この操作は取り消せません。"
+          onConfirm={onClickOK}
+          okText="Yes"
+          cancelText="No"
+        >
+          <AsyncButton type="primary" danger>
+            アカウントの削除
+          </AsyncButton>
+        </Popconfirm>,
+      ]}
+    >
+      アカウントを削除します。この操作は取り消すことができません。よろしければ削除を選択して続行してください。
     </Modal>
   );
 }
