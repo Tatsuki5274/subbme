@@ -67,19 +67,8 @@ function PasswordForm(props: { user: firebase.User; handleClose: () => void }) {
         props.user.email,
         values.password
       );
-      if (values.providerId === `${ProvidersEnum.Email}-password`) {
-        // Emailアカウント認証の場合
-        await props.user.reauthenticateWithCredential(credential);
-      } else if (values.providerId === `${ProvidersEnum.Email}-passwordless`) {
-        // Todo パスワードレスの退会確認メール送信処理
-      } else if (values.providerId === ProvidersEnum.Google) {
-        // Googleアカウント認証の場合
-        const provider = new firebase.auth.GoogleAuthProvider();
-        await props.user.reauthenticateWithPopup(provider);
-      } else {
-        // 存在しないProviderの場合
-        throw new Error("不明な認証プロバイダーが選択されています");
-      }
+      await props.user.reauthenticateWithCredential(credential);
+
       await props.user.delete();
       props.handleClose();
       form.resetFields();
@@ -161,11 +150,17 @@ function PasswordlessForm(props: {
 }
 
 function GoogleForm(props: { user: firebase.User; handleClose: () => void }) {
+  const history = useHistory();
   const onClickCancel = () => {
     props.handleClose();
   };
-  const onClickOK = () => {
-    console.log("OK");
+  const onClickOK = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await props.user.reauthenticateWithPopup(provider);
+    await props.user.delete();
+    props.handleClose();
+    history.push(routeBuilder.signInPath());
+    message.success("退会処理が完了しました");
   };
   return (
     <>
