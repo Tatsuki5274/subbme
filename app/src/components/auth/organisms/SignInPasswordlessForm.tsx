@@ -1,4 +1,4 @@
-import { Form, Input, Button, message, Checkbox } from "antd";
+import { Form, Input, Button, message, Checkbox, Alert } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
 import firebase from "libs/Firebase";
@@ -100,9 +100,13 @@ export default function SignInPasswordlessForm() {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          認証送信
+          ログイン
         </Button>
       </Form.Item>
+      <Alert
+        type="info"
+        message="Googleアカウントでログインしたい方はサービス認証を選択してください"
+      />
     </Form>
   );
 }

@@ -26,10 +26,16 @@ export default function SignIn() {
       <Title>ログイン・新規登録</Title>
       <Tabs defaultActiveKey="1">
         <TabPane tab="安全な認証(推奨)" key="1">
-          <SubTitle>パスワードレス認証(推奨)</SubTitle>
-          <SignInPasswordlessForm />
-          <SubTitle>サービス認証</SubTitle>
-          <SignInServices />
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="パスワードレス認証(推奨)" key="1">
+              <SubTitle>パスワードレス認証</SubTitle>
+              <SignInPasswordlessForm />
+            </TabPane>
+            <TabPane tab="サービス認証" key="2">
+              <SubTitle>サービス認証</SubTitle>
+              <SignInServices />
+            </TabPane>
+          </Tabs>
         </TabPane>
         <TabPane tab="一般的な認証" key="2">
           <Tabs defaultActiveKey="1">
