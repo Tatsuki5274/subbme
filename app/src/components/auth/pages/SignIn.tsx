@@ -11,6 +11,7 @@ import OSignUpForm from "../organisms/SignUpForm";
 import SignInPasswordlessForm from "../organisms/SignInPasswordlessForm";
 import SignInServices from "../organisms/SignInServices";
 import SignInForgetPassword from "../organisms/SignInForgetPassword";
+import { Tooltip } from "@material-ui/core";
 
 const { TabPane } = Tabs;
 
@@ -29,10 +30,16 @@ export default function SignIn() {
           <Tabs defaultActiveKey="1">
             <TabPane tab="パスワードレス認証(推奨)" key="1">
               <SubTitle>パスワードレス認証</SubTitle>
+              <Tooltip title="パスワードを使わない認証です。アカウント作成とログインはどちらもこの画面で行います。">
+                <LikeLinkStyle>パスワードレス認証とは？</LikeLinkStyle>
+              </Tooltip>
               <SignInPasswordlessForm />
             </TabPane>
             <TabPane tab="サービス認証" key="2">
               <SubTitle>サービス認証</SubTitle>
+              <Tooltip title="既存のサービスアカウントを用いる認証です。アカウント作成とログインはどちらもこの画面で行います。">
+                <LikeLinkStyle>サービス認証とは？</LikeLinkStyle>
+              </Tooltip>
               <SignInServices />
             </TabPane>
           </Tabs>
@@ -70,4 +77,8 @@ export default function SignIn() {
 const SubTitle = styled.div({
   fontSize: "26px",
   color: "#868E96",
+});
+
+const LikeLinkStyle = styled.span({
+  color: "#1890ff",
 });
