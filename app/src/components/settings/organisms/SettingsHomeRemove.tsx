@@ -114,8 +114,24 @@ function PasswordlessForm(props: {
   const onClickCancel = () => {
     props.handleClose();
   };
-  const onClickOK = () => {
-    console.log("OK");
+  const onClickOK = async () => {
+    if (!props.user.email) {
+      // ユーザーのemailが取得できない場合
+      throw new Error("User is not signedin.");
+    }
+    const uri = new URL(window.location.href);
+    const origin = uri.origin;
+    const actionCodeSettings = {
+      url: routeBuilder.settingsPath(origin) + "?modal=remove",
+      handleCodeInApp: true,
+    };
+    await firebase
+      .auth()
+      .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
+    window.localStorage.setItem("emailForSignIn", props.user.email);
+    message.info(
+      "認証メールを送信しました。リンク先からメールアドレスを変更してください"
+    );
   };
   return (
     <>

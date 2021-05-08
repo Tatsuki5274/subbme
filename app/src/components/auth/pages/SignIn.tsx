@@ -25,7 +25,7 @@ export default function SignIn() {
       <Title>ログイン</Title>
       <SubTitle>メールアドレスでログイン</SubTitle>
       <Tabs defaultActiveKey="1">
-        <TabPane tab="パスワードレス(推奨)" key="1">
+        <TabPane tab="パスワードレス" key="1">
           <SignInPasswordlessForm />
         </TabPane>
         <TabPane tab="パスワード" key="2">

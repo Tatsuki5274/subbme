@@ -188,6 +188,7 @@ function RemoveModal(props: {
   const onClickOK = async () => {
     try {
       await props.user.delete();
+      message.success("退会が完了しました");
     } catch (e) {
       message.error(messageAuth(e));
     }
