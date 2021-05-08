@@ -1,20 +1,25 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Checkbox } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
+import { routeBuilder } from "router";
 
 type FormType = {
   email: string;
+  isAgreePrivacyPolicy: boolean;
 };
 
 export default function SignInPasswordlessForm() {
   const [form] = useForm<FormType>();
+  // const agreement = localStorage.getItem("policyAgreement");
   const initialValues: FormType = {
     email: "",
+    isAgreePrivacyPolicy: true,
   };
   const onFinish = async (values: FormType) => {
     try {
+      // localStorage.setItem("policyAgreement", "true");
       const uri = new URL(window.location.href);
       const origin = uri.origin;
       const actionCodeSettings = {
@@ -63,7 +68,36 @@ export default function SignInPasswordlessForm() {
       >
         <Input type="email" />
       </Form.Item>
-
+      <Form.Item
+        label={
+          <>
+            <a
+              target="_blank"
+              href={routeBuilder.privacyPolicyPath()}
+              rel="noreferrer"
+            >
+              プライバシーポリシ
+            </a>
+            に同意する
+          </>
+        }
+        name="isAgreePrivacyPolicy"
+        valuePropName="checked"
+        rules={[
+          () => ({
+            validator(_, value) {
+              if (value === true) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error("プライバシーポリシへの同意が必要です")
+              );
+            },
+          }),
+        ]}
+      >
+        <Checkbox />
+      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           認証送信
