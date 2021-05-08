@@ -1,25 +1,17 @@
 import { Button } from "antd";
 import { useModal } from "hooks/CommonHooks";
 import React from "react";
-import { Link } from "react-router-dom";
-import { routeBuilder } from "router";
 import ResetPasswordForm from "./ResetPasswordForm";
 
-export default function SignInNewUser() {
+export default function SignInForgetPassword() {
   const modal = useModal();
   return (
     <>
-      <div>
-        初めてのご利用の方は
-        <Link to={routeBuilder.signUpPath()}>こちら</Link>
-      </div>
       <div>
         パスワードを忘れた方は
         <Button type="link" size="large" onClick={modal.handleOpen}>
           こちら
         </Button>
-        {/* <span onClick={modal.handleOpen}>こちら</span> */}
-        {/* <Link to={routeBuilder.resetPasword()}>こちら</Link> */}
       </div>
       <ResetPasswordForm
         visible={modal.isVisible}

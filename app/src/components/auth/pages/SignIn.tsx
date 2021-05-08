@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Alert, Tabs } from "antd";
 import Title from "components/common/atoms/Title";
 import SimpleHeader from "components/common/organisms/SimpleHeader";
 import { useUser } from "hooks/UserHooks";
@@ -7,9 +7,10 @@ import { Redirect } from "react-router";
 import { routeBuilder } from "router";
 import styled from "styled-components";
 import OSignInForm from "../organisms/SignInForm";
-import SignInNewUser from "../organisms/SignInNewUser";
+import OSignUpForm from "../organisms/SignUpForm";
 import SignInPasswordlessForm from "../organisms/SignInPasswordlessForm";
 import SignInServices from "../organisms/SignInServices";
+import SignInForgetPassword from "../organisms/SignInForgetPassword";
 
 const { TabPane } = Tabs;
 
@@ -22,19 +23,39 @@ export default function SignIn() {
   return (
     <>
       <SimpleHeader />
-      <Title>ログイン</Title>
-      <SubTitle>メールアドレスでログイン</SubTitle>
+      <Title>ログイン・新規登録</Title>
       <Tabs defaultActiveKey="1">
-        <TabPane tab="パスワードレス" key="1">
+        <TabPane tab="安全な認証(推奨)" key="1">
+          <SubTitle>パスワードレス認証(推奨)</SubTitle>
+          <SignInPasswordlessForm />
+          <SubTitle>サービス認証</SubTitle>
+          <SignInServices />
+        </TabPane>
+        <TabPane tab="一般的な認証" key="2">
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="ログイン" key="1">
+              <OSignInForm />
+              <SignInForgetPassword />
+            </TabPane>
+            <TabPane tab="新規登録" key="2">
+              <Alert
+                message="セキュリティ警告"
+                description="パスワードによる認証は推奨されません。リスクを理解している上で適切な管理ができる場合のみご利用ください。"
+                type="warning"
+                showIcon
+                closable
+              />
+              <OSignUpForm />
+            </TabPane>
+          </Tabs>
+        </TabPane>
+        {/* <TabPane tab="パスワードレス" key="3">
           <SignInPasswordlessForm />
         </TabPane>
-        <TabPane tab="パスワード" key="2">
+        <TabPane tab="パスワード" key="4">
           <OSignInForm />
-        </TabPane>
+        </TabPane> */}
       </Tabs>
-      <SignInNewUser />
-      <SubTitle>サービスでログイン</SubTitle>
-      <SignInServices />
       {/* <Footer /> */}
     </>
   );
