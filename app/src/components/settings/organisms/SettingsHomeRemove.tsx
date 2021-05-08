@@ -1,11 +1,10 @@
 import { FrownOutlined } from "@ant-design/icons";
-import { Alert, Button, Form, Input, message, Modal, Radio, Tabs } from "antd";
+import { Alert, Button, Form, Input, message, Modal, Tabs } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import React from "react";
 import firebase from "libs/Firebase";
 import { messageAuth } from "common/lang";
-import { ProvidersEnum } from "libs/User";
 import { useHistory } from "react-router";
 import { routeBuilder } from "router";
 
