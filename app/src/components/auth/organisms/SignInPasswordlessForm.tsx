@@ -64,7 +64,6 @@ export default function SignInPasswordlessForm() {
           { required: true, message: "入力が必須です" },
           { type: "email", message: "正しい形式で入力してください" },
         ]}
-        tooltip="アカウントを作成済み場合は、ログインを行います。未作成の場合はアカウントを作成します。認証時は登録メールアドレス宛に認証リクエストが送信されます。パスワードの登録は必要ありません。"
       >
         <Input type="email" />
       </Form.Item>

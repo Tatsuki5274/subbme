@@ -1,5 +1,6 @@
 import { Button, Checkbox, Form, message, Radio } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import { messageAuth } from "common/lang";
 import firebase from "libs/Firebase";
 import React from "react";
 import { useHistory } from "react-router";
@@ -14,7 +15,7 @@ export default function SignInServices() {
   const history = useHistory();
   const [form] = useForm<FormType>();
   const initialValues: FormType = {
-    provider: "google",
+    provider: "",
     isAgreePrivacyPolicy: true,
   };
   const google = () => {
@@ -35,21 +36,30 @@ export default function SignInServices() {
       });
   };
   const onFinish = (values: FormType) => {
-    switch (values.provider) {
-      case "google":
-        google();
-        break;
-      default:
-        throw new Error("不明なプロバイダーが選択されています");
+    try {
+      switch (values.provider) {
+        case "google":
+          google();
+          break;
+        default:
+          throw new Error("不明なプロバイダーが選択されています");
+      }
+    } catch (e) {
+      message.error(messageAuth(e));
     }
   };
   return (
     <Form form={form} onFinish={onFinish} initialValues={initialValues}>
-      <Radio.Group name="provider">
-        <Radio value="google">
-          <ServiceGoogle />
-        </Radio>
-      </Radio.Group>
+      <Form.Item
+        name="provider"
+        rules={[{ required: true, message: "プロバイダーを選択してください" }]}
+      >
+        <Radio.Group>
+          <Radio value="google">
+            <ServiceGoogle />
+          </Radio>
+        </Radio.Group>
+      </Form.Item>
       <Form.Item
         label={
           <>
@@ -81,7 +91,9 @@ export default function SignInServices() {
         <Checkbox />
       </Form.Item>
       <div>
-        <Button type="primary">ログイン</Button>
+        <Button type="primary" htmlType="submit">
+          ログイン
+        </Button>
       </div>
     </Form>
   );
