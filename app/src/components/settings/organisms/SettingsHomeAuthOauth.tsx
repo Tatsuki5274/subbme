@@ -19,19 +19,12 @@ export default function SettingsHomeAuthOauth(props: { user: firebase.User }) {
               変更
             </Button>
           </td>
-          <td>メールアドレス</td>
-          <td>{`${props.user.email || ""}(${
-            props.user.emailVerified ? "確認済み" : "未確認"
-          })`}</td>
-        </tr>
-        <tr>
           <td>
-            <Button type="primary" disabled>
-              変更
-            </Button>
+            <div>メールアドレス</div>
+            <div>{`${props.user.email || ""}(${
+              props.user.emailVerified ? "確認済み" : "未確認"
+            })`}</div>
           </td>
-          <td>パスワード</td>
-          <td>********</td>
         </tr>
       </SeparatedTableStyle>
     </>

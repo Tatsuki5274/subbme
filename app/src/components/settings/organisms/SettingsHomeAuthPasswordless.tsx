@@ -60,8 +60,10 @@ export default function SettingsHomeAuthPasswordless(props: {
               変更
             </Button>
           </td>
-          <td>パスワードタイプ</td>
-          <td>パスワードレス</td>
+          <td>
+            <div>パスワードタイプ</div>
+            <div>パスワードレス</div>
+          </td>
         </tr>
         <tr>
           <td>
@@ -77,10 +79,13 @@ export default function SettingsHomeAuthPasswordless(props: {
               変更
             </Button> */}
           </td>
-          <td>メールアドレス</td>
-          <td>{`${props.user.email || ""}(${
-            props.user.emailVerified ? "確認済み" : "未確認"
-          })`}</td>
+          <td>
+            <div>メールアドレス</div>
+            <div>{`${props.user.email || ""}(${
+              props.user.emailVerified ? "確認済み" : "未確認"
+            })`}</div>
+          </td>
+          <td></td>
         </tr>
       </SeparatedTableStyle>
       <UpdateEmailModal
