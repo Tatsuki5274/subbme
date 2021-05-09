@@ -1,42 +1,41 @@
 import LoadingScreen from "components/common/organisms/LoadingScreen";
 import PrivateRoute from "components/wrapper/PrivateRoute";
-import { useListService } from "hooks/ServiceHooks";
+import { Service } from "entities/Service";
 import { useUser } from "hooks/UserHooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ServiceDao } from "repositories/Services";
 import ReportNewTemplate from "../templates/ReportNewTemplate";
 
-// const mock = [
-//     {
-//         id: "1",
-//         costPerDay: 50,
-//         serviceName: "OO保険",
-//         categoryName: "保険"
-//     },
-//     {
-//         id: "2",
-//         costPerDay: 20,
-//         serviceName: "Onedrive",
-//         categoryName: "クラウドストレージ"
-//     },
-//     {
-//         id: "3",
-//         costPerDay: 100,
-//         serviceName: "Dropbox",
-//         categoryName: "クラウドストレージ"
-//     },
-//     {
-//         id: "4",
-//         costPerDay: 150,
-//         serviceName: "Netflix",
-//         categoryName: "動画オンデマンド"
-//     }
-// ];
+const useLocalQuery = (userID: string | null) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [serviceList, setServiceList] = useState<Service[] | null>(null);
+  useEffect(() => {
+    (async () => {
+      if (userID) {
+        try {
+          const sv = await ServiceDao.query((ref) =>
+            ref.where("userID", "==", userID).where("isArchived", "!=", true)
+          );
+          setServiceList(sv);
+        } catch (e) {
+          setServiceList(null);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    })();
+  }, [userID]);
+  return {
+    isLoading,
+    serviceList,
+  };
+};
 
 export default function ReportNew() {
   const { currentUser } = useUser();
-  const { serviceList } = useListService(currentUser?.uid);
+  const { isLoading, serviceList } = useLocalQuery(currentUser?.uid || null);
 
-  if (!serviceList) {
+  if (isLoading) {
     return <LoadingScreen />;
   }
 

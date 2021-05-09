@@ -10,10 +10,9 @@ export function useListService(userID?: string) {
     const fn = async () => {
       setIsLoading(true);
       if (userID) {
-        const data = await ServiceDao.query((ref) => {
-          const queryRef = ref.where("userID", "==", userID);
-          return queryRef;
-        });
+        const data = await ServiceDao.query((ref) =>
+          ref.where("userID", "==", userID)
+        );
         // const ref = getServiceR ef();
         // const query = await ref.where("userID", "==", userID);
         // const data = await listService(query);
