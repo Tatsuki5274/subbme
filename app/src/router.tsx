@@ -97,6 +97,12 @@ const Router = () => {
             component={MailActions}
           />
 
+          {/* <Route
+            exact
+            path={routeBuilder.mailLink(":action", ":id")}
+            component={LinkMail}
+          /> */}
+
           <Result404 />
         </Switch>
       </BrowserRouter>
@@ -150,6 +156,9 @@ export const routeBuilder = {
   settingMailPath: (host = "") => {
     return `${host}/settings/mail`;
   },
+  // mailLink: (action: string, id: string, host = "") => {
+  //   return `${host}/key/${action}/${id}`;
+  // },
   privacyPolicyPath: () => {
     const host = process.env.REACT_APP_WEB_HOST;
     return `${host}/privacy-policy`;

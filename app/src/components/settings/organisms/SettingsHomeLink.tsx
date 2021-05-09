@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "libs/Firebase";
 import AsyncButton from "components/common/atoms/AsyncButton";
-import { Button, Form, Input, message, Modal, Popconfirm } from "antd";
+import { Button, Form, Input, message, Modal, Popconfirm, Tabs } from "antd";
 import { messageAuth } from "common/lang";
 import { useModal } from "hooks/CommonHooks";
 import { useForm } from "antd/lib/form/Form";
@@ -10,6 +10,7 @@ import { useHistory } from "react-router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Tooltip } from "@material-ui/core";
 import { ProvidersEnum } from "libs/User";
+import { routeBuilder } from "router";
 
 export default function SettingsHomeLink(props: {
   user: firebase.User;
@@ -81,8 +82,8 @@ export default function SettingsHomeLink(props: {
                 <AsyncButton danger>連携解除</AsyncButton>{" "}
               </Popconfirm>
             ) : (
-              <AsyncButton type="primary" onClick={onClickGoogle}>
-                連携
+              <AsyncButton type="primary" onClick={onClickGoogle} disabled>
+                連携(調整中)
               </AsyncButton>
             )}
           </td>
@@ -98,9 +99,105 @@ export default function SettingsHomeLink(props: {
   );
 }
 
+/**
+ * @description Emailアカウント紐付けモーダル
+ */
 const PasswordProviderForm = (props: {
   user: firebase.User;
   isVisible: boolean;
+  handleClose: () => void;
+}) => {
+  return (
+    <Modal
+      visible={props.isVisible}
+      title="認証情報の追加"
+      onCancel={props.handleClose}
+      footer={null}
+    >
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane key="1" tab="パスワードレス(推奨)">
+          <PasswordlessForm user={props.user} handleClose={props.handleClose} />
+        </Tabs.TabPane>
+        <Tabs.TabPane key="2" tab="パスワード">
+          <PasswordForm user={props.user} handleClose={props.handleClose} />
+        </Tabs.TabPane>
+      </Tabs>
+    </Modal>
+  );
+};
+
+const PasswordlessForm = (props: {
+  user: firebase.User;
+  handleClose: () => void;
+}) => {
+  type FormType = {
+    email: string;
+  };
+  const [form] = useForm<FormType>();
+  const initialValues: FormType = {
+    email: "",
+  };
+  const onSubmit = async (values: FormType) => {
+    try {
+      if (!props.user.email) {
+        throw new Error("mail is undefined");
+      }
+      const uri = new URL(window.location.href);
+      const origin = uri.origin;
+      const actionCodeSettings = {
+        url: routeBuilder.settingsPath(origin),
+        // url: routeBuilder.mailLink("link", id, origin),
+        handleCodeInApp: true,
+      };
+      await firebase
+        .auth()
+        .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
+      window.localStorage.setItem("emailForSignIn", props.user.email);
+      message.info(
+        "認証メールを送信しました。リンク先から連携を確定してください。"
+      );
+      form.resetFields();
+      props.handleClose();
+    } catch (e) {
+      message.error(messageAuth(e));
+      console.error(e);
+    }
+  };
+  const onCancel = () => {
+    props.handleClose();
+    form.resetFields();
+  };
+  const onOK = async () => {
+    await form.validateFields();
+    await onSubmit(form.getFieldsValue());
+  };
+  return (
+    <Form form={form} initialValues={initialValues}>
+      <Form.Item
+        label="新しいメールアドレス"
+        name="email"
+        rules={[
+          { required: true, message: "入力が必須です" },
+          { type: "email", message: "メールアドレスの形式が異なります" },
+        ]}
+      >
+        <Input type="email" />
+      </Form.Item>
+      <Button key="cancel" onClick={onCancel}>
+        キャンセル
+      </Button>
+      <AsyncButton key="ok" type="primary" onClick={onOK}>
+        OK
+      </AsyncButton>
+    </Form>
+  );
+};
+
+/**
+ * @description パスワード認証追加フォーム
+ */
+const PasswordForm = (props: {
+  user: firebase.User;
   handleClose: () => void;
 }) => {
   type FormType = {
@@ -109,6 +206,7 @@ const PasswordProviderForm = (props: {
     passwordConfirm: string;
   };
   const [form] = useForm();
+  const minLengthPassword = 7;
   const onSubmit = async (values: FormType) => {
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
@@ -124,77 +222,68 @@ const PasswordProviderForm = (props: {
       message.error(messageAuth(e));
     }
   };
-  const onCancel = () => {
-    form.resetFields();
-    props.handleClose();
-  };
   const onOK = async () => {
     await form.validateFields();
     await onSubmit(form.getFieldsValue());
   };
-  const minLengthPassword = 7;
+  const onCancel = () => {
+    props.handleClose();
+    form.resetFields();
+  };
+
   return (
-    <Modal
-      visible={props.isVisible}
-      title="認証情報の追加"
-      onOk={onOK}
-      onCancel={onCancel}
-      footer={[
-        <Button key="cancel" onClick={onCancel}>
-          キャンセル
-        </Button>,
-        <AsyncButton key="ok" type="primary" onClick={onOK}>
-          OK
-        </AsyncButton>,
-      ]}
-    >
-      <Form form={form}>
-        <Form.Item
-          label="新しいメールアドレス"
-          name="email"
-          rules={[
-            { required: true, message: "入力が必須です" },
-            { type: "email", message: "メールアドレスの形式が異なります" },
-          ]}
-        >
-          <Input type="email" />
-        </Form.Item>
-        <Form.Item
-          label="新しいパスワード"
-          name="password"
-          rules={[
-            { required: true, message: "入力が必須です" },
-            {
-              min: minLengthPassword,
-              message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+    <Form form={form}>
+      <Form.Item
+        label="新しいメールアドレス"
+        name="email"
+        rules={[
+          { required: true, message: "入力が必須です" },
+          { type: "email", message: "メールアドレスの形式が異なります" },
+        ]}
+      >
+        <Input type="email" />
+      </Form.Item>
+      <Form.Item
+        label="新しいパスワード"
+        name="password"
+        rules={[
+          { required: true, message: "入力が必須です" },
+          {
+            min: minLengthPassword,
+            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+          },
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Form.Item
+        label="新しいパスワード確認"
+        name="passwordConfirm"
+        rules={[
+          { required: true, message: "入力が必須です" },
+          {
+            min: minLengthPassword,
+            message: `パスワードは最低${minLengthPassword}文字以上必要です`,
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (value === getFieldValue("password")) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error("パスワードが異なります"));
             },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
-          label="新しいパスワード確認"
-          name="passwordConfirm"
-          rules={[
-            { required: true, message: "入力が必須です" },
-            {
-              min: minLengthPassword,
-              message: `パスワードは最低${minLengthPassword}文字以上必要です`,
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (value === getFieldValue("password")) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("パスワードが異なります"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-      </Form>
-    </Modal>
+          }),
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Button key="cancel" onClick={onCancel}>
+        キャンセル
+      </Button>
+      <AsyncButton key="ok" type="primary" onClick={onOK}>
+        OK
+      </AsyncButton>
+    </Form>
   );
 };
 

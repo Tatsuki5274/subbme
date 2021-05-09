@@ -102,10 +102,6 @@ export default function SignInPasswordlessForm() {
           ログイン
         </Button>
       </Form.Item>
-      <Alert
-        type="info"
-        message="Googleアカウントでログインしたい方はサービス認証を選択してください"
-      />
     </Form>
   );
 }

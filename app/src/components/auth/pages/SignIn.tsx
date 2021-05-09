@@ -34,8 +34,12 @@ export default function SignIn() {
                 <LikeLinkStyle>パスワードレス認証とは？</LikeLinkStyle>
               </Tooltip>
               <SignInPasswordlessForm />
+              {/* <Alert
+                type="info"
+                message="Googleアカウントでログインしたい方はサービス認証を選択してください"
+              /> */}
             </TabPane>
-            <TabPane tab="サービス認証" key="2">
+            <TabPane tab="サービス認証(調整中)" key="2" disabled>
               <SubTitle>サービス認証</SubTitle>
               <Tooltip title="既存のサービスアカウントを用いる認証です。アカウント作成とログインはどちらもこの画面で行います。">
                 <LikeLinkStyle>サービス認証とは？</LikeLinkStyle>
