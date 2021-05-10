@@ -29,7 +29,7 @@ export default function ServiceListFunction(props: PropsType) {
       value: "cost",
     },
     {
-      display: "新しい準",
+      display: "新しい順",
       value: "new",
     },
   ];
