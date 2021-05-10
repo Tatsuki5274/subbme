@@ -11,7 +11,7 @@ export function useListService(userID?: string) {
       setIsLoading(true);
       if (userID) {
         const data = await ServiceDao.query((ref) =>
-          ref.where("userID", "==", userID)
+          ref.where("userID", "==", userID).orderBy("createdAt", "desc")
         );
         // const ref = getServiceR ef();
         // const query = await ref.where("userID", "==", userID);
