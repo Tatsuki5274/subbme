@@ -33,6 +33,7 @@ const useLocalQuery = (userID: string | null) => {
           const rp = await ReportDao.query((ref) =>
             ref
               .where("userID", "==", userID)
+              .orderBy("createdAt", "desc")
               .where("createdAt", ">=", start)
               .where("createdAt", "<", end)
           );

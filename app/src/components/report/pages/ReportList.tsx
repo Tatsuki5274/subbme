@@ -19,7 +19,9 @@ const useReport = (uid: string | null) => {
       let result: Report[] | null = null;
       if (uid) {
         // 文字が入力された場合はユーザーIDとして解釈する
-        result = await ReportDao.query((ref) => ref.where("userID", "==", uid));
+        result = await ReportDao.query((ref) =>
+          ref.where("userID", "==", uid).orderBy("createdAt", "desc")
+        );
         setIsLoading(false);
         if (result && result?.length > 0) {
           setReportList(result);
