@@ -1,4 +1,4 @@
-import { Form, Input, Button, message, Checkbox, Alert } from "antd";
+import { Form, Input, Button, message, Checkbox } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
 import firebase from "libs/Firebase";

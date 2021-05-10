@@ -151,8 +151,8 @@ const PasswordlessForm = (props: {
       };
       await firebase
         .auth()
-        .sendSignInLinkToEmail(props.user.email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", props.user.email);
+        .sendSignInLinkToEmail(values.email, actionCodeSettings);
+      window.localStorage.setItem("emailForSignIn", values.email);
       message.info(
         "認証メールを送信しました。リンク先から連携を確定してください。"
       );
@@ -160,7 +160,6 @@ const PasswordlessForm = (props: {
       props.handleClose();
     } catch (e) {
       message.error(messageAuth(e));
-      console.error(e);
     }
   };
   const onCancel = () => {
