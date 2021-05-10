@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "Report",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "Service",
       "queryScope": "COLLECTION",
       "fields": [
