@@ -1,3 +1,4 @@
+import { logDocument } from "libs/Analytics";
 import { Service, ServiceUnitEnum, ServiceUnitType } from "../entities/Service";
 import {
   db,
@@ -5,6 +6,8 @@ import {
   FirebaseCollectionReferenceType,
 } from "../libs/Types";
 import { DaoBase, DaoType } from "./_Common";
+
+const analyticsType = "Service";
 
 export const ServiceDao: DaoType<Service> = {
   /**
@@ -15,6 +18,7 @@ export const ServiceDao: DaoType<Service> = {
   async get(id: string): Promise<Service | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.get<Service>(ref, id);
+    logDocument.read(analyticsType, [result]);
     return result;
   },
   /**
@@ -24,6 +28,7 @@ export const ServiceDao: DaoType<Service> = {
   async set(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.set(ref, arg);
+    logDocument.write(analyticsType);
     return result;
   },
   /**
@@ -34,6 +39,7 @@ export const ServiceDao: DaoType<Service> = {
   async add(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.add(ref, arg);
+    logDocument.write(analyticsType);
     return result;
   },
   /**
@@ -45,6 +51,9 @@ export const ServiceDao: DaoType<Service> = {
   ): Promise<Service[] | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.query<Service>(ref, where);
+    if (result) {
+      logDocument.read(analyticsType, result);
+    }
     return result;
   },
   /**
@@ -54,6 +63,7 @@ export const ServiceDao: DaoType<Service> = {
   async delete(id: string): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.delete(ref, id);
+    logDocument.delete(analyticsType);
     return result;
   },
   /**
@@ -63,6 +73,7 @@ export const ServiceDao: DaoType<Service> = {
   async update(arg: Service): Promise<string | null> {
     const ref = db.collection("Service");
     const result = await DaoBase.update(ref, arg);
+    logDocument.write(analyticsType);
     return result;
   },
 };
