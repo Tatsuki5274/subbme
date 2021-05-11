@@ -4,19 +4,17 @@ import React from "react";
 import { getServiceUnitString } from "repositories/Services";
 const { Option } = Select;
 
-// export type ServiceListFunctionType = {
-//     serviceName: string
-//     planName: string
-//     unit: string
-//     unitTerm: string
-//     costPerDay: number
-//     currency: string
-// }
-
 type PropsType = {
   setUnit: React.Dispatch<React.SetStateAction<ServiceUnitType>>;
   serviceList: Service[] | null;
   setServiceList: React.Dispatch<React.SetStateAction<Service[] | null>>;
+};
+
+export const ServiceOrderByCreatedAtDesc = (a: Service, b: Service) => {
+  return a.createdAt && b.createdAt && a.createdAt < b.createdAt ? 1 : -1;
+};
+export const ServiceOrderByCostDesc = (a: Service, b: Service) => {
+  return a.costPerDay && b.costPerDay && a.costPerDay < b.costPerDay ? 1 : -1;
 };
 
 /**
@@ -54,20 +52,10 @@ export default function ServiceListFunction(props: PropsType) {
           const serviceList = props.serviceList;
           switch (value) {
             case "new":
-              serviceList?.sort((a, b) => {
-                return a.createdAt && b.createdAt && a.createdAt < b.createdAt
-                  ? 1
-                  : -1;
-              });
+              serviceList?.sort(ServiceOrderByCreatedAtDesc);
               break;
             case "cost":
-              serviceList?.sort((a, b) => {
-                return a.costPerDay &&
-                  b.costPerDay &&
-                  a.costPerDay < b.costPerDay
-                  ? 1
-                  : -1;
-              });
+              serviceList?.sort(ServiceOrderByCostDesc);
           }
           if (serviceList) {
             props.setServiceList(serviceList.concat());

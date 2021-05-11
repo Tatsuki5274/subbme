@@ -80,16 +80,6 @@ export default function ServiceList() {
   }
   return (
     <>
-      {/* <button
-            onClick={()=>{
-                serviceList?.sort((a, b) => {
-                    return a.costPerDay && b.costPerDay && (a.costPerDay > b.costPerDay) ? 1 : -1;
-                })
-                if(serviceList){
-                    setServiceList(serviceList.concat());
-                }
-            }}
-        >そーと</button> */}
       <PrivateRoute>
         <ServiceListTemplate
           formattedTotalCost={`${"¥"}${Math.round(

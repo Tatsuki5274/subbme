@@ -23,20 +23,6 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "costPerDay",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "Service",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "userID",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "isArchived",
           "order": "ASCENDING"
         }

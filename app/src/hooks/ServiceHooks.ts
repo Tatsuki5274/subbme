@@ -1,3 +1,4 @@
+import { ServiceOrderByCostDesc } from "components/service/organisms/ServiceListFunction";
 import { Service } from "entities/Service";
 import { useEffect, useState } from "react";
 import { ServiceDao } from "repositories/Services";
@@ -11,8 +12,10 @@ export function useListService(userID?: string) {
       setIsLoading(true);
       if (userID) {
         const data = await ServiceDao.query((ref) =>
-          ref.where("userID", "==", userID).orderBy("costPerDay", "desc")
+          ref.where("userID", "==", userID)
         );
+        data?.sort(ServiceOrderByCostDesc);
+
         // const ref = getServiceR ef();
         // const query = await ref.where("userID", "==", userID);
         // const data = await listService(query);
