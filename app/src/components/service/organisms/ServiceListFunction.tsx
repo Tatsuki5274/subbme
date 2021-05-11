@@ -1,7 +1,7 @@
 import { Form, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
-import React from "react";
+import React, { useEffect } from "react";
 import { getServiceUnitString } from "repositories/Services";
 const { Option } = Select;
 
@@ -28,6 +28,7 @@ export default function ServiceListFunction(props: PropsType) {
   type FormType = {
     order: string;
     unit: string;
+    archive: "except" | "include" | "only";
   };
   const [form] = useForm<FormType>();
   const sortSelection = [
@@ -43,10 +44,11 @@ export default function ServiceListFunction(props: PropsType) {
   const initialValues: FormType = {
     order: "cost",
     unit: ServiceUnitEnum.Month,
+    archive: "except",
   };
   const onChange = (values: FormType) => {
     props.setUnit(values.unit as ServiceUnitType);
-    const serviceList = props.serviceList;
+    let serviceList = props.serviceList;
     switch (values.order) {
       case "new":
         serviceList?.sort(ServiceOrderByCreatedAtDesc);
@@ -54,10 +56,24 @@ export default function ServiceListFunction(props: PropsType) {
       case "cost":
         serviceList?.sort(ServiceOrderByCostDesc);
     }
+
     if (serviceList) {
+      // アーカイブのフィルター
+      if (values.archive === "except") {
+        // アーカイブを除外する場合
+        serviceList = serviceList.filter((sv) => sv.isArchived !== true);
+      } else if (values.archive === "only") {
+        serviceList = serviceList.filter((sv) => sv.isArchived === true);
+      }
       props.setServiceList(serviceList.concat());
     }
   };
+
+  useEffect(() => {
+    // 初回ロード時に初期設定のフィルタを実行
+    onChange(form.getFieldsValue());
+  }, []);
+
   return (
     <Form
       form={form}
@@ -85,6 +101,20 @@ export default function ServiceListFunction(props: PropsType) {
               </Option>
             );
           })}
+        </Select>
+      </Form.Item>
+      <Form.Item label="アーカイブ" name="archive">
+        <Select onChange={() => onChange(form.getFieldsValue())}>
+          <Option key="except" value="except">
+            除外
+          </Option>
+          <Option key="only" value="only">
+            アーカイブのみ
+          </Option>
+          {/* アーカイブとの見分けをつけたら実装 */}
+          {/* <Option key="include" value="include">
+            全て
+          </Option> */}
         </Select>
       </Form.Item>
     </Form>
