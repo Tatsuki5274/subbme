@@ -62,7 +62,7 @@ export const categoryList: Category[] = [
     ],
   },
   {
-    value: "その他",
-    label: "その他",
+    value: "カスタム",
+    label: "カスタム",
   },
 ];

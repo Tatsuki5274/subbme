@@ -20,6 +20,8 @@ import {
 import { routeBuilder } from "router";
 import firebase from "libs/Firebase";
 import { listCategories } from "repositories/Categories";
+import { useForm } from "antd/lib/form/Form";
+import { CascaderValueType } from "antd/lib/cascader";
 
 type FormType = {
   serviceName: string;
@@ -36,7 +38,9 @@ type FormType = {
 export default function ServiceCreateForm() {
   const { currentUser, isSignedIn } = useUser();
   const history = useHistory();
+  const [form] = useForm<FormType>();
   const [isCategoryRequest, setIsCategoryRequest] = useState(false);
+  const [isCustomCategory, setIsCustomCategory] = useState(false);
   const initialValues: FormType = {
     serviceName: "",
     planName: "",
@@ -92,8 +96,14 @@ export default function ServiceCreateForm() {
       message.error("失敗しました");
     }
   };
+  const onChangeCategory = (value: CascaderValueType) => {
+    // カスタムカテゴリの入力切り替え
+    let isCustom = false;
+    if (value[0] === "カスタム") isCustom = true;
+    setIsCustomCategory(isCustom);
+  };
   return (
-    <Form initialValues={initialValues} onFinish={onFinish}>
+    <Form initialValues={initialValues} onFinish={onFinish} form={form}>
       <Form.Item
         label="サービス名"
         name="serviceName"
@@ -121,16 +131,33 @@ export default function ServiceCreateForm() {
         {/* <Input /> */}
         <Cascader
           options={listCategories()}
-          // onChange={onChange}
+          onChange={onChangeCategory}
           placeholder="選択してください"
         />
       </Form.Item>
-      <Button
-        type="link"
-        onClick={() => setIsCategoryRequest(!isCategoryRequest)}
-      >
-        カテゴリがない場合
-      </Button>
+      {isCustomCategory ? (
+        <>
+          <Form.Item
+            label="カスタムカテゴリ"
+            labelCol={labelCol}
+            wrapperCol={wrapperCol}
+            tooltip="カスタムカテゴリは暫定処置です。カテゴリが揃い次第廃止されます。"
+          >
+            <Input
+              onChange={(e) => {
+                form.setFieldsValue({ category: ["カスタム", e.target.value] });
+              }}
+            />
+          </Form.Item>
+          <Button
+            type="link"
+            onClick={() => setIsCategoryRequest(!isCategoryRequest)}
+          >
+            カテゴリ追加リクエスト
+          </Button>
+        </>
+      ) : null}
+
       {isCategoryRequest ? (
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSdYxzVyE8Vzul_GD9LyINbviwVMrpT3veAPYk_bkwUZuhFRuQ/viewform?embedded=true"
