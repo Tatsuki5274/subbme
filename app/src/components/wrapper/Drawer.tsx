@@ -156,6 +156,10 @@ function DrawerContainer(props: PropsType) {
 
   return (
     <div className={classes.root}>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {props.children}
+      </main>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -211,10 +215,6 @@ function DrawerContainer(props: PropsType) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {props.children}
-      </main>
     </div>
   );
 }
