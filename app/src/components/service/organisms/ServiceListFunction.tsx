@@ -65,11 +65,8 @@ export default function ServiceListFunction(props: PropsType) {
       layout="inline"
       onChange={() => onChange(form.getFieldsValue())}
     >
-      <Form.Item name="unit">
-        <Select
-          defaultValue={ServiceUnitEnum.Month}
-          onChange={() => onChange(form.getFieldsValue())}
-        >
+      <Form.Item label="表示単位" name="unit">
+        <Select onChange={() => onChange(form.getFieldsValue())}>
           {Object.values(ServiceUnitEnum).map((unit) => {
             return (
               <Option key={unit} value={unit}>
@@ -79,11 +76,8 @@ export default function ServiceListFunction(props: PropsType) {
           })}
         </Select>
       </Form.Item>
-      <Form.Item name="order">
-        <Select
-          defaultValue={sortSelection[0].value}
-          onChange={() => onChange(form.getFieldsValue())}
-        >
+      <Form.Item label="表示順" name="order">
+        <Select onChange={() => onChange(form.getFieldsValue())}>
           {sortSelection.map((sel) => {
             return (
               <Option key={sel.value} value={sel.value}>
