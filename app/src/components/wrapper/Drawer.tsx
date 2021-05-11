@@ -156,34 +156,7 @@ function DrawerContainer(props: PropsType) {
 
   return (
     <div className={classes.root}>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {props.children}
-      </main>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={classes.appBar}
-        style={{
-          backgroundColor: "#5794C3",
-          zIndex: "auto",
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap style={{ color: "white" }}>
-            Subblish
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
@@ -215,6 +188,33 @@ function DrawerContainer(props: PropsType) {
           </Drawer>
         </Hidden>
       </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {props.children}
+      </main>
+      <AppBar
+        position="fixed"
+        className={classes.appBar}
+        style={{
+          backgroundColor: "#5794C3",
+          zIndex: "auto",
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap style={{ color: "white" }}>
+            Subblish
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
