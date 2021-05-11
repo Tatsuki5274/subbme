@@ -1,4 +1,5 @@
-import { Select } from "antd";
+import { Form, Input, Select, Space } from "antd";
+import { useForm } from "antd/lib/form/Form";
 import { Service, ServiceUnitEnum, ServiceUnitType } from "entities/Service";
 import React from "react";
 import { getServiceUnitString } from "repositories/Services";
@@ -14,13 +15,21 @@ export const ServiceOrderByCreatedAtDesc = (a: Service, b: Service) => {
   return a.createdAt && b.createdAt && a.createdAt < b.createdAt ? 1 : -1;
 };
 export const ServiceOrderByCostDesc = (a: Service, b: Service) => {
-  return a.costPerDay && b.costPerDay && a.costPerDay < b.costPerDay ? 1 : -1;
+  if (!a.costPerDay || !b.costPerDay) return 0; // 意図しない結果になりそう
+  if (a.costPerDay < b.costPerDay) return 1;
+  if (a.costPerDay > b.costPerDay) return -1;
+  return 0;
 };
 
 /**
  * @returns
  */
 export default function ServiceListFunction(props: PropsType) {
+  type FormType = {
+    order: string;
+    unit: string;
+  };
+  const [form] = useForm<FormType>();
   const sortSelection = [
     {
       display: "価格の高い順",
@@ -31,46 +40,59 @@ export default function ServiceListFunction(props: PropsType) {
       value: "new",
     },
   ];
+  const initialValues: FormType = {
+    order: "cost",
+    unit: ServiceUnitEnum.Month,
+  };
+  const onChange = (values: FormType) => {
+    props.setUnit(values.unit as ServiceUnitType);
+    const serviceList = props.serviceList;
+    switch (values.order) {
+      case "new":
+        serviceList?.sort(ServiceOrderByCreatedAtDesc);
+        break;
+      case "cost":
+        serviceList?.sort(ServiceOrderByCostDesc);
+    }
+    if (serviceList) {
+      props.setServiceList(serviceList.concat());
+    }
+  };
   return (
-    <>
-      <Select
-        onChange={(value) => {
-          props.setUnit(value);
-        }}
-        defaultValue={ServiceUnitEnum.Month}
-      >
-        {Object.values(ServiceUnitEnum).map((unit) => {
-          return (
-            <Option key={unit} value={unit}>
-              {getServiceUnitString(unit)}
-            </Option>
-          );
-        })}
-      </Select>
-      <Select
-        onChange={(value) => {
-          const serviceList = props.serviceList;
-          switch (value) {
-            case "new":
-              serviceList?.sort(ServiceOrderByCreatedAtDesc);
-              break;
-            case "cost":
-              serviceList?.sort(ServiceOrderByCostDesc);
-          }
-          if (serviceList) {
-            props.setServiceList(serviceList.concat());
-          }
-        }}
-        defaultValue={sortSelection[0].value}
-      >
-        {sortSelection.map((sel) => {
-          return (
-            <Option key={sel.value} value={sel.value}>
-              {sel.display}
-            </Option>
-          );
-        })}
-      </Select>
-    </>
+    <Form
+      form={form}
+      initialValues={initialValues}
+      layout="inline"
+      onChange={() => onChange(form.getFieldsValue())}
+    >
+      <Form.Item name="unit">
+        <Select
+          defaultValue={ServiceUnitEnum.Month}
+          onChange={() => onChange(form.getFieldsValue())}
+        >
+          {Object.values(ServiceUnitEnum).map((unit) => {
+            return (
+              <Option key={unit} value={unit}>
+                {getServiceUnitString(unit)}
+              </Option>
+            );
+          })}
+        </Select>
+      </Form.Item>
+      <Form.Item name="order">
+        <Select
+          defaultValue={sortSelection[0].value}
+          onChange={() => onChange(form.getFieldsValue())}
+        >
+          {sortSelection.map((sel) => {
+            return (
+              <Option key={sel.value} value={sel.value}>
+                {sel.display}
+              </Option>
+            );
+          })}
+        </Select>
+      </Form.Item>
+    </Form>
   );
 }
