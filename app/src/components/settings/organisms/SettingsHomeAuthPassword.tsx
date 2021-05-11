@@ -6,6 +6,7 @@ import { useForm } from "antd/lib/form/Form";
 import { messageAuth } from "common/lang";
 import AsyncButton from "components/common/atoms/AsyncButton";
 import { useModal } from "hooks/CommonHooks";
+import { resendEmailVerification } from "./SettingsHome";
 
 export default function SettingsHomeAuthPassword(props: {
   user: firebase.User;
@@ -23,9 +24,21 @@ export default function SettingsHomeAuthPassword(props: {
           </td>
           <td>
             <div>メールアドレス</div>
-            <div>{`${props.user.email || ""}(${
-              props.user.emailVerified ? "確認済み" : "未確認"
-            })`}</div>
+            <div>
+              {props.user.email || ""}
+              {props.user.emailVerified ? (
+                <span>確認済み</span>
+              ) : (
+                <AsyncButton
+                  type="link"
+                  onClick={async () =>
+                    await resendEmailVerification(props.user)
+                  }
+                >
+                  確認メール再送信
+                </AsyncButton>
+              )}
+            </div>
           </td>
         </tr>
         <tr>

@@ -2,6 +2,8 @@ import { Alert, Button } from "antd";
 import React from "react";
 import styled from "styled-components";
 import firebase from "libs/Firebase";
+import { resendEmailVerification } from "./SettingsHome";
+import AsyncButton from "components/common/atoms/AsyncButton";
 
 export default function SettingsHomeAuthOauth(props: { user: firebase.User }) {
   return (
@@ -21,9 +23,21 @@ export default function SettingsHomeAuthOauth(props: { user: firebase.User }) {
           </td>
           <td>
             <div>メールアドレス</div>
-            <div>{`${props.user.email || ""}(${
-              props.user.emailVerified ? "確認済み" : "未確認"
-            })`}</div>
+            <div>
+              {props.user.email || ""}
+              {props.user.emailVerified ? (
+                <span>確認済み</span>
+              ) : (
+                <AsyncButton
+                  type="link"
+                  onClick={async () =>
+                    await resendEmailVerification(props.user)
+                  }
+                >
+                  確認メール再送信
+                </AsyncButton>
+              )}
+            </div>
           </td>
         </tr>
       </SeparatedTableStyle>

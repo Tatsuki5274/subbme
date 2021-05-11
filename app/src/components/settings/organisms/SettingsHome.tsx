@@ -74,6 +74,10 @@ const useUserSetting = () => {
   };
 };
 
+export const resendEmailVerification = async (user: firebase.User) => {
+  await user.sendEmailVerification();
+};
+
 export default function SettingsHome() {
   const {
     currentUser,
