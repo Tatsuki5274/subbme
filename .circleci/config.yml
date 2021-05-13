@@ -8,12 +8,12 @@ jobs:
       - run:
           name: install firebase-tools
           command: sudo npm install -g firebase-tools
-      # - run:
-      #     name: install nuxt
-      #     command: npm install nuxt
       - run:
-          name: build project
-          command: npm run build:prod
+          name: build project app
+          command: npm run --prefix app build:prod
+      - run:
+          name: build project web
+          command: npm run --prefix web build:prod
       - run:
           name: Deploy Firebase Hosting
           command: firebase deploy --token $FIREBASE_CI_TOKEN --project $PROD_PROJECT_ID
@@ -26,12 +26,12 @@ jobs:
       - run:
           name: install firebase-tools
           command: sudo npm install -g firebase-tools
-      # - run:
-      #     name: install nuxt
-      #     command: npm install nuxt
       - run:
-          name: build project
-          command: npm run build:dev
+          name: build project app
+          command: npm run --prefix app build:dev
+      - run:
+          name: build project web
+          command: npm run --prefix web build:dev
       - run:
           name: Deploy Firebase Hosting
           command: firebase deploy --token $FIREBASE_CI_TOKEN --project $DEV_PROJECT_ID
@@ -43,8 +43,8 @@ workflows:
       - deploy_dev: # 上で定義したジョブを指定します
           filters:
             branches:
-              only: develop # developブランチのみを実行対象とします
+              only: master # developブランチのみを実行対象とします
       - deploy_master:
           filters:
             branches:
-              only: master # masterブランチのみを実行対象とします
+              only: prod # masterブランチのみを実行対象とします
