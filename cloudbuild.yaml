@@ -1,0 +1,21 @@
+steps:
+  # ビルドに必要になるpackagesをinstall
+  # - id: "Install npm packages app"
+    name: "node:14-slim"
+    args: ["npm", "install"]
+    dir: "./app/"
+  - id: "Install npm packages web"
+    name: "node:14-slim"
+    args: ["npm", "install"]
+    dir: "./web/"
+  - id: "Build app"
+    name: "node:14-slim"
+    args: ["npm", "run", "build:dev"]
+    dir: "./app/"
+  - id: "Build web"
+    name: "node:14-slim"
+    args: ["npm", "run", "build:dev"]
+    dir: "./web/"
+  # firebaseのデプロイ
+  # - name: gcr.io/$PROJECT_ID/firebase
+  #   args: ["deploy", "--project=$PROJECT_ID"]
