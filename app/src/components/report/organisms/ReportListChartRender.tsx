@@ -71,7 +71,7 @@ export default function ReportChartRender(props: PropsType) {
                   </a>
               </div>
           </div> */}
-      <Line data={data} options={options} />
+      <Line data={data} options={options} type="" />
     </>
   );
 }

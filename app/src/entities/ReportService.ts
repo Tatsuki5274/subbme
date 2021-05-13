@@ -5,14 +5,16 @@ export const ReportServiceRankEnum = {
   B: "B",
   C: "C",
 } as const;
-export type ReportServiceRankType = typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum];
+export type ReportServiceRankType =
+  typeof ReportServiceRankEnum[keyof typeof ReportServiceRankEnum];
 
 export const ReportServiceAdviceStatusEnum = {
   SUCCESS: "SUCCESS",
   WARNING: "WARNING",
   DANGER: "DANGER",
 } as const;
-export type ReportServiceAdviceStatusType = typeof ReportServiceAdviceStatusEnum[keyof typeof ReportServiceAdviceStatusEnum];
+export type ReportServiceAdviceStatusType =
+  typeof ReportServiceAdviceStatusEnum[keyof typeof ReportServiceAdviceStatusEnum];
 
 type ReportServiceBase = {
   id: string;

@@ -16,9 +16,8 @@ const useUserSetting = () => {
   const [isProviderEmailLink, setIsProviderEmailLink] = useState(false);
   const [isProviderPassword, setIsProviderPassword] = useState(false);
   const [isProviderGoogle, setIsProviderGoogle] = useState(false);
-  const [isLoadingPasswordProvider, setIsLoadingPasswordProvider] = useState(
-    true
-  );
+  const [isLoadingPasswordProvider, setIsLoadingPasswordProvider] =
+    useState(true);
   const [isLoadingOauthProvider, setIsLoadingOauthProvider] = useState(true);
   useEffect(() => {
     // アカウントがemail linkかemail passwordか判断
