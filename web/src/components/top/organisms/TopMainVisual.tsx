@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
+import { Link } from "gatsby";
 import React from "react";
 import styled, { CSSProperties } from "styled-components";
 // import MainVisual from "Savings-amico.svg";
@@ -18,7 +19,18 @@ export default function TopMainVisual() {
               <br />
               まずは固定費の見直しからしてみませんか？
             </MessageStyle>
-            <ReleaseStyle>6月上旬、WEBアプリβ版リリース予定</ReleaseStyle>
+            <ReleaseStyle>
+              <Link to={process.env.GATSBY_APP_HOST_NAME || ""}>
+                <Button
+                  type="primary"
+                  size="large"
+                  block
+                  style={{ backgroundColor: "#e04a3f" }}
+                >
+                  アプリ登録
+                </Button>
+              </Link>
+            </ReleaseStyle>
           </MessageContainerStyle>
         </MessageCenter>
       </Col>
@@ -51,5 +63,5 @@ const MessageStyle = styled.div({
 const ReleaseStyle = styled.div({
   fontSize: "30px",
   textAlign: "left",
-  marginTop: "25px",
+  margin: "25px 0",
 });

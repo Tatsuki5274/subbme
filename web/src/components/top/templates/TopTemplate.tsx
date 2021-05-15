@@ -32,9 +32,9 @@ export default function TopTemplate() {
       </AboutTextStyle>
       <Divider style={DividerStyle}>RELEASE</Divider>
       <ReleaseTextStyle>
-        2021年6月上旬、パブリックβ版WEBアプリ公開予定
+        2021年6月、パブリックβ版WEBアプリ公開
         <br />
-        ※リリースを保証する内容ではありません
+        年内正式版公開予定
       </ReleaseTextStyle>
       <Divider style={DividerStyle}>ROADMAP</Divider>
       <RoadmapStyle>
