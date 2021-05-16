@@ -42,7 +42,7 @@ export default function TopLoadMap() {
         description="基本機能である固定費洗い出し機能のみで公開"
       />
       <Step
-        title="秋予定 コンテンツ機能の実装"
+        title="夏予定 コンテンツ機能の実装"
         description="学習用の教材などのコンテンツ機能の実装"
       />
       <Step
