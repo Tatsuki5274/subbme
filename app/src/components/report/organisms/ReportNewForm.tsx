@@ -115,7 +115,7 @@ export default function ReportNewForm(props: PropsType) {
   const rankMessage = [
     "支出の多くを占めている分類です。この分類を見直すことで劇的な家計改善を期待できます。まずはこの項目を良い評価にしましょう。",
     "支出の約３割を占めている分類です。家計改善が見込めます。",
-    "ランクCのメッセージ",
+    "全体の1割りを占める支出です。この分類の改善に務めることは効率的ではありません。",
   ];
 
   const formik = useFormik<FormType>({

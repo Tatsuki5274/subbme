@@ -47,12 +47,12 @@ export default function ReportDetailTemplate(props: PropsType) {
           />
           <ReportDetailRank
             title="ランクB"
-            description="支出の多くを占めている分類です。この分類を見直すことで劇的な家計改善を期待できます。"
+            description="支出の約３割を占めている分類です。家計改善が見込めます。"
             services={props.serviceListB}
           />
           <ReportDetailRank
             title="ランクC"
-            description="支出の多くを占めている分類です。この分類を見直すことで劇的な家計改善を期待できます。"
+            description="全体の1割りを占める支出です。この分類の改善に務めることは効率的ではありません。"
             services={props.serviceListC}
           />
         </>
