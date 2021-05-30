@@ -18,8 +18,12 @@ export const categoryList: Category[] = [
         label: "動画配信",
       },
       {
-        value: "オンラインゲーム",
-        label: "オンラインゲーム",
+        value: "ゲーム",
+        label: "ゲーム",
+      },
+      {
+        value: "読み放題",
+        label: "読み放題",
       },
       {
         value: "その他",
@@ -56,8 +60,101 @@ export const categoryList: Category[] = [
         label: "学資保険",
       },
       {
+        value: "ペット保険",
+        label: "ペット保険",
+      },
+      {
         value: "その他",
         label: "その他",
+      },
+    ],
+  },
+  {
+    value: "仕事効率化",
+    label: "仕事効率化",
+    children: [
+      {
+        value: "クラウドストレージ",
+        label: "クラウドストレージ",
+      },
+      {
+        value: "ノート",
+        label: "ノート",
+      },
+      {
+        value: "生産ツール",
+        label: "生産ツール",
+      },
+    ],
+  },
+  {
+    value: "生活",
+    label: "生活",
+    children: [
+      {
+        value: "通信費",
+        label: "通信費",
+      },
+      {
+        value: "光熱費",
+        label: "光熱費",
+      },
+      {
+        value: "住居費",
+        label: "住居費",
+      },
+      {
+        value: "車両関係費用",
+        label: "車両関係費用",
+      },
+    ],
+  },
+  {
+    value: "スキルアップ",
+    label: "スキルアップ",
+    children: [{ value: "料理教室", label: "料理教室" }],
+  },
+  {
+    value: "学習",
+    label: "学習",
+    children: [
+      {
+        value: "予備校・塾",
+        label: "予備校・塾",
+      },
+      {
+        value: "英会話",
+        label: "英会話",
+      },
+      {
+        value: "Eラーニング",
+        label: "Eラーニング",
+      },
+    ],
+  },
+  {
+    value: "スポーツ",
+    label: "スポーツ",
+    children: [
+      {
+        value: "格闘技",
+        label: "格闘技",
+      },
+      {
+        value: "水泳",
+        label: "水泳",
+      },
+      {
+        value: "ゴルフ",
+        label: "ゴルフ",
+      },
+      {
+        value: "スポーツジム",
+        label: "スポーツジム",
+      },
+      {
+        value: "球技",
+        label: "球技",
       },
     ],
   },
